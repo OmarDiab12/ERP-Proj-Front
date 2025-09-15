@@ -1,0 +1,38 @@
+<div class="page-header" [class.rtl]="rtl" role="region" aria-label="Page header">
+  <div class="ph-top d-flex align-items-center justify-content-between flex-wrap">
+    <div class="ph-left d-flex align-items-center">
+      <div class="ph-title">
+        <h3 class="mb-0">{{ title }}</h3>
+        <small *ngIf="subtitle" class="text-muted d-block">{{ subtitle }}</small>
+      </div>
+    </div>
+
+    <div class="ph-actions d-flex align-items-center gap-2">
+      <ng-container *ngIf="showsecondaryButton && secondaryButton">
+        <button type="button"
+                class="btn secondaryButton"
+                (click)="onSecondary()">
+          <i *ngIf="secondaryButton.icon" class="me-2 fa" [ngClass]="secondaryButton.icon"></i>
+          {{ secondaryButton.label }}
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="showAddButton && addButton">
+        <button type="button" class="btn addButton" (click)="onAdd()">
+          <i *ngIf="addButton.icon" class="me-2 fa" [ngClass]="addButton.icon"></i>
+          {{ addButton.label }}
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="showprimaryButton && primaryButton">
+        <button type="button"
+                class="btn primaryButton"
+                (click)="onPrimary()">
+          <i *ngIf="primaryButton.icon" class="me-2 fa" [ngClass]="primaryButton.icon"></i>
+          {{ primaryButton.label }}
+        </button>
+      </ng-container>
+
+    </div>
+  </div>
+</div>

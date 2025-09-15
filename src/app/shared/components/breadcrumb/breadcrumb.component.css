@@ -1,0 +1,40 @@
+.breadcrumb {
+  margin: 0;
+}
+.breadcrumb ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+}
+
+.breadcrumb li {
+  display: flex;
+  align-items: center;
+  color: #777;
+}
+
+.breadcrumb span {
+  font-size: 16px;
+}
+
+.breadcrumb a {
+  color: #000 !important;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+}
+.breadcrumb a i{
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+.breadcrumb a:hover {
+  color: #007ad9;
+}
+
+.breadcrumb .separator {
+  margin: 0 8px;
+  color: #aaa;
+}

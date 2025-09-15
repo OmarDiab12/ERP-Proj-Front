@@ -1,0 +1,136 @@
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+.wrapper {
+  display: flex;
+  height: 100%;
+}
+
+#sidebar {
+  background: #fff;
+  border-left: 1px solid #eee;
+  width: 240px;
+  min-width: 240px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: var(--trasition);
+  overflow-y: auto;
+}
+
+.sidebar-nav {
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+
+.sidebar-item {
+  margin: 5px 0;
+   transition: var(--trasition);
+}
+
+.sidebar-section {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: bold;
+  color: #00000066;
+  padding: 10px 15px 5px;
+  transition: var(--trasition);
+}
+
+.sidebar-section:first-of-type {
+  padding: 0px 15px 5px;
+}
+
+a.sidebar-link {
+  width: 100%;
+  padding: 8px 12px;
+  color: #000;
+  display: flex;
+  align-items: center;
+  border-radius: 14px;
+  transition: var(--trasition);
+}
+
+a.sidebar-link i {
+  font-size: 16px;
+  transition: var(--trasition);
+}
+
+a.sidebar-link span {
+  margin-right: 12px;
+  font-size: 16px;
+  transition: var(--trasition);
+}
+
+.sidebar-item.active a.sidebar-link,
+a.sidebar-link:hover {
+  background: var(--purple);
+  color: #fff !important;
+}
+
+.sidebar-item.active a.sidebar-link i,
+a.sidebar-link:hover i {
+  color: #fff !important;
+}
+
+.sidebar-footer a.sidebar-link.logout {
+  color: var(--red);
+  font-weight: bold;
+  transition: var(--trasition);
+}
+
+.sidebar-footer a.sidebar-link.logout:hover {
+  background: var(--light-red);
+  color: #fff;
+}
+
+/* Collapsed sidebar: hide text */
+#sidebar.collapsed .sidebar-link span {
+  display: none;
+}
+
+/* Center icons when collapsed */
+#sidebar.collapsed .sidebar-link {
+  justify-content: center;
+  padding: 12px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Collapsed sidebar */
+#sidebar.collapsed {
+  width: 56px;
+  min-width: 56px;
+  padding: 8px;
+}
+
+#sidebar.collapsed .sidebar-section {
+  display: none;
+}
+
+/* إخفاء الـ scrollbar في كروم/إيدج/سفاري */
+#sidebar::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+  /* يخليها كأنها مش موجودة */
+}
+
+/* إخفاء في فايرفوكس */
+#sidebar {
+  scrollbar-width: none;
+  /* يخفي */
+}
+
+/* إخفاء في إنترنت إكسبلورر وإيدج القديم */
+#sidebar {
+  -ms-overflow-style: none;
+}

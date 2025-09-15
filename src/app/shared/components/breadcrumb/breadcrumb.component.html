@@ -1,0 +1,16 @@
+<nav class="breadcrumb">
+  <ul>
+    <li *ngFor="let bc of breadcrumbs; let last = last">
+      <a routerLink="/dashboard">
+        <i class="pi pi-objects-column"></i>
+        لوحة التحكم
+      </a>
+      <span class="separator">/</span>
+    </li>
+    <li *ngFor="let bc of breadcrumbs; let last = last">
+      <a *ngIf="!last" [routerLink]="bc.url">{{ bc.label }}</a>
+      <span *ngIf="last">{{ bc.label }}</span>
+      <span class="separator" *ngIf="!last">/</span>
+    </li>
+  </ul>
+</nav>

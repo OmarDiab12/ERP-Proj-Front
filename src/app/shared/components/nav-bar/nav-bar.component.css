@@ -1,0 +1,106 @@
+/* Start Global NavBar Styling */
+.nav{
+  height: 64px;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  top: 0;
+  left: 0;
+}
+
+/* End Global NavBar Styling */
+/* Start Left Side */
+.navbar-brand{
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between ;
+  padding:10px 15px;
+}
+.navbar-brand .right{
+  width: 40%;
+}
+
+.navbar-brand .left{
+  display: flex;
+  align-items: center;
+  justify-content: space-between ;
+  width: 40%;
+}
+.navbar-brand .left .icon{
+  border: 1px solid var(--gray);
+  border-radius: 8px;
+  color: #000;
+  font-size: 16px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.navbar-brand .left .icon i{
+    position: relative;
+}
+.navbar-brand .left .icon span{
+    position: absolute;
+    top:-3px;
+    left: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--red);
+}
+
+
+
+
+
+
+.navbar-search input {
+  border: none;
+  border-radius: 8px;
+  color: #000;
+  font-size: 16px;
+  padding: 5px;
+  transition: all 0.3s ease;
+  background-color: var(--body);
+  outline: none;
+}
+
+.navbar-search input::placeholder {
+  color: var(--gray);
+}
+
+
+
+/* End Left Side */
+/* Start SideBar Button */
+.sidebarButton {
+  width: 240px;
+  min-width: 240px;
+  height: 100% ;
+  padding: 16px 24px;
+  color: #000;
+  display: flex;
+  align-items: center;
+  transition: var(--trasition);
+}
+
+.sidebarButton span{
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.sidebarButton.collapsed {
+  width: 72px;
+  min-width: 72px;
+  display: flex;
+  justify-content: center;
+  justify-content: center;
+  padding: 0;
+}
+.sidebarButton.collapsed span{
+display: none;
+}
+
+/* End SideBar Button */

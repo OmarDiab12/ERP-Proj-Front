@@ -1,0 +1,39 @@
+<div class="container d-flex ">
+  <div class="p-5 d-flex flex-column align-items-center w-75 mx-auto">
+    <form action="" class="w-100" [formGroup]="loginForm" (ngSubmit)="Submit()">
+      <div class="mb-3 row">
+        <label for="userName" class="col-sm-3 col-form-label">Email</label>
+        <div class="col-sm-9">
+          <input type="text" placeholder="enter the email" name="email" class="form-control" id="email" formControlName="email">
+          <div class="errormsg" [hidden]="email?.valid ||email?.untouched">
+            <small class="text-danger text-end" *ngIf="email?.errors?.['required']">
+              Email Required
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3 row g">
+        <label for="inputPassword" class="col-sm-3 col-form-label">Password</label>
+        <div class="col-sm-9">
+          <input type="password" placeholder="enter the password" class="form-control" id="inputPassword" formControlName="password">
+          <div class="errormsg" [hidden]="password?.valid ||password?.untouched">
+            <small class="text-danger" *ngIf="password?.errors?.['required']">
+              Password Required
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="form-floating">
+        <small class="text-danger ms-auto" *ngIf="error!=''">{{error}}</small>
+      </div>
+      <div class="text-center">
+        <button class="btn prmbtn mt-2" [disabled]="loginForm.invalid">
+          Login
+          <i *ngIf="loading" class="fas fa-spinner fa-spin"></i>
+        </button>
+        <br>
+        <a routerLink="/register">Create New Account</a>
+      </div>
+    </form>
+  </div>
+</div>

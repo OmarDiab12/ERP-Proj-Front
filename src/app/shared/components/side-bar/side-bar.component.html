@@ -1,0 +1,141 @@
+<div class="wrapper h-100">
+  <div id="sidebar" class="w-100 h-100" [class.collapsed]="isCollapsed">
+    <aside class="w-100 h-100 d-flex flex-column">
+      <ul class="sidebar-nav">
+
+        <li class="sidebar-section">الرئيسية</li>
+
+        <li class="sidebar-item"  routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a routerLink="/dashboard" class="sidebar-link">
+            <i class="pi pi-chart-line"></i>
+            <span>نظرة عامة</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item" routerLinkActive="active">
+          <a routerLink="/analytics" class="sidebar-link">
+            <i class="pi pi-chart-bar"></i>
+            <span>التحليلات</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item" routerLinkActive="active">
+          <a routerLink="/projects" class="sidebar-link">
+            <i class="pi pi-briefcase"></i>
+            <span>المشاريع</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item" routerLinkActive="active">
+          <a routerLink="/clients" class="sidebar-link">
+            <i class="pi pi-users"></i>
+            <span>العملاء</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item" routerLinkActive="active">
+          <a routerLink="/contractors" class="sidebar-link">
+            <i class="pi pi-id-card"></i>
+            <span>المقاولون</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item" routerLinkActive="active">
+          <a routerLink="/brokers" class="sidebar-link">
+            <i class="pi pi-sitemap"></i>
+            <span>السماسرة (الوسطاء)</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item" routerLinkActive="active">
+          <a routerLink="/suppliers" class="sidebar-link">
+            <i class="pi pi-shopping-cart"></i>
+            <span>الموردون</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item" routerLinkActive="active">
+          <a routerLink="/assets" class="sidebar-link">
+            <i class="pi pi-box"></i>
+            <span>الأصول</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item" routerLinkActive="active">
+          <a routerLink="/quotes" class="sidebar-link">
+            <i class="pi pi-file"></i>
+            <span>عروض الأسعار</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item" routerLinkActive="active">
+          <a routerLink="/warehouse" class="sidebar-link">
+            <i class="pi pi-inbox"></i>
+            <span>المخزون</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item" routerLinkActive="active">
+          <a routerLink="/invoices" class="sidebar-link">
+            <i class="pi pi-file-pdf"></i>
+            <span>الفواتير</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item" routerLinkActive="active">
+          <a routerLink="/partners" class="sidebar-link">
+            <i class="pi pi-users"></i>
+            <span>الشركاء</span>
+          </a>
+        </li>
+
+        <li class="sidebar-section">المصاريف</li>
+
+        <li class="sidebar-item" routerLinkActive="active">
+          <a routerLink="/revenues" class="sidebar-link">
+            <i class="pi pi-dollar"></i>
+            <span>الإيرادات</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item" routerLinkActive="active">
+          <a routerLink="/cashflow" class="sidebar-link">
+            <i class="pi pi-chart-line"></i>
+            <span>التدفق النقدي</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item" routerLinkActive="active">
+          <a routerLink="/loans" class="sidebar-link">
+            <i class="pi pi-credit-card"></i>
+            <span>القروض الشخصية</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item" routerLinkActive="active">
+          <a routerLink="/expenses" class="sidebar-link">
+            <i class="pi pi-wallet"></i>
+            <span>المصروفات التشغيلية</span>
+          </a>
+        </li>
+
+        <li class="sidebar-section">الإعدادات</li>
+
+        <li class="sidebar-item" routerLinkActive="active">
+          <a routerLink="/settings" class="sidebar-link">
+            <i class="pi pi-cog"></i>
+            <span>الإعدادات</span>
+          </a>
+        </li>
+
+      </ul>
+
+      <div class="sidebar-footer mt-auto p-2">
+        <a routerLink="/" class="sidebar-link logout">
+          <i class="pi pi-sign-out"></i>
+          <span>تسجيل الخروج</span>
+        </a>
+      </div>
+    </aside>
+  </div>
+</div>

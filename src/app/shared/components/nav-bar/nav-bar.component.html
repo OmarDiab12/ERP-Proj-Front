@@ -1,0 +1,49 @@
+<div class="nav d-flex flex-row-reverse align-items-center justify-content-between">
+
+  <!-- <app-breadcrumb></app-breadcrumb> -->
+  <div class="navbar-brand">
+    <div class="right">
+      <app-breadcrumb></app-breadcrumb>
+    </div>
+    <div class="left">
+
+
+      <div class="navbar-search">
+        <input type="text" pInputText placeholder="&#xF002;  ابحث هنا" [(ngModel)]="searchText"
+          (ngModelChange)="onSearchChange()" />
+      </div>
+
+
+
+
+
+      <div class="mx-2 icon" (click)="toggleNotification()">
+        <i class="pi pi-bell">
+          <span class="notificationSignal"></span>
+        </i>
+      </div>
+
+
+
+
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="sidebarButton" (click)="toggleSidebar()" [class.collapsed]="isCollapsed" title="Toggle sidebar"
+    role="button" tabindex="0">
+    <!-- <img src="" alt=""> -->
+    <i class="pi pi-bars"></i>
+    <span>لوحة التحكم</span>
+  </div>
+</div>

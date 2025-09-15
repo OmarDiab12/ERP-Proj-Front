@@ -1,0 +1,46 @@
+.notification-panel {
+  background: #fff;
+  height: calc(100% - 64px);
+  width: 300px;
+  padding: 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.notification-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.notification-header h5 {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.notification-header button {
+  font-size: 14px;
+}
+
+.notification-body {
+  transition: var(--trasition);
+  overflow-y: auto;
+}
+
+
+
+
+
+.notification-body::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+.notification-body {
+  scrollbar-width: none;
+}
+
+.notification-body {
+  -ms-overflow-style: none;
+}

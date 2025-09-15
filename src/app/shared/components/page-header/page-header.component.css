@@ -1,0 +1,42 @@
+.page-header {
+  padding-bottom: 1rem;
+  border-radius: 8px;
+  background: transparent;
+}
+
+/* top row */
+.ph-top { gap: 0.5rem; }
+.ph-title h3 { font-weight: bold; font-size: 16px;line-height: 20px; margin-bottom: 8px;}
+.ph-title small { font-size: 14px;color: var(--gray); }
+
+/* actions alignment */
+.ph-actions .btn { min-width: 100px; }
+
+
+/* RTL support */
+.page-header.rtl { direction: rtl; }
+.page-header.rtl .ph-actions .btn i { margin-left: .5rem; margin-right: 0; }
+.page-header button {
+  border: 1px solid var(--purple);
+  border-radius: 14px;
+  padding: 12px 18px;
+  transition: 0.3s;
+}
+.page-header .btn.secondaryButton,
+.page-header .btn.primaryButton {
+  color:var(--purple);
+  background-color: transparent;
+}
+.page-header .btn.addButton{
+  background-color:var(--purple);
+  color: #fff;
+}
+.page-header .btn.secondaryButton:hover,
+.page-header .btn.primaryButton:hover {
+  color:#fff;
+  background-color: var(--purple);
+}
+.page-header .btn.addButton:hover{
+  background-color:transparent;
+  color: var(--purple);
+}

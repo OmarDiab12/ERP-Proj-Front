@@ -1,1 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+:root{
+  --purple: #5D5FEF;
+  --shine-green:#27C840;
+  --light-green:#64FF9A;
+  --green:#42A56B;
+  --red:#FF0000;
+  --light-red:#FF5F57;
+  --yellow:#FEBC2F;
+  --light-yellow:#FBFF87;
+  --blue:#0088FF;
+  --light-blue:#92BFFF;
+  --dark-blue:#222B59;
+  --brown:#AC7F5E;
+  --dark-brown:#633B48;
+  --gray:#BABABA;
+  --body:#F5F5F5;
+  --trasition:0.3s ease;
+}
+*{
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  direction: rtl !important;
+}
+html{
+  scroll-behavior: smooth;
+}
+body{
+  font-family: "Almarai", sans-serif !important;
+}
