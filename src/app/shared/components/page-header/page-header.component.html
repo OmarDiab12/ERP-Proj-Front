@@ -8,28 +8,44 @@
     </div>
 
     <div class="ph-actions d-flex align-items-center gap-2">
-      <ng-container *ngIf="showsecondaryButton && secondaryButton">
+      <ng-container *ngIf="showLightButton3 && LightButton3">
         <button type="button"
-                class="btn secondaryButton"
-                (click)="onSecondary()">
-          <i *ngIf="secondaryButton.icon" class="me-2 fa" [ngClass]="secondaryButton.icon"></i>
-          {{ secondaryButton.label }}
+                class="btn LightButton3"
+                (click)="onLight3()">
+          <i *ngIf="LightButton3.icon" class="me-2 fa" [ngClass]="LightButton3.icon"></i>
+          {{ LightButton3.label }}
+        </button>
+      </ng-container>
+      <ng-container *ngIf="showLightButton1 && LightButton1">
+        <button type="button"
+                class="btn LightButton1"
+                (click)="onLight1()">
+          <i *ngIf="LightButton1.icon" class="me-2 fa" [ngClass]="LightButton1.icon"></i>
+          {{ LightButton1.label }}
         </button>
       </ng-container>
 
-      <ng-container *ngIf="showAddButton && addButton">
-        <button type="button" class="btn addButton" (click)="onAdd()">
-          <i *ngIf="addButton.icon" class="me-2 fa" [ngClass]="addButton.icon"></i>
-          {{ addButton.label }}
+      <ng-container *ngIf="showAddButton1 && addButton1">
+        <button type="button" class="btn addButton" (click)="onAdd1()">
+          <i *ngIf="addButton1.icon" class="me-2 fa" [ngClass]="addButton1.icon"></i>
+          {{ addButton1.label }}
         </button>
       </ng-container>
 
-      <ng-container *ngIf="showprimaryButton && primaryButton">
+      <ng-container *ngIf="showLightButton2 && LightButton2">
         <button type="button"
-                class="btn primaryButton"
-                (click)="onPrimary()">
-          <i *ngIf="primaryButton.icon" class="me-2 fa" [ngClass]="primaryButton.icon"></i>
-          {{ primaryButton.label }}
+                class="btn LightButton2"
+                (click)="onLight2()">
+          <i *ngIf="LightButton2.icon" class="me-2 fa" [ngClass]="LightButton2.icon"></i>
+          {{ LightButton2.label }}
+        </button>
+      </ng-container>
+      <ng-container *ngIf="showDarkButton && DarkButton">
+        <button type="button"
+                class="btn DarkButton"
+                (click)="onDark()">
+          <i *ngIf="DarkButton.icon" class="me-2 fa" [ngClass]="DarkButton.icon"></i>
+          {{ DarkButton.label }}
         </button>
       </ng-container>
 

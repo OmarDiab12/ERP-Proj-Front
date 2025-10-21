@@ -15,41 +15,79 @@ export class UserDataService {
   name:string="";
   email:string="";
   id:string="";
-  back: string = "https://aubs.runasp.net/api/"
+  // back: string = "https://aubs.runasp.net/api/"
+  back: string = "https://newerp.runasp.net/api/"
   constructor(private HttpClient:HttpClient,private Router:Router) {}
 
-  saveUserData(){
-    if(localStorage.getItem('token') !=null){
-      let encodeToken:any = localStorage.getItem('token');
-      let decodeToken = jwtDecode(encodeToken);
-      this.userData=decodeToken;
-      this.id=this.userData["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
-      this.role=this.userData["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-      this.email=this.userData["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
-      this.name=this.userData["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
-      // Store role in lowercase for consistency
-      localStorage.setItem("role", (this.role || '').toLowerCase());
-      localStorage.setItem("name",this.name)
-    }
+
+  isTokenExpired(): boolean {
+  const token = localStorage.getItem('token');
+  if (!token) return true;
+
+  try {
+    const decoded: any = jwtDecode(token);
+    const exp = decoded['exp'];
+    if (!exp) return true;
+
+    const now = Date.now().valueOf() / 1000; // الوقت الحالي بالثواني
+    return exp < now; // true لو انتهى
+  } catch (e) {
+    console.error('Invalid token:', e);
+    return true;
   }
+}
+
+  // saveUserData(){
+  //   if(localStorage.getItem('token') !=null){
+
+  //     if (this.isTokenExpired()) {
+  //     this.logOut();
+  //     return;
+  //   }
+
+
+  //     let encodeToken:any = localStorage.getItem('token');
+  //     let decodeToken = jwtDecode(encodeToken);
+  //     this.userData=decodeToken;
+  //     console.log(this.userData)
+  //     this.id=this.userData["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+  //     this.role=this.userData["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+  //     this.email=this.userData["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
+  //     this.name=this.userData["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
+  //     // Store role in lowercase for consistency
+  //     localStorage.setItem("role", (this.role || '').toLowerCase());
+  //     localStorage.setItem("name",this.name)
+  //   }
+  // }
+
+  saveUserData() {
+  const token = localStorage.getItem('token');
+  if (token) {
+    if (this.isTokenExpired()) {
+      this.logOut();
+      return;
+    }
+
+    const decoded: any = jwtDecode(token);
+    this.userData = decoded;
+    this.id = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+    this.role = decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || 'admin'; // fallback مؤقت
+    this.email = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
+    this.name = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
+
+    // Store role in lowercase for consistency
+    localStorage.setItem("role", (this.role || 'admin').toLowerCase());
+    localStorage.setItem("name", this.name);
+  }
+}
+
 
 getCurrentUserId(): number {
   return this.id ? Number(this.id) : 0;
 }
 
   registerStudent(data:object):Observable<any>{
-    // return this.HttpClient.post(this.back+'User/register-student',data,
-    //   {
-    //     context: new HttpContext().set(SUCCESS_MESSAGE, 'Applied successfully and waiting for approval 🎉')
-    //   });
     return this.HttpClient.post(this.back+'User/register-student',data,{});
-  }
-
-  AddUser(data:object):Observable<any>{
-    const headers = new HttpHeaders({
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        });
-    return this.HttpClient.post(this.back+'User/create-user-by-admin',data,{headers});
   }
 
   login(data:object):Observable<any>{
@@ -76,10 +114,6 @@ getCurrentUserId(): number {
 
   isInstructor(): boolean {
     return (this.role || '').toLowerCase() === 'instructor';
-  }
-
-  isStudent(): boolean {
-    return (this.role || '').toLowerCase() === 'student';
   }
 
   getRoleFromStorage(): void {

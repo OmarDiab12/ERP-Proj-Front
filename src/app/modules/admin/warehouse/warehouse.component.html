@@ -1,1 +1,52 @@
-<p>warehouse works!</p>
+<app-page-header [title]="'المخزون'" [subtitle]="'تتبع مستويات المخزون وتفاصيل المنتجات'"
+  [rtl]="true" [showAddButton1]="true" [addButton1]="{ label: 'إضافة منتج', icon: 'pi pi-plus' }" (add1Click)="openAddModal()"></app-page-header>
+
+
+<div class="row mb-2 mt-4">
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-wallet" [title]='"إجمالى المنتجات"' [value]="3" [percentage]="'منتج مختلف'">
+    </app-card>
+  </div>
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-wallet" [title]='"تنبيهات المخزون المنخفضة"' [value]="2" [percentage]="'منتج يحتاج إلى إعاده تزويد'">
+    </app-card>
+  </div>
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-wallet" [title]='"قيمة المخزون الإجمالية"' [value]="80400" [currency]="'ر.س'" [percentage]="'منتج مختلف'">
+    </app-card>
+  </div>
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-wallet" [title]='"إجمالى العقود"' [value]="20100" [currency]="'ر.س'" [percentage]="'منتج مختلف'">
+    </app-card>
+  </div>
+</div>
+
+
+
+
+<div class="bg-round-white">
+
+  <app-page-header [title]="'قائمة المقاولين'" [subtitle]="'إدارة بيانات جميع المقاولين'" [rtl]="true"></app-page-header>
+
+
+  <app-custom-table [data]="products" [columns]="productColumns" [showCheckbox]="false" [showActions]="true"
+    [showEye]="true" [showPencil]="true" [showTrash]="false" [showDownload]="true"></app-custom-table>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<app-form-module *ngIf="showModal" [title]="'منتج'" [subtitle]="'المنتج'" [fields]="productFields"
+  [formData]="isEditMode ? selectedProduct : null" [disabledFields]="isEditMode ? ['email', 'productName'] : []"
+  [submitText]="isEditMode ? 'تعديل' : 'إضافة'" (formSubmit)="isEditMode ? updateProduct($event) : addProduct($event)"
+  (cancel)="closeForm()"></app-form-module>

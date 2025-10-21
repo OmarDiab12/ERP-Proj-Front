@@ -1,1 +1,49 @@
-<p>loans works!</p>
+<app-page-header [title]="'القروض الشخصية'" [subtitle]="'إدارة وعرض القروض الشخصية'"
+  [rtl]="true" [showAddButton1]="true" [addButton1]="{ label: 'إضافة سلفة', icon: 'pi pi-plus' }" (add1Click)="openAddModal()"></app-page-header>
+
+
+
+
+
+<div class="row mb-2 mt-4">
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-wallet" [title]='"إجمالى السلف الممنوحة"' [value]="1200000" [currency]="'ر.س'" [percentage]="'+12% من الشهر الماضى'">
+    </app-card>
+  </div>
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-wallet" [title]='"إجمالى المسدد"' [value]="850000" [currency]="'ر.س'" [percentage]="'71% من الإجمالى'">
+    </app-card>
+  </div>
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-wallet" [title]='"المبلغ المتبقى"' [value]="350000" [currency]="'ر.س'" [percentage]="'29% من الإجمالى'">
+    </app-card>
+  </div>
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-wallet" [title]='"السلف النشطه"' [value]="15" [percentage]="'من أصل 28 موظف'">
+    </app-card>
+  </div>
+</div>
+
+
+
+
+<div class="bg-round-white">
+
+  <app-page-header [title]="'قائمة المقاولين'" [subtitle]="'إدارة بيانات جميع المقاولين'" [rtl]="true"></app-page-header>
+
+
+  <app-custom-table [data]="loans" [columns]="loanColumns" [showCheckbox]="false" [showActions]="true"
+    [showEye]="true" [showPencil]="true" [showTrash]="false" [showDownload]="true"></app-custom-table>
+
+</div>
+
+
+
+
+
+
+
+<app-form-module *ngIf="showModal" [title]="'سلفة'" [subtitle]="'السلفة'" [fields]="loanFields"
+  [formData]="isEditMode ? selectedLoan : null" [disabledFields]="isEditMode ? ['email', 'loanName'] : []"
+  [submitText]="isEditMode ? 'تعديل' : 'إضافة'" (formSubmit)="isEditMode ? updateLoan($event) : addLoan($event)"
+  (cancel)="closeForm()"></app-form-module>

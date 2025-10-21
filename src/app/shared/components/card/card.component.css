@@ -1,0 +1,70 @@
+.stat-card {
+  background: #fff;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5px;
+  padding: 14px;
+  border-radius: 12px;
+    font-family: "Almarai", sans-serif !important;
+
+}
+
+.icon {
+  font-size: 16px;
+}
+
+.title {
+  font-size: 16px;
+  color: var(--gray);
+}
+
+.value {
+  font-size: 22px;
+  font-weight: bold;
+  color: #000;
+}
+
+.currency {
+  font-size: 16px;
+  color: #000;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--gray);
+}
+
+.percentage {
+  font-size: 14px;
+  color: var(--gray);
+}
+
+.flexx{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.CardButton {
+  background-color: var(--purple);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  width: 100%;
+  border-radius:var(--radius);
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: 0.5s;
+}
+.CardButton:hover {
+  background-color: var(--light-purple);
+  color: var(--purple);
+}

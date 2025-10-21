@@ -1,13 +1,14 @@
 .page-header {
-  padding-bottom: 1rem;
+  /* padding-bottom: 2rem; */
   border-radius: 8px;
   background: transparent;
+  font-family: "Almarai", sans-serif !important;
 }
 
 /* top row */
 .ph-top { gap: 0.5rem; }
-.ph-title h3 { font-weight: bold; font-size: 16px;line-height: 20px; margin-bottom: 8px;}
-.ph-title small { font-size: 14px;color: var(--gray); }
+.ph-title h3 { font-weight: bold; font-size: 16px;line-height: 20px; margin-bottom: 16px;}
+.ph-title small { font-size: 12px;color: var(--gray);font-weight: lighter; }
 
 /* actions alignment */
 .ph-actions .btn { min-width: 100px; }
@@ -22,8 +23,10 @@
   padding: 12px 18px;
   transition: 0.3s;
 }
-.page-header .btn.secondaryButton,
-.page-header .btn.primaryButton {
+.page-header .btn.LightButton1,
+.page-header .btn.LightButton2,
+.page-header .btn.LightButton3
+ {
   color:var(--purple);
   background-color: transparent;
 }
@@ -31,12 +34,21 @@
   background-color:var(--purple);
   color: #fff;
 }
-.page-header .btn.secondaryButton:hover,
-.page-header .btn.primaryButton:hover {
+.page-header .btn.LightButton1:hover,
+.page-header .btn.LightButton2:hover,
+.page-header .btn.LightButton3:hover{
   color:#fff;
   background-color: var(--purple);
 }
 .page-header .btn.addButton:hover{
   background-color:transparent;
   color: var(--purple);
+}
+.page-header .btn.DarkButton{
+  background-color:var(--body);
+  color: #000;
+  border: none;
+}
+.page-header .btn.DarkButton:hover{
+  background-color:var(--gray);
 }

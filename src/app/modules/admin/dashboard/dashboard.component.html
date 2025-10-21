@@ -1,1 +1,63 @@
-<p>dashboard works!</p>
+<app-page-header [title]="'الرئيسية'" [subtitle]="'نظرة عامة على أداء الشركة'" [rtl]="true"></app-page-header>
+
+
+
+<div class="row mb-2 mt-4">
+        <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+          <app-card icon="pi pi-wallet" [title]='"إجمالى الإيرادات"' [value]="1245000" percentage="12.5 %" percentageColor="red" subtitle="اخر 30 يوم">
+          </app-card>
+        </div>
+        <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+          <app-card icon="pi pi-wallet" [title]='"مصاريف التشغيل"' [value]="897000" percentage="12.5 %" percentageColor="green" subtitle="اخر 30 يوم">
+          </app-card>
+        </div>
+        <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+          <app-card icon="pi pi-wallet" [title]='"صافى الربح"' [value]="348000" percentage="12.5 %" percentageColor="red" currency="ر.س"
+            subtitle="اخر 30 يوم">
+          </app-card>
+        </div>
+        <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+          <app-card icon="pi pi-wallet" [title]='"قيمة المخزون"' [value]="348000" percentage="12.5 %" percentageColor="green" currency="ر.س"
+            subtitle="اخر 30 يوم">
+          </app-card>
+        </div>
+      </div>
+
+<div class="row mb-3">
+
+  <!-- التدفق النقدي -->
+  <div class="col-lg-8 col-sm-12 mb-sm-3">
+    <p-card header="التدفق النقدي">
+      <p-chart type="line" [data]="cashflowData" [options]="cashflowOptions"></p-chart>
+    </p-card>
+  </div>
+
+  <!-- المشاريع -->
+  <div class="col-lg-4 col-sm-6 mb-sm-3">
+    <p-card header="المشاريع">
+      <p-chart type="doughnut" [data]="projectsData" [options]="chartOptions"></p-chart>
+      <div class="p-mt-3">
+        <p class="status"><span class="dot yellow"></span> نشط: 23</p>
+        <p class="status"><span class="dot green"></span> مكتمل: 18</p>
+        <p class="status"><span class="dot gray"></span> معلق: 6</p>
+      </div>
+    </p-card>
+  </div>
+
+  <!-- توزيع أرباح الشركاء -->
+  <div class="col-lg-4 col-sm-6 mb-sm-3">
+    <p-card header="توزيع أرباح الشركاء">
+      <p-chart type="pie" [data]="partnersData" [options]="partnersOptions"></p-chart>
+    </p-card>
+  </div>
+
+  <!-- الإيرادات حسب الفئة -->
+  <div class="col-lg-8 col-sm-12 mb-sm-3">
+    <p-card header="الايرادات حسب الفئة">
+      <p-chart type="bar" [data]="revenuesData" [options]="revenuesOptions"></p-chart>
+    </p-card>
+  </div>
+
+</div>
+
+

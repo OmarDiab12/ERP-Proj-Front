@@ -29,6 +29,15 @@ import { ExpensesComponent } from './expenses/expenses.component';
 import { SettingsComponent } from './settings/settings.component';
 import { PageHeaderComponent } from 'src/app/shared/components/page-header/page-header.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CardComponent } from 'src/app/shared/components/card/card.component';
+import { TabViewModule } from 'primeng/tabview';
+import { CustomTableComponent } from 'src/app/shared/components/custom-table/custom-table.component';
+import { ChartModule } from 'primeng/chart';
+import { CardModule } from 'primeng/card';
+import { FormModuleComponent } from 'src/app/shared/components/form-module/form-module.component';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -56,7 +65,9 @@ import { HttpClientModule } from '@angular/common/http';
     LoansComponent,
     ExpensesComponent,
     SettingsComponent,
-    PageHeaderComponent
+    PageHeaderComponent,
+    CardComponent,
+    CustomTableComponent
   ],
   imports: [
     CommonModule,
@@ -64,7 +75,13 @@ import { HttpClientModule } from '@angular/common/http';
     AdminRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
-  ]
+    HttpClientModule,
+    TabViewModule,
+    ChartModule,
+    CardModule,
+    FormModuleComponent,
+    ToastModule,
+    ConfirmDialogModule
+],providers: [ConfirmationService, MessageService],
 })
 export class AdminModule { }

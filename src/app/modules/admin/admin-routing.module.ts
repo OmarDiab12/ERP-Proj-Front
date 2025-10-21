@@ -18,28 +18,34 @@ import { CashflowComponent } from './cashflow/cashflow.component';
 import { LoansComponent } from './loans/loans.component';
 import { ExpensesComponent } from './expenses/expenses.component';
 import { SettingsComponent } from './settings/settings.component';
+import { AdminLayoutComponent } from 'src/app/layouts/admin-layout/admin-layout.component';
 
 const routes: Routes = [
-  {path:"",redirectTo:"dashboard",pathMatch:'full'},
-  // { path: 'dashboard', component: DashboardComponent , data: { breadcrumb: 'لوحة التحكم' }},
-  { path: 'dashboard', component: DashboardComponent , data: { breadcrumb: 'لوحة التحكم' }},
-  { path: 'analytics', component: AnalyticsComponent , data: { breadcrumb: 'التحليلات' }},
-  { path: 'projects', component: ProjectsComponent , data: { breadcrumb: 'المشاريع' }},
-  { path: 'clients', component: ClientsComponent , data: { breadcrumb: 'العملاء' }},
-  { path: 'contractors', component: ContractorsComponent , data: { breadcrumb: 'المقاولون' }},
-  { path: 'brokers', component: BrokersComponent , data: { breadcrumb: 'السماسرة' }},
-  { path: 'suppliers', component: SuppliersComponent , data: { breadcrumb: 'الموردون' }},
-  { path: 'assets', component: AssetsComponent , data: { breadcrumb: 'الأصول' }},
-  { path: 'quotes', component: QuotesComponent , data: { breadcrumb: 'عروض الأسعار' }},
-  { path: 'warehouse', component: WarehouseComponent , data: { breadcrumb: 'المخزون' }},
-  { path: 'invoices', component: InvoicesComponent , data: { breadcrumb: 'الفواتير' }},
-  { path: 'partners', component: PartnersComponent , data: { breadcrumb: 'الشركاء' }},
-  { path: 'revenues', component: RevenuesComponent , data: { breadcrumb: 'الإيرادات' }},
-  { path: 'cashflow', component: CashflowComponent , data: { breadcrumb: 'التدفق النقدي' }},
-  { path: 'loans', component: LoansComponent , data: { breadcrumb: 'القروض الشخصية' }},
-  { path: 'expenses', component: ExpensesComponent , data: { breadcrumb: 'المصروفات التشغيلية' }},
-  { path: 'settings', component: SettingsComponent , data: { breadcrumb: 'الإعدادات' }},
-
+  {
+    path: '',
+    component: AdminLayoutComponent, // ⬅️ دا الـ Layout اللى فيه الـ navbar والـ sidebar
+    children: [
+      { path: "", redirectTo: "dashboard", pathMatch: 'full' },
+      // { path: 'dashboard', component: DashboardComponent , data: { breadcrumb: 'لوحة التحكم' }},
+      { path: 'dashboard', component: DashboardComponent , data: { breadcrumb: 'لوحة التحكم' }},
+      { path: 'analytics', component: AnalyticsComponent , data: { breadcrumb: 'التحليلات' }},
+      { path: 'projects', component: ProjectsComponent , data: { breadcrumb: 'المشاريع' }},
+      { path: 'clients', component: ClientsComponent , data: { breadcrumb: 'العملاء' }},
+      { path: 'contractors', component: ContractorsComponent , data: { breadcrumb: 'المقاولون' }},
+      { path: 'brokers', component: BrokersComponent , data: { breadcrumb: 'السماسرة' }},
+      { path: 'suppliers', component: SuppliersComponent , data: { breadcrumb: 'الموردون' }},
+      { path: 'assets', component: AssetsComponent , data: { breadcrumb: 'الأصول' }},
+      { path: 'quotes', component: QuotesComponent , data: { breadcrumb: 'عروض الأسعار' }},
+      { path: 'warehouse', component: WarehouseComponent , data: { breadcrumb: 'المخزون' }},
+      { path: 'invoices', component: InvoicesComponent , data: { breadcrumb: 'الفواتير' }},
+      { path: 'partners', component: PartnersComponent , data: { breadcrumb: 'الشركاء' }},
+      { path: 'revenues', component: RevenuesComponent , data: { breadcrumb: 'الإيرادات' }},
+      { path: 'cashflow', component: CashflowComponent , data: { breadcrumb: 'التدفق النقدي' }},
+      { path: 'loans', component: LoansComponent , data: { breadcrumb: 'القروض الشخصية' }},
+      { path: 'expenses', component: ExpensesComponent , data: { breadcrumb: 'المصروفات التشغيلية' }},
+      { path: 'settings', component: SettingsComponent , data: { breadcrumb: 'الإعدادات' }},
+    ]
+  }
 ];
 
 @NgModule({

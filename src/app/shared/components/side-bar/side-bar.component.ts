@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SidebarService } from 'src/app/Core/services/sidebar.service';
 import { Subscription } from 'rxjs';
+import { UserDataService } from 'src/app/Core/services/user-data.service';
 
 
 @Component({
@@ -12,12 +13,15 @@ export class SideBarComponent implements OnInit, OnDestroy {
   isCollapsed = false;
   private sub?: Subscription;
 
-  constructor(private sidebarService: SidebarService) {}
+  constructor(private sidebarService: SidebarService, private _UserDataService: UserDataService) { }
+
+  logOut() {
+    this._UserDataService.logOut()
+  }
 
   ngOnInit() {
     this.sub = this.sidebarService.collapsed$.subscribe(v => {
       this.isCollapsed = v;
-      // console.log('sidebar collapsed ->', v);
     });
   }
 

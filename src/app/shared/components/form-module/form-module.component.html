@@ -1,0 +1,112 @@
+<div class="fm-overlay">
+  <div class="fm-modal">
+    <!-- الهيدر -->
+    <div class="modal-header">
+      <!-- <div>
+        <h2>{{ isEditMode ? 'تعديل مورد' : 'إضافة مورد جديد' }}</h2>
+        <p class="subtitle">
+          {{ isEditMode ? 'قم بتعديل بيانات المورد ثم اضغط حفظ عند الانتهاء.' : 'أدخل بيانات المورد الجديد هنا ثم اضغط حفظ عند الانتهاء.' }}
+        </p>
+      </div> -->
+       <div>
+        <h2>{{ isEditMode ? 'تعديل ' + title : 'إضافة ' + title + ' جديد' }}</h2>
+        <p class="subtitle">
+          {{
+            isEditMode
+              ? 'قم بتعديل بيانات ' + subtitle + ' ثم اضغط حفظ عند الانتهاء.'
+              : 'أدخل بيانات ' + subtitle + ' هنا ثم اضغط حفظ عند الانتهاء.'
+          }}
+        </p>
+      </div>
+      <button (click)="onCancel()" class="close-btn">✕</button>
+    </div>
+
+    <!-- جسم الفورم -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-body scroll-area">
+
+      <!-- لو فيه رفع صورة -->
+      <div *ngIf="showImageUpload" class="image-upload-container">
+        <label class="image-label">اختيار صورة</label>
+        <div class="image-preview-box" (click)="imageInput.click()">
+          <img *ngIf="previewUrl" [src]="previewUrl" alt="Preview" />
+          <div *ngIf="!previewUrl" class="upload-placeholder">
+            <span>📁</span>
+            <p>اختر صورة</p>
+          </div>
+        </div>
+        <input type="file" accept="image/*" #imageInput (change)="onImageChange($event)" hidden />
+      </div>
+
+      <!-- الحقول -->
+      <div *ngFor="let field of fields" [ngClass]="{'form-group': true, 'row-group': field.rowGroup}">
+        <ng-container *ngIf="!field.rowGroup">
+          <label>{{ field.label }} <span *ngIf="field.required" class="required">*</span></label>
+
+          <!-- Input -->
+          <input
+            *ngIf="field.type !== 'textarea' && field.type !== 'select' && field.type !== 'file'"
+            [type]="field.type"
+            [placeholder]="field.placeholder"
+            [formControlName]="field.name"
+            [class.invalid]="form.get(field.name)?.invalid && form.get(field.name)?.touched"
+          />
+
+          <!-- Textarea -->
+          <textarea
+            *ngIf="field.type === 'textarea'"
+            [placeholder]="field.placeholder"
+            [formControlName]="field.name"
+          ></textarea>
+
+          <!-- Select -->
+          <select *ngIf="field.type === 'select'" [formControlName]="field.name">
+            <option *ngFor="let opt of field.options" [value]="opt.value">{{ opt.label }}</option>
+          </select>
+
+          <!-- File -->
+          <input *ngIf="field.type === 'file'" type="file" (change)="onFileChange($event, field.name)" />
+
+          <div *ngIf="form.get(field.name)?.invalid && form.get(field.name)?.touched" class="error">
+            هذا الحقل مطلوب
+          </div>
+        </ng-container>
+
+        <!-- لو فيه حقلين فى نفس الصف -->
+        <ng-container *ngIf="field.rowGroup">
+          <div class="double-input">
+            <div *ngFor="let subField of field.rowGroup">
+              <label>{{ subField.label }}</label>
+              <input
+                [type]="subField.type"
+                [placeholder]="subField.placeholder"
+                [formControlName]="subField.name"
+              />
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </form>
+
+    <!-- الفوتر الثابت -->
+    <div class="modal-footer fixed-footer">
+      <button type="button" class="cancel" (click)="onCancel()">إلغاء</button>
+      <button type="submit" class="save" (click)="onSubmit()">{{ isEditMode ? 'تحديث' : 'حفظ' }}</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- <app-form-module
+  [fields]="fields"
+  [showImageUpload]="true"
+  (formSubmit)="save($event)"
+  (cancel)="closeModal()"
+></app-form-module> -->

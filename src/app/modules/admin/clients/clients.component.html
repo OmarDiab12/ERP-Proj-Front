@@ -1,1 +1,47 @@
-<p>clients works!</p>
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+
+<app-page-header [title]="'العملاء'" [subtitle]="'إدارة وعرض بيانات العملاء'"
+  [rtl]="true" [showAddButton1]="true" [addButton1]="{ label: 'إضافة عميل', icon: 'pi pi-plus' }" (add1Click)="openAddModal()"></app-page-header>
+
+
+
+
+<div class="row mb-2 mt-4">
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-wallet" [title]='"إجمالى عدد العملاء"' [value]="156" [percentage]="'عميل مسجل'">
+    </app-card>
+  </div>
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-wallet" [title]='"عملاء جدد (هذا الشهر)"' [value]="23" [percentage]="'18% من الشهر الماضى'">
+    </app-card>
+  </div>
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-wallet" [title]='"العملاء النشطون"' [value]="134" [percentage]="'86% من إجمالى العملاء'">
+    </app-card>
+  </div>
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-wallet" [title]='"معدل فقدان العملاء"' [value]="'2.1%'" [percentage]="'-5% من الشهر الماضى'">
+    </app-card>
+  </div>
+</div>
+
+
+
+
+<div class="bg-round-white">
+
+  <app-page-header [title]="'قائمة العملاء'" [subtitle]="'إدارة بيانات جميع العملاء'" [rtl]="true"></app-page-header>
+
+
+  <app-custom-table [data]="clients" [columns]="clientColumns" [showCheckbox]="false" [showActions]="true"
+    [showEye]="true" [showPencil]="true" [showTrash]="false" [showDownload]="true" (edit)="openEditModal($event)"
+    (delete)="deleteClient($event)"></app-custom-table>
+</div>
+
+
+<app-form-module *ngIf="showModal" [title]="'عميل'" [subtitle]="'العميل'" [fields]="clientFields"
+  [formData]="isEditMode ? selectedClient : null" [disabledFields]="isEditMode ? ['email', 'clientName'] : []"
+  [submitText]="isEditMode ? 'تعديل' : 'إضافة'" (formSubmit)="isEditMode ? updateClient($event) : addClient($event)"
+  (cancel)="closeForm()"></app-form-module>

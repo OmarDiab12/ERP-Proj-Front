@@ -1,1 +1,62 @@
-<p>brokers works!</p>
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<app-page-header [title]="'الوسطاء'" [subtitle]="'إدارة الوسطاء والعمولات والصفقات'"
+  [rtl]="true" [showAddButton1]="true" [addButton1]="{ label: 'إضافة وسيط', icon: 'pi pi-plus' }" (add1Click)="openAddModal()"></app-page-header>
+
+
+
+
+
+<div class="row mb-2 mt-4">
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-wallet" [title]='"إجمالى الوسطاء"' [value]="45" [percentage]="'+3 هذا الشهر'">
+    </app-card>
+  </div>
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-wallet" [title]='"الصفقات المكتملة"' [value]="128" [percentage]="'هذا الشهر'">
+    </app-card>
+  </div>
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-wallet" [title]='"إجمالى العمولات"' [value]="2800000" [currency]="'ر.س'" [percentage]="'+18% من الشهر الماضى'">
+    </app-card>
+  </div>
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-wallet" [title]='"العمولات المدفوعة"' [value]="385000" [currency]="'ر.س'" [percentage]="'هذا الشهر'">
+    </app-card>
+  </div>
+</div>
+
+
+
+
+<div class="bg-round-white">
+
+  <app-page-header [title]="'قائمة الوسطاء'" [subtitle]="'إدارة بيانات جميع الوسطاء'" [rtl]="true"></app-page-header>
+
+
+
+    <app-custom-table
+  [data]="brokers"
+  [columns]="brokerColumns"
+  [showCheckbox]="false"
+  [showActions]="true"
+  [showEye]="false"
+  [showPencil]="true"
+  [showTrash]="true"
+  (editClick)="openEditModal($event)"
+  (deleteClick)="deleteBroker($event)">
+</app-custom-table>
+
+</div>
+
+
+
+
+
+
+
+<app-form-module *ngIf="showModal" [title]="'وسيط'" [subtitle]="'الوسيط'" [fields]="brokerFields"
+  [formData]="isEditMode ? selectedBroker : null" [disabledFields]="isEditMode ? ['email', 'loanName'] : []"
+  [submitText]="isEditMode ? 'تعديل' : 'إضافة'" (formSubmit)="isEditMode ? updateBroker($event) : addBroker($event)"
+  (cancel)="closeForm()"></app-form-module>

@@ -1,0 +1,227 @@
+/* Start Tabs */
+::ng-deep .custom-tabs .p-tabview-nav {
+  border: none;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+  padding: 16px;
+  border-radius: 16px;
+  font-family: "Almarai", sans-serif !important;
+  margin-top: 2rem;
+}
+
+::ng-deep .small-custom-tabs .p-tabview-nav {
+  border: none;
+  display: flex;
+  gap: 10px;
+  margin: 5px 0 0 0;
+  justify-content: flex-start;
+  padding: 16px;
+  border-radius: 16px;
+  font-family: "Almarai", sans-serif !important;
+  background-color: transparent;
+}
+
+::ng-deep .custom-tabs .p-tabview-nav li {
+  flex: none;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+::ng-deep .small-custom-tabs .p-tabview-nav li {
+  flex: none;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+::ng-deep .custom-tabs .p-tabview-nav li a {
+  text-decoration: none;
+  font-size: 14px;
+}
+
+::ng-deep .small-custom-tabs .p-tabview-nav li a {
+  text-decoration: none;
+  font-size: 14px;
+}
+
+::ng-deep .small-custom-tabs .p-tabview-nav li .p-tabview-nav-link,
+::ng-deep .custom-tabs .p-tabview-nav li .p-tabview-nav-link {
+  border: none;
+  background: transparent;
+  color: var(--gray);
+  padding: 6px 16px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+::ng-deep .small-custom-tabs .p-tabview-nav li.p-highlight .p-tabview-nav-link,
+::ng-deep .custom-tabs .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  background: var(--light-purple);
+  color: var(--purple);
+}
+
+::ng-deep .custom-tabs .p-tabview-panels {
+  border: none;
+  border-radius: 16px;
+  padding: 16px 5px;
+  margin-top: 10px;
+  background-color: transparent;
+}
+
+::ng-deep .small-custom-tabs .p-tabview-panels {
+  border: none;
+  padding: 10px;
+  margin-top: 5px;
+  background-color: transparent;
+}
+
+/* End Tabs */
+
+/* Start InfoCard */
+.card {
+  background: #fff;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5px;
+  padding: 14px;
+  border: none;
+  border-radius: var(--radius);
+  font-family: "Almarai", sans-serif !important;
+}
+
+.card .row {
+  margin: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar {
+  background: var(--blue);
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.personInfo {
+  padding: 2px 5px;
+}
+
+.name {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.email {
+  font-size: 14px;
+  color: var(--dark-gray);
+  margin-bottom: 5px;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  padding: 3px 10px;
+  border: 1px solid var(--dark-gray);
+  border-radius: 20px;
+  color: var(--dark-gray);
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+  border-bottom: 1px solid var(--gray);
+}
+
+.stat {
+  text-align: center;
+}
+
+.label {
+  font-size: 14px;
+  color: var(--dark-gray);
+  margin-bottom: 3px;
+}
+
+.value {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.balance {
+  margin: 2px 0 10px;
+}
+
+.balance p {
+  margin-bottom: 0;
+  font-size: 14px;
+  color: var(--dark-gray);
+}
+
+.balance h4 {
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.btn {
+  flex: 1;
+}
+
+/* End InfoCard */
+/* Start Dark Card */
+.darkcard {
+  background: var(--body);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border: none;
+  border-radius: var(--radius);
+  font-family: "Almarai", sans-serif !important;
+  margin-top: 15px;
+}
+
+.darkcard .right {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.darkcard .right h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.darkcard .right p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.darkcard .left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--gray);
+  color: black;
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+/* End Dark Card */

@@ -1,27 +1,25 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { adminAuthGuard } from './Core/gaurds/admin-auth.guard';
+import { authGuard } from './Core/gaurds/auth.guard';
 
 const routes: Routes = [
-  // {
-  //   path: 'admin',
-  //   component: AdminLayoutComponent,
-  //   canActivate: [adminAuthGuard],
-  //   data: { roles: ['ADMIN'] },
-  //   loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
-  // },
   {
-    path: '',
-    component: AdminLayoutComponent,
-    // data: { roles: ['ADMIN'] },
+    path: 'admin',
+    canActivate: [authGuard, adminAuthGuard],
+    canActivateChild: [authGuard, adminAuthGuard],
+    canLoad: [authGuard, adminAuthGuard],
+    data: { roles: ['ADMIN'] },
     loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
   },
+
   {
     path: '',
     loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)
   },
   // { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: '**', redirectTo: 'notFoundPage' }
+  // Redirect unknown routes to root which loads auth module (and then login)
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

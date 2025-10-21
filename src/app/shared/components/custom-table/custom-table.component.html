@@ -1,0 +1,82 @@
+<table class="custom-table">
+  <thead>
+    <tr>
+      <th *ngIf="showCheckbox">
+        <input type="checkbox" />
+      </th>
+
+      <th *ngFor="let col of columns" [hidden]="col.show === false">
+        {{ col.header }}
+      </th>
+
+      <th *ngIf="showActions">الإجراءات</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let row of data">
+      <td *ngIf="showCheckbox">
+        <input type="checkbox" />
+      </td>
+
+      <td *ngFor="let col of columns" [hidden]="col.show === false" [ngClass]="getCellClass(col, row[col.field])">
+        <!-- نوع العمود -->
+        <ng-container [ngSwitch]="col.type">
+
+          <!-- نص عادي -->
+          <span *ngSwitchCase="'text'" [ngClass]="col.styleClass">{{ row[col.field] }}</span>
+
+          <!-- عملة -->
+          <span *ngSwitchCase="'currency'" class="currency">{{ row[col.field] }} رس</span>
+
+          <!-- تاريخ -->
+          <span *ngSwitchCase="'date'">{{ row[col.field] | date:'yyyy-MM-dd' }}</span>
+
+          <!-- حالة -->
+          <span *ngSwitchCase="'status'" [ngClass]="getStatusClass(row[col.field])">
+            {{ row[col.field] }}
+          </span>
+
+          <!-- صورة -->
+          <img *ngSwitchCase="'image'" [src]="getFullImageUrl(row[col.field])" alt="Client Image" width="60" height="60"
+            style="border-radius: 8px; object-fit: cover;" />
+
+          <!-- افتراضي -->
+          <span *ngSwitchDefault>{{ row[col.field] }}</span>
+        </ng-container>
+      </td>
+
+      <!-- الإجراءات -->
+      <td *ngIf="showActions">
+        <button (click)="onView(row)" *ngIf="showActions && showEye" class="action-btn"><i
+            class="pi pi-eye"></i></button>
+        <button (click)="onEdit(row)" *ngIf="showActions && showPencil" class="action-btn"><i
+            class="pi pi-pencil"></i></button>
+        <button (click)="onDelete(row)" *ngIf="showActions && showTrash" class="action-btn"><i
+            class="pi pi-trash"></i></button>
+        <button (click)="onDownload(row)" *ngIf="showActions && showDownload" class="action-btn"><i
+            class="pi pi-download"></i></button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+<!-- <app-custom-table
+  [data]="employees"
+  [columns]="employeeColumns"
+  [showCheckbox]="true"
+  [showActions]="true"
+  [showEye]="true"
+  [showPencil]="true"
+  [showTrash]="true"
+  [showDownload]="true"
+    (view)="onView($event)"
+  (edit)="onEdit($event)"
+  (delete)="onDelete($event)"
+  (download)="onDownload($event)">
+></app-custom-table> -->
+
+

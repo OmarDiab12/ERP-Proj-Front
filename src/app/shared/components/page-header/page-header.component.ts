@@ -21,19 +21,27 @@ export class PageHeaderComponent {
   @Input() subtitle?: string;
   @Input() rtl = false;
 
-  @Input() primaryButton?: PHButton;   // main action (solid)
-  @Input() secondaryButton?: PHButton; // secondary action (outline)
-  @Input() showsecondaryButton = false;
-  @Input() showprimaryButton = false;
-  @Input() showAddButton = false;
-  @Input() addButton?: PHButton;
+  @Input() LightButton1?: PHButton; // secondary action (outline)
+  @Input() LightButton2?: PHButton;   // main action (solid)
+  @Input() LightButton3?: PHButton;   // main action (solid)
+  @Input() showLightButton1 = false;
+  @Input() showLightButton2 = false;
+  @Input() showLightButton3 = false;
+  @Input() showAddButton1 = false;
+  @Input() showDarkButton = false;
+  @Input() addButton1?: PHButton;
+  @Input() DarkButton?: PHButton;
 
 
-  @Output() primaryClick = new EventEmitter<void>();
-  @Output() secondaryClick = new EventEmitter<void>();
-  @Output() addClick = new EventEmitter<void>();
+  @Output() Light1Click = new EventEmitter<void>();
+  @Output() Light2Click = new EventEmitter<void>();
+  @Output() Light3Click = new EventEmitter<void>();
+  @Output() DarkButtonClick = new EventEmitter<void>();
+  @Output() add1Click = new EventEmitter<void>();
 
-  onPrimary() { this.primaryClick.emit(); }
-  onSecondary() { this.secondaryClick.emit(); }
-  onAdd() { this.addClick.emit(); }
+  onLight1() { this.Light1Click.emit(); }
+  onLight2() { this.Light2Click.emit(); }
+  onLight3() { this.Light3Click.emit(); }
+  onAdd1() { this.add1Click.emit(); }
+  onDark() { this.DarkButtonClick.emit(); }
 }

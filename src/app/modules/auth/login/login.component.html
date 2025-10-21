@@ -1,39 +1,60 @@
-<div class="container d-flex ">
-  <div class="p-5 d-flex flex-column align-items-center w-75 mx-auto">
-    <form action="" class="w-100" [formGroup]="loginForm" (ngSubmit)="Submit()">
-      <div class="mb-3 row">
-        <label for="userName" class="col-sm-3 col-form-label">Email</label>
-        <div class="col-sm-9">
-          <input type="text" placeholder="enter the email" name="email" class="form-control" id="email" formControlName="email">
-          <div class="errormsg" [hidden]="email?.valid ||email?.untouched">
-            <small class="text-danger text-end" *ngIf="email?.errors?.['required']">
-              Email Required
-            </small>
+<div class="login-page">
+  <div class="login-wrapper">
+    <div class="login-card">
+      <div class="login-hero">
+        <h1>قم بتسجيل الدخول لحسابك</h1>
+        <p class="subtitle">لوحة التحكم المالية</p>
+      </div>
+
+      <form class="login-form" [formGroup]="loginForm" (ngSubmit)="Submit()">
+        <div class="field">
+          <label>البريد الالكترونى :</label>
+          <div class="input-with-icon">
+            <input type="text" placeholder="example@example.com" id="email" formControlName="email">
+            <i class="pi pi-envelope"></i>
+          </div>
+          <div class="errormsg" [hidden]="email?.valid || email?.untouched">
+            <small class="text-danger" *ngIf="email?.errors?.['required']">البريد الإلكترونى مطلوب</small>
           </div>
         </div>
-      </div>
-      <div class="mb-3 row g">
-        <label for="inputPassword" class="col-sm-3 col-form-label">Password</label>
-        <div class="col-sm-9">
-          <input type="password" placeholder="enter the password" class="form-control" id="inputPassword" formControlName="password">
-          <div class="errormsg" [hidden]="password?.valid ||password?.untouched">
-            <small class="text-danger" *ngIf="password?.errors?.['required']">
-              Password Required
-            </small>
+
+        <div class="field">
+          <label>كلمة المرور :</label>
+          <div class="input-with-icon">
+            <input [type]="showPassword ? 'text' : 'password'" placeholder="********" id="inputPassword" formControlName="password">
+            <i class="pi" [ngClass]="showPassword ? 'pi-eye' : 'pi-eye-slash'" (click)="showPassword = !showPassword" style="cursor:pointer"></i>
+          </div>
+          <div class="errormsg" [hidden]="password?.valid || password?.untouched">
+            <small class="text-danger" *ngIf="password?.errors?.['required']">كلمة المرور مطلوبة</small>
           </div>
         </div>
-      </div>
-      <div class="form-floating">
-        <small class="text-danger ms-auto" *ngIf="error!=''">{{error}}</small>
-      </div>
-      <div class="text-center">
-        <button class="btn prmbtn mt-2" [disabled]="loginForm.invalid">
-          Login
-          <i *ngIf="loading" class="fas fa-spinner fa-spin"></i>
-        </button>
-        <br>
-        <a routerLink="/register">Create New Account</a>
-      </div>
-    </form>
+
+        <div class="form-actions">
+          <div class="remember">
+            <label for="check"><input type="checkbox" id="check"> تذكرنى لاحقاً</label>
+          </div>
+          <a class="forgot" routerLink="/forgot">نسيت كلمة المرور</a>
+        </div>
+
+        <div class="submit-row">
+          <button class="primary-btn" [disabled]="loginForm.invalid">
+            تسجيل الدخول
+            <i *ngIf="loading" class="pi pi-spin pi-spinner"></i>
+          </button>
+        </div>
+        <div class="register-link">ليس لديك حساب؟ <a routerLink="/register">انشاء حساب جديد</a></div>
+        <div class="error-msg" *ngIf="error">{{error}}</div>
+      </form>
+    </div>
+  </div>
+
+  <div class="login-wave" aria-hidden="true">
+    <div class="right">
+      <p>Copyright © 2025</p>
+    </div>
+    <div class="left">
+      <a href="">Privacy Policy</a>
+      <a href>Terms & Conditions</a>
+    </div>
   </div>
 </div>

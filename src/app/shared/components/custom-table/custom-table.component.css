@@ -1,0 +1,56 @@
+.custom-table {
+  font-family: "Almarai", sans-serif !important;
+  width: 100%;
+  border-collapse: collapse;
+  background: transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.custom-table th, .custom-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--gray);
+  text-align: center;
+  color: #000;
+}
+
+.custom-table th {
+  color: var(--gray);
+  font-weight: bold;
+}
+
+.custom-table img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Badges */
+.badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 13px;
+}
+
+.badge-blue { background: var(--light-blue); color: #000; }
+.badge-green { background: var(--light-green); color: #000; }
+.badge-red { background: var(--light-red); color: #000; }
+.badge-gray { background: var(--gray); color: #000; }
+
+.red { color: var(--red) !important; }
+.green { color: var(--green) !important }
+.blue { color:var(--blue) !important; }
+.yellow { color: var(--yellow) !important; }
+
+/* Actions */
+.action-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  margin: 0 4px;
+  font-size: 16px;
+}

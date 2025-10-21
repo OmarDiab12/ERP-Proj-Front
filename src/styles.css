@@ -1,5 +1,6 @@
 :root{
   --purple: #5D5FEF;
+  --light-purple: #5D5FEF4D;
   --shine-green:#27C840;
   --light-green:#64FF9A;
   --green:#42A56B;
@@ -13,14 +14,31 @@
   --brown:#AC7F5E;
   --dark-brown:#633B48;
   --gray:#BABABA;
+  --dark-gray:#00000080;
   --body:#F5F5F5;
   --trasition:0.3s ease;
+  --radius: 12px;
 }
+/* ألوان عامة */
+.red { color: var(--red) !important; }
+.green { color: var(--green) !important }
+.blue { color:var(--blue) !important; }
+.yellow { color: var(--yellow) !important; }
+.bg-round-white{
+  border: none;
+  background: #fff;
+  margin: 20px 0;
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
 *{
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   direction: rtl !important;
+  font-family: "Almarai", sans-serif !important;
 }
 html{
   scroll-behavior: smooth;
@@ -28,3 +46,92 @@ html{
 body{
   font-family: "Almarai", sans-serif !important;
 }
+
+
+/* Start Global Components */
+.flexx{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.flexy{
+  display: flex;
+    flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+/* -------------------------BUTTONs------------------------------- */
+.btn {
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  transition: 0.3s;
+}
+
+.btn.outline {
+  border: 1px solid var(--purple);
+  color: var(--purple);
+  background: transparent;
+}
+
+.btn.outline:hover {
+  background: var(--purple);
+  color:#fff;
+}
+
+.btn.filled {
+  background: var(--purple);
+  color: #fff;
+  border: 1px solid var(--purple);
+}
+
+.btn.filled:hover {
+  background: transparent;
+  color: var(--purple);
+}
+/* ------------------------------------------------------------ */
+
+/* End Global Components */
+
+/* PrimeIcons override: the project had a global `* { font-family: ... !important }`
+   which prevents the icon font from being applied. This rule restores the
+   PrimeIcons font-family and ensures the pseudo-element uses the icon glyphs. */
+.pi, .pi:before {
+  font-family: 'primeicons' !important;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+.p-card-body{
+  padding: 10px !important;
+  height: 450px;
+}
+canvas{
+  width: 100% !important;
+  max-height: 100% !important;
+  font-family: "Almarai", sans-serif !important;
+}
+.p-card-title{
+  font-size: 18px;
+  font-weight: bold;
+}
+.p-card-content{
+  padding: 0 !important;
+}
+
+@media (max-width: 768px){
+  .p-card-body{
+  padding: 8px !important;
+  height: 250px;
+}
+}
+
+/* style="display: block; width: 100%; height: 400px;" */

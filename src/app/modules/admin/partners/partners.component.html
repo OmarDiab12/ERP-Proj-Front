@@ -1,15 +1,353 @@
-<app-page-header
-  [title]="'إدارة الشركاء'"
-  [subtitle]="'إدارة شركاء الشركة وملكية الأموال وتوزيع الأرباح'"
-  [rtl]="true"
-  [showprimaryButton]="true"
-  [primaryButton]="{ label: 'توزيع الأرباح', icon: 'pi pi-chart-line' }"
-  [showsecondaryButton]="true"
-  [secondaryButton]="{ label: 'كل الشركاء', icon: 'pi pi-users' }"
-  [showAddButton]="true"
-  [addButton]="{ label: 'إضافة شريك', icon: 'pi pi-plus' }"
-  ></app-page-header>
-  <!--
+<app-page-header [title]="'إدارة الشركاء'" [subtitle]="'إدارة شركاء الشركة وملكية الأموال وتوزيع الأرباح'" [rtl]="true"
+  [showLightButton2]="true" [LightButton2]="{ label: 'توزيع الأرباح', icon: 'pi pi-chart-line' }"
+  [showLightButton1]="true" [LightButton1]="{ label: 'كل الشركاء', icon: 'pi pi-users' }" [showAddButton1]="true"
+  [addButton1]="{ label: 'إضافة شريك', icon: 'pi pi-plus' }" (add1Click)="openAddModal()"></app-page-header>
+<!--
     (primaryClick)="onDistribute()"
     (secondaryClick)="onShowAllPartners()"
     (addClick)="openAddPartnerModal()" -->
+
+
+
+<p-tabView [(activeIndex)]="selectedTab" class="custom-tabs">
+
+
+
+
+  <p-tabPanel>
+    <ng-template pTemplate="header">
+      <span>نظرة عامة</span>
+    </ng-template>
+
+    <div class="overView-content">
+      <div class="row mb-2">
+        <div class="col-md-6 col-lg-4 col-sm-12 mb-sm-1 ">
+          <app-card icon="pi pi-users" [title]='"كل الشركاء"' [value]="3" percentage="شريك نشط">
+          </app-card>
+        </div>
+        <div class="col-md-6 col-lg-4 col-sm-12 mb-sm-1 ">
+          <app-card icon="pi pi-chart-line" [title]='"اجمالى الملكية"' [value]="100" subtitle="من إجمالى الملكية المزعة">
+          </app-card>
+        </div>
+        <div class="col-md-6 col-lg-4 col-sm-12 mb-sm-1 ">
+          <app-card icon="pi pi-chart-line" [title]='"الأسهم المقدرة(الشهر)"' [value]="300000" currency="ر.س"
+            subtitle="إجمالى التوزيع المقدر">
+          </app-card>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-lg-4 col-sm-12 mb-sm-1">
+          <div class="card shadow-sm">
+            <!-- Avatar -->
+            <div class="row gap-1">
+              <div class="avatar col-4">عا</div>
+              <!-- Info -->
+              <div class="personInfo col-8">
+                <h3 class="name">عمر المنصوري</h3>
+                <p class="email">omar@company.com</p>
+                <span class="badge">٪٢٥ ملكية شراكة</span>
+              </div>
+            </div>
+            <!-- Stats -->
+            <div class="stats">
+              <div class="stat">
+                <p class="label">الحصة المقدرة</p>
+                <p class="value green">٧٥,٠٠٠ رس</p>
+              </div>
+              <div class="stat">
+                <p class="label">عمليات السحب</p>
+                <p class="value red">٤٥,٠٠٠ رس</p>
+              </div>
+            </div>
+            <!-- Balance -->
+            <div class="balance flexx">
+              <p>صافي الرصيد</p>
+              <h4>٤٢,٧٥٠ رس</h4>
+            </div>
+            <!-- Buttons -->
+            <div class="actions">
+              <button class="btn outline">تعديل</button>
+              <button class="btn filled">تفاصيل اضافية</button>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="col-md-6 col-lg-4 col-sm-12 mb-sm-1">
+          <div class="card shadow-sm">
+            <!-- Avatar -->
+            <div class="row gap-1">
+              <div class="avatar col-4">عا</div>
+              <!-- Info -->
+              <div class="personInfo col-8">
+                <h3 class="name">عمر المنصوري</h3>
+                <p class="email">omar@company.com</p>
+                <span class="badge">٪٢٥ ملكية شراكة</span>
+              </div>
+            </div>
+            <!-- Stats -->
+            <div class="stats">
+              <div class="stat">
+                <p class="label">الحصة المقدرة</p>
+                <p class="value green">٧٥,٠٠٠ رس</p>
+              </div>
+              <div class="stat">
+                <p class="label">عمليات السحب</p>
+                <p class="value red">٤٥,٠٠٠ رس</p>
+              </div>
+            </div>
+            <!-- Balance -->
+            <div class="balance flexx">
+              <p>صافي الرصيد</p>
+              <h4>٤٢,٧٥٠ رس</h4>
+            </div>
+            <!-- Buttons -->
+            <div class="actions">
+              <button class="btn outline">تعديل</button>
+              <button class="btn filled">تفاصيل اضافية</button>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="col-md-6 col-lg-4 col-sm-12 mb-sm-1">
+          <div class="card shadow-sm">
+            <!-- Avatar -->
+            <div class="row gap-1">
+              <div class="avatar col-4">عا</div>
+              <!-- Info -->
+              <div class="personInfo col-8">
+                <h3 class="name">عمر المنصوري</h3>
+                <p class="email">omar@company.com</p>
+                <span class="badge">٪٢٥ ملكية شراكة</span>
+              </div>
+            </div>
+            <!-- Stats -->
+            <div class="stats">
+              <div class="stat">
+                <p class="label">الحصة المقدرة</p>
+                <p class="value green">٧٥,٠٠٠ رس</p>
+              </div>
+              <div class="stat">
+                <p class="label">عمليات السحب</p>
+                <p class="value red">٤٥,٠٠٠ رس</p>
+              </div>
+            </div>
+            <!-- Balance -->
+            <div class="balance flexx">
+              <p>صافي الرصيد</p>
+              <h4>٤٢,٧٥٠ رس</h4>
+            </div>
+            <!-- Buttons -->
+            <div class="actions">
+              <button class="btn outline">تعديل</button>
+              <button class="btn filled">تفاصيل اضافية</button>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </p-tabPanel>
+
+
+
+
+  <p-tabPanel>
+    <ng-template pTemplate="header">
+      <span>رأس المال والسحوبات</span>
+    </ng-template>
+    <div>
+      <div class="row mb-2">
+        <div class="col-md-6 col-lg-4 col-sm-12 mb-sm-1 ">
+          <app-card icon="pi pi-wallet" [title]='"إجمالى مساهمات رأس المال"' currency="ر.س" [value]="1000000"
+            percentage="مساهمات تراكمية" colorClass="green">
+          </app-card>
+        </div>
+        <div class="col-md-6 col-lg-4 col-sm-12 mb-sm-1 ">
+          <app-card icon="pi pi-money-bill" [title]='"إجمالى السحوبات"' currency="ر.س" [value]="105000"
+            subtitle="سحوبات تراكمية" colorClass="red">
+          </app-card>
+        </div>
+        <div class="col-md-6 col-lg-4 col-sm-12 mb-sm-1 ">
+          <app-card icon="pi pi-dollar" [title]='"صافى الرصيد"' currency="ر.س" [value]="859000" currency="ر.س"
+            subtitle="رأس المال مطروحا منه عمليات السحب">
+          </app-card>
+        </div>
+      </div>
+      <div class="bg-round-white">
+
+        <app-page-header [title]="'إدارة رأس المال والسحوبات'" [subtitle]="'تتبع مساهمات رأس مال الشريك وتاريخ السحب'"
+          [rtl]="true"></app-page-header>
+
+        <p-tabView [(activeIndex)]="smallSelectedTab" class="small-custom-tabs">
+
+          <p-tabPanel>
+            <ng-template pTemplate="header">
+              <span>توزيع الأرباح</span>
+            </ng-template>
+            <div>
+              <app-custom-table [data]="employees" [columns]="employeeColumns" [showCheckbox]="false"
+                [showActions]="true" [showEye]="true" [showPencil]="true" [showTrash]="false"
+                [showDownload]="true"></app-custom-table>
+            </div>
+          </p-tabPanel>
+
+          <p-tabPanel>
+            <ng-template pTemplate="header">
+              <span>تقارير الشركاء</span>
+            </ng-template>
+            <div>
+              <app-custom-table [data]="employees" [columns]="employeeColumns" [showCheckbox]="false"
+                [showActions]="true" [showEye]="true" [showPencil]="true" [showTrash]="false"
+                [showDownload]="true"></app-custom-table>
+            </div>
+          </p-tabPanel>
+
+        </p-tabView>
+      </div>
+
+    </div>
+  </p-tabPanel>
+
+
+
+  <p-tabPanel>
+    <ng-template pTemplate="header">
+      <span>توزيع الأرباح</span>
+    </ng-template>
+    <div class="overView-content">
+      <div class="row mb-2">
+        <div class="col-md-6 col-lg-4 col-sm-12 mb-sm-1 ">
+          <app-card icon="pi pi-dollar" [title]='"صافى أرباح الشركة"' [value]="300000" currency="ر.س"
+            percentage="بعد نفقات التشغيل">
+          </app-card>
+        </div>
+        <div class="col-md-6 col-lg-4 col-sm-12 mb-sm-1 ">
+          <app-card icon="pi pi-users" [title]='"صيغة التوزيع"' [value]="25 / 25 / 50" subtitle="من إجمالى الملكية المزعة">
+          </app-card>
+        </div>
+        <div class="col-md-6 col-lg-4 col-sm-12 mb-sm-1 ">
+          <app-card icon="pi pi-chart-line" [title]='"جاهز للتوزيع"' subtitle="توزيع الأرباح على الشركاء" [showCardButton]="true" [CardButton]="{ label: 'بدء التوزيع', icon: 'pi pi-caret-left' }">
+          </app-card>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-round-white">
+      <app-page-header [title]="'نسب الملكية'" [subtitle]="'إدارة توزيع ملكية الشركاء ( يجب أن يكون المجموع 100%)'"
+        [rtl]="true" [DarkButton]="{ label: 'تعديل النسب', icon: 'pi pi-pencil' }"
+        [showDarkButton]="true"></app-page-header>
+
+      <div>
+        <div class="darkcard">
+          <div class="right">
+            <h3>محمد سرور</h3>
+            <p>الحصة المقدره 150000 ريال سعودى</p>
+          </div>
+          <div class="left">
+            50%
+          </div>
+        </div>
+        <div class="darkcard">
+          <div class="right">
+            <h3>محمد يونس</h3>
+            <p>الحصة المقدره 75000 ريال سعودى</p>
+          </div>
+          <div class="left">
+            25%
+          </div>
+        </div>
+        <div class="darkcard">
+          <div class="right">
+            <h3>محمد عماد</h3>
+            <p>الحصة المقدره 75000 ريال سعودى</p>
+          </div>
+          <div class="left">
+            25%
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-round-white">
+      <app-page-header [title]="'إدارة رأس المال والسحوبات'" [subtitle]="'تتبع مساهمات رأس مال الشريك وتاريخ السحب'"
+        [rtl]="true"></app-page-header>
+
+      <app-custom-table [data]="employees" [columns]="employeeColumns" [showCheckbox]="false" [showActions]="true"
+        [showEye]="true" [showPencil]="true" [showTrash]="false" [showDownload]="true"></app-custom-table>
+    </div>
+
+  </p-tabPanel>
+
+
+
+
+
+  <p-tabPanel>
+    <ng-template pTemplate="header">
+      <span>تقارير الشركاء</span>
+    </ng-template>
+    <div>
+      <h3>ده محتوى تقارير الشركاء</h3>
+    </div>
+  </p-tabPanel>
+
+
+
+
+
+</p-tabView>
+
+
+
+
+
+
+
+
+<!-- <button (click)="openModal()">➕ إضافة عميل</button> -->
+
+<!-- هنا بستخدم showModal عشان يظهر أو يختفي -->
+<!-- <app-form-module
+  *ngIf="showModal"
+  [title]="'إضافة عميل جديد'"
+  [fields]="customerFields"
+  submitText="حفظ"
+  (close)="closeModal()"
+  (submit)="saveCustomer($event)">
+</app-form-module> -->
+
+<!-- <app-form-module
+  *ngIf="showModal"
+  [title]="'إضافة مورد جديد'"
+  [subtitle]="'أدخل بيانات المورد الجديد هنا، ثم اضغط حفظ عند الانتهاء.'"
+  [fields]="fields"
+  [formData]="selectedSupplier"
+  [submitText]="'حفظ'"
+  (cancel)="closeModal()"
+  (formSubmit)="saveSupplier($event)">
+</app-form-module> -->
+
+
+<app-form-module
+  *ngIf="showModal"
+  [title]="'شريك'" [subtitle]="'الشريك'"
+  [showImageUpload]="true"
+  [fields]="partnerFields"
+  [formData]="isEditMode ? selectedPartner : null"
+  [disabledFields]="isEditMode ? ['email', 'supplierName'] : []"
+  [submitText]="isEditMode ? 'تعديل' : 'إضافة'"
+  (formSubmit)="isEditMode ? updatePartner($event) : addPartner($event)"
+  (cancel)="closeForm()"
+></app-form-module>
+
+
+<!-- <app-form-modal
+  [title]="'إضافة عميل جديد'"
+  [submitText]="'حفظ'"
+  [fields]="customerFields"
+  (close)="showModal = false"
+  (submit)="saveCustomer($event)">
+</app-form-modal> -->

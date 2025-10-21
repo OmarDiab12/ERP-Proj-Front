@@ -1,0 +1,58 @@
+<div class="stat-card shadow-sm">
+
+  <!-- الأيقونة -->
+   <div class="flexx">
+     <div *ngIf="title" class="title">
+       {{ title }}
+     </div>
+     <div [ngClass]="iconColor" *ngIf="icon" class="icon">
+       <i [class]="icon"></i>
+      </div>
+    </div>
+
+    <!-- القيمة + العملة -->
+    <div class="flexx">
+      <span [ngClass]="colorClass" *ngIf="value" class="value">{{ value }}</span>
+      <span [ngClass]="colorClass" *ngIf="currency" class="currency">{{ currency }}</span>
+    </div>
+
+    <div class="d-flexalign-center justify-content-center" *ngIf="showCardButton && CardButton">
+      <button type="button"
+                class="CardButton"
+                (click)="onCardButton()">
+          <i *ngIf="CardButton.icon" class="me-2 fa" [ngClass]="CardButton.icon"></i>
+          {{ CardButton.label }}
+        </button>
+    </div>
+
+    <div class="flexx">
+      <!-- النسبة -->
+      <div [ngClass]="percentageColor" *ngIf="percentage" class="percentage">
+        {{ percentage }}
+      </div>
+      <!-- النص الصغير -->
+      <div *ngIf="subtitle" class="subtitle">
+        {{ subtitle }}
+      </div>
+    </div>
+
+</div>
+<!--
+
+
+
+<app-stat-card
+  title="مصاريف التشغيل"
+  icon="pi pi-wallet"
+  iconColor="red"
+  value="897,000"
+  currency="رس"
+  percentage="-3.2%"
+  percentageColor="red"
+  subtitle="آخر 30 يوم"
+  colorClass="red"
+></app-stat-card>
+
+
+
+ -->

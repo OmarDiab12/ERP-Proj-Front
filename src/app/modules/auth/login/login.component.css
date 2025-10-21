@@ -1,0 +1,121 @@
+.login-page{
+	height:100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+  background-image: url('../../../../assets/LoginBG.jpg');
+}
+.login-wrapper{
+	width: 500px;
+	max-height: calc(100% - 40px);
+  height: 600px;
+}
+.login-card{
+	overflow: hidden;
+}
+.login-hero{
+	text-align: center;
+	padding: 10px 30px;
+}
+.login-hero h1{
+	margin: 0;
+	font-size: 30px;
+	color: #000;
+	font-weight: bold;
+}
+.login-hero .subtitle{
+	margin: 8px 0px 0px;
+	color: #000;
+	font-size: 16px;
+}
+.login-form{
+	padding: 10px;
+}
+.field{ margin-bottom: 16px; }
+.field label{ display:block; margin-bottom:8px; color:#000; font-size:14px;font-weight: bold; }
+.input-with-icon{ position: relative; }
+.input-with-icon input{
+	width: 100%;
+	padding: 12px 40px 12px 14px;
+	border-radius: 10px;
+	border: none;
+	background: var(--gray);
+}
+.input-with-icon input:focus{
+border: none;
+}
+.input-with-icon .pi{ position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color:var(--light-purple); font-size: 18px }
+.form-actions{ display:flex; align-items:center; justify-content:space-between; margin:6px 0px 8px }
+.form-actions .forgot{ color:var(--purple); text-decoration:none;font-size: 12px;font-weight: bold; }
+.form-actions .remember label{ display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #000; }
+
+.form-actions .remember input[type="checkbox"] {
+  accent-color: var(--purple);
+  height: 12px;
+  width: 12px;
+  cursor: pointer;
+}
+.form-actions .remember label{ font-size: 12px;font-weight: bold; }
+.form-actions .remember input{ border: 1px solid var(--purple);background-color: var(--purple); }
+.primary-btn{
+	display:inline-block;
+	width:100%;
+	padding: 12px 18px;
+	border-radius: 12px;
+	border: none;
+	background: var(--purple);
+	color: #fff;
+	font-weight: 700;
+	font-size: 16px;
+	cursor: pointer;
+}
+.register-link{ text-align:center; margin-top:10px; color:#000 ;font-size: 10px;font-weight: bold;}
+.register-link a{color:var(--purple) }
+.error-msg{ color:var(--red); margin-top:8px; text-align:center }
+
+.login-wave{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 40px;
+  width: 100%;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  border-top: 1px solid var(--gray);
+
+}
+.login-wave p,
+.login-wave a{
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Times New Roman', Times, serif;
+  margin: 0;
+}
+.login-wave .right p{
+  color:#000;
+}
+.login-wave .left a{
+  color:var(--purple);
+}
+.login-wave .right, .login-wave .left{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 20px;
+}
+
+@media (max-width: 768px){
+	.login-hero{ padding: 40px 20px }
+	.login-form{ padding: 20px }
+}
+
