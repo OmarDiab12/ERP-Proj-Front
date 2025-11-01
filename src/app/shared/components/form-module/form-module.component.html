@@ -1,93 +1,104 @@
 <div class="fm-overlay">
   <div class="fm-modal">
-    <!-- الهيدر -->
+
     <div class="modal-header">
-      <!-- <div>
-        <h2>{{ isEditMode ? 'تعديل مورد' : 'إضافة مورد جديد' }}</h2>
-        <p class="subtitle">
-          {{ isEditMode ? 'قم بتعديل بيانات المورد ثم اضغط حفظ عند الانتهاء.' : 'أدخل بيانات المورد الجديد هنا ثم اضغط حفظ عند الانتهاء.' }}
-        </p>
-      </div> -->
-       <div>
+      <div>
         <h2>{{ isEditMode ? 'تعديل ' + title : 'إضافة ' + title + ' جديد' }}</h2>
         <p class="subtitle">
           {{
-            isEditMode
-              ? 'قم بتعديل بيانات ' + subtitle + ' ثم اضغط حفظ عند الانتهاء.'
-              : 'أدخل بيانات ' + subtitle + ' هنا ثم اضغط حفظ عند الانتهاء.'
+          isEditMode
+          ? 'قم بتعديل بيانات ' + subtitle + ' ثم اضغط حفظ عند الانتهاء.'
+          : 'أدخل بيانات ' + subtitle + ' هنا ثم اضغط حفظ عند الانتهاء.'
           }}
         </p>
       </div>
       <button (click)="onCancel()" class="close-btn">✕</button>
     </div>
 
-    <!-- جسم الفورم -->
+
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-body scroll-area">
 
-      <!-- لو فيه رفع صورة -->
-      <div *ngIf="showImageUpload" class="image-upload-container">
-        <label class="image-label">اختيار صورة</label>
+
+      <!-- <div *ngIf="showImageUpload" class="image-upload-container">
         <div class="image-preview-box" (click)="imageInput.click()">
           <img *ngIf="previewUrl" [src]="previewUrl" alt="Preview" />
           <div *ngIf="!previewUrl" class="upload-placeholder">
-            <span>📁</span>
+            <span><i class="pi pi-upload"></i></span>
             <p>اختر صورة</p>
           </div>
         </div>
         <input type="file" accept="image/*" #imageInput (change)="onImageChange($event)" hidden />
+      </div> -->
+
+      <div *ngIf="showImageUpload" class="personal-image-upload-container mb-2">
+        <div class="personal-upload-circle" (click)="imageInput.click()">
+          <img *ngIf="previewUrl" [src]="previewUrl" alt="Preview" />
+          <div *ngIf="!previewUrl" class="personal-upload-icon">
+            <i class="pi pi-{{circleIcon}}"></i>
+          </div>
+        </div>
+        <label class="personal-upload-label">
+          <i class="pi pi-upload"></i>
+          اختيار صورة {{personImageLabel}}
+        </label>
+        <input type="file" accept="image/*" #imageInput (change)="onImageChange($event)" hidden />
       </div>
 
-      <!-- الحقول -->
+
+
       <div *ngFor="let field of fields" [ngClass]="{'form-group': true, 'row-group': field.rowGroup}">
         <ng-container *ngIf="!field.rowGroup">
-          <label>{{ field.label }} <span *ngIf="field.required" class="required">*</span></label>
+          <label *ngIf="field.type !== 'file'">{{ field.label }} <span *ngIf="field.required"
+              class="required">*</span></label>
 
-          <!-- Input -->
-          <input
-            *ngIf="field.type !== 'textarea' && field.type !== 'select' && field.type !== 'file'"
-            [type]="field.type"
-            [placeholder]="field.placeholder"
-            [formControlName]="field.name"
-            [class.invalid]="form.get(field.name)?.invalid && form.get(field.name)?.touched"
-          />
 
-          <!-- Textarea -->
-          <textarea
-            *ngIf="field.type === 'textarea'"
-            [placeholder]="field.placeholder"
-            [formControlName]="field.name"
-          ></textarea>
+          <input *ngIf="field.type !== 'textarea' && field.type !== 'select' && field.type !== 'file'"
+            [type]="field.type" [placeholder]="field.placeholder" [formControlName]="field.name"
+            [class.invalid]="form.get(field.name)?.invalid && form.get(field.name)?.touched" />
 
-          <!-- Select -->
+
+          <textarea *ngIf="field.type === 'textarea'" [placeholder]="field.placeholder"
+            [formControlName]="field.name"></textarea>
+
+
           <select *ngIf="field.type === 'select'" [formControlName]="field.name">
             <option *ngFor="let opt of field.options" [value]="opt.value">{{ opt.label }}</option>
           </select>
 
-          <!-- File -->
-          <input *ngIf="field.type === 'file'" type="file" (change)="onFileChange($event, field.name)" />
+
+          <!-- <input *ngIf="field.type === 'file'" type="file" (change)="onFileChange($event, field.name)" />
 
           <div *ngIf="form.get(field.name)?.invalid && form.get(field.name)?.touched" class="error">
             هذا الحقل مطلوب
+          </div> -->
+          <div *ngIf="field.type === 'file'&&!showImageUpload" class="image-upload-container">
+            <!-- <label class="image-label">اختيار صورة</label> -->
+            <div class="image-preview-box" (click)="fileInput.click()">
+              <img *ngIf="previewUrl" [src]="previewUrl" alt="Preview" />
+              <div *ngIf="!previewUrl" class="upload-placeholder">
+                <!-- <span>📁</span> -->
+                <span><i class="pi pi-upload"></i></span>
+                <p>اختر ملف</p>
+              </div>
+            </div>
+            <input type="file" #fileInput (change)="onImageChange($event)" hidden />
           </div>
         </ng-container>
 
-        <!-- لو فيه حقلين فى نفس الصف -->
+
         <ng-container *ngIf="field.rowGroup">
           <div class="double-input">
             <div *ngFor="let subField of field.rowGroup">
               <label>{{ subField.label }}</label>
-              <input
-                [type]="subField.type"
-                [placeholder]="subField.placeholder"
-                [formControlName]="subField.name"
-              />
+              <input [type]="subField.type" [placeholder]="subField.placeholder" [formControlName]="subField.name" />
             </div>
           </div>
         </ng-container>
+
       </div>
     </form>
 
-    <!-- الفوتر الثابت -->
+
     <div class="modal-footer fixed-footer">
       <button type="button" class="cancel" (click)="onCancel()">إلغاء</button>
       <button type="submit" class="save" (click)="onSubmit()">{{ isEditMode ? 'تحديث' : 'حفظ' }}</button>
@@ -104,9 +115,337 @@
 
 
 
-<!-- <app-form-module
-  [fields]="fields"
-  [showImageUpload]="true"
-  (formSubmit)="save($event)"
-  (cancel)="closeModal()"
-></app-form-module> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="fm-overlay">
+  <div class="fm-modal">
+    <div class="modal-header">
+      <div>
+        <h2>{{ isEditMode ? 'تعديل ' + title : 'إضافة ' + title + ' جديد' }}</h2>
+        <p class="subtitle">
+          {{
+            isEditMode
+              ? 'قم بتعديل بيانات ' + subtitle + ' ثم اضغط حفظ عند الانتهاء.'
+              : 'أدخل بيانات ' + subtitle + ' هنا ثم اضغط حفظ عند الانتهاء.'
+          }}
+        </p>
+      </div>
+      <button (click)="onCancel()" class="close-btn">✕</button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-body scroll-area">
+
+      <div *ngFor="let field of fields" class="form-group">
+        <label>{{ field.label }}</label>
+        <input
+          *ngIf="field.type !== 'textarea' && field.type !== 'select'"
+          [type]="field.type"
+          [placeholder]="field.placeholder"
+          [formControlName]="field.name"
+        />
+
+      <div *ngIf="showOfferItems" class="offer-items">
+        <div class="items-header">
+          <h3>بنود العرض</h3>
+          <button type="button" class="add-btn" (click)="addItem()">+ إضافة بند</button>
+        </div>
+
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>الوصف</th>
+              <th>الكمية</th>
+              <th>سعر الوحدة</th>
+              <th>نسبة الخصم (%)</th>
+              <th>ملاحظات</th>
+              <th>الإجمالي</th>
+              <th>إجراء</th>
+            </tr>
+          </thead>
+          <tbody formArrayName="items">
+            <tr *ngFor="let item of itemsArray.controls; let i = index" [formGroupName]="i">
+
+              <td><input formControlName="description" type="text" /></td>
+              <td><input formControlName="quantity" type="number" /></td>
+              <td><input formControlName="unitPrice" type="number" /></td>
+              <td><input formControlName="discountPercentage" type="number" /></td>
+              <td><input formControlName="itemNotes" type="text" /></td>
+              <td>{{ ((item.get('quantity')?.value || 0) * (item.get('unitPrice')?.value || 0) * (1 - ((item.get('discountPercentage')?.value || 0) / 100))) | number:'1.2-2' }}</td>
+              <td>
+                <button type="button" (click)="removeItem(i)" [disabled]="items.length === 1">🗑️</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="total-sum">
+          <strong>الإجمالي الكلي:</strong> {{ totalSum | number:'1.2-2' }}
+        </div>
+      </div>
+
+        <select *ngIf="field.type === 'select'" [formControlName]="field.name">
+          <option *ngFor="let opt of field.options" [value]="opt.value">{{ opt.label }}</option>
+        </select>
+
+        <textarea
+          *ngIf="field.type === 'textarea'"
+          [placeholder]="field.placeholder"
+          [formControlName]="field.name"
+        ></textarea>
+      </div>
+
+
+    </form>
+
+    <div class="modal-footer fixed-footer">
+      <button type="button" class="cancel" (click)="onCancel()">إلغاء</button>
+      <button type="submit" class="save" (click)="onSubmit()">{{ submitText }}</button>
+    </div>
+  </div>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="fm-overlay">
+  <div class="fm-modal">
+
+    <div class="modal-header">
+       <div>
+        <h2>{{ isEditMode ? 'تعديل ' + title : 'إضافة ' + title + ' جديد' }}</h2>
+        <p class="subtitle">
+          {{
+            isEditMode
+              ? 'قم بتعديل بيانات ' + subtitle + ' ثم اضغط حفظ عند الانتهاء.'
+              : 'أدخل بيانات ' + subtitle + ' هنا ثم اضغط حفظ عند الانتهاء.'
+          }}
+        </p>
+      </div>
+      <button (click)="onCancel()" class="close-btn">✕</button>
+    </div>
+
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-body scroll-area">
+
+
+      <div *ngIf="showImageUpload" class="image-upload-container">
+        <label class="image-label">اختيار صورة</label>
+        <div class="image-preview-box" (click)="imageInput.click()">
+          <img *ngIf="previewUrl" [src]="previewUrl" alt="Preview" />
+          <div *ngIf="!previewUrl" class="upload-placeholder">
+            <span>📁</span>
+            <p>اختر صورة</p>
+          </div>
+        </div>
+        <input type="file" accept="image/*" #imageInput (change)="onImageChange($event)" hidden />
+      </div>
+
+
+      <div *ngFor="let field of fields" [ngClass]="{'form-group': true, 'row-group': field.rowGroup}">
+        <ng-container *ngIf="!field.rowGroup">
+          <label>{{ field.label }} <span *ngIf="field.required" class="required">*</span></label>
+
+
+          <input
+            *ngIf="field.type !== 'textarea' && field.type !== 'select' && field.type !== 'file'"
+            [type]="field.type"
+            [placeholder]="field.placeholder"
+            [formControlName]="field.name"
+            [class.invalid]="form.get(field.name)?.invalid && form.get(field.name)?.touched"
+          />
+
+
+<div class="items-section" *ngIf="showItemsSection">
+  <h3>البنود</h3>
+
+  <div formArrayName="items">
+    <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i" class="item-row">
+      <input type="text" placeholder="الوصف" formControlName="description" />
+      <input type="number" placeholder="الكمية" formControlName="quantity" />
+      <input type="number" placeholder="السعر" formControlName="price" />
+      <input type="number" placeholder="الخصم" formControlName="discount" />
+
+      <button type="button" class="delete-item" (click)="removeItem(i)">❌</button>
+    </div>
+  </div>
+
+  <button type="button" class="add-item" (click)="addItem()">➕ إضافة بند</button>
+</div>
+
+
+
+          <textarea
+            *ngIf="field.type === 'textarea'"
+            [placeholder]="field.placeholder"
+            [formControlName]="field.name"
+          ></textarea>
+
+
+          <select *ngIf="field.type === 'select'" [formControlName]="field.name">
+            <option *ngFor="let opt of field.options" [value]="opt.value">{{ opt.label }}</option>
+          </select>
+
+
+          <input *ngIf="field.type === 'file'" type="file" (change)="onFileChange($event, field.name)" />
+
+          <div *ngIf="form.get(field.name)?.invalid && form.get(field.name)?.touched" class="error">
+            هذا الحقل مطلوب
+          </div>
+        </ng-container>
+
+
+        <ng-container *ngIf="field.rowGroup">
+          <div class="double-input">
+            <div *ngFor="let subField of field.rowGroup">
+              <label>{{ subField.label }}</label>
+              <input
+                [type]="subField.type"
+                [placeholder]="subField.placeholder"
+                [formControlName]="subField.name"
+              />
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </form>
+
+
+    <div class="modal-footer fixed-footer">
+      <button type="button" class="cancel" (click)="onCancel()">إلغاء</button>
+      <button type="submit" class="save" (click)="onSubmit()">{{ isEditMode ? 'تحديث' : 'حفظ' }}</button>
+    </div>
+  </div>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="fm-overlay">
+  <div class="fm-modal">
+    <div class="modal-header">
+      <div>
+        <h2>{{ isEditMode ? 'تعديل ' + title : 'إنشاء ' + title }}</h2>
+        <p class="subtitle">{{ subtitle }}</p>
+      </div>
+      <button (click)="onCancel()" class="close-btn">✕</button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-body scroll-area">
+
+
+      <div *ngFor="let field of fields" class="form-group" [ngClass]="{'row-group': field.rowGroup}">
+        <ng-container *ngIf="field.type !== 'items' && !field.rowGroup">
+          <label>{{ field.label }} <span *ngIf="field.required" class="required">*</span></label>
+
+
+          <select *ngIf="field.type === 'select'" [formControlName]="field.name">
+            <option *ngFor="let opt of field.options" [value]="opt.value">{{ opt.label }}</option>
+          </select>
+
+          <textarea *ngIf="field.type === 'textarea'" [formControlName]="field.name" [placeholder]="field.placeholder"></textarea>
+
+
+          <input
+            *ngIf="field.type !== 'select' && field.type !== 'textarea' && field.type !== 'file'"
+            [type]="field.type || 'text'"
+            [placeholder]="field.placeholder"
+            [formControlName]="field.name"
+            [class.invalid]="form.get(field.name)?.invalid && form.get(field.name)?.touched"
+          />
+
+<input *ngIf="field.type === 'file'" type="file" (change)="onFileChange($event, field.name)" />
+
+          <div *ngIf="form.get(field.name)?.invalid && form.get(field.name)?.touched" class="error">هذا الحقل مطلوب</div>
+        </ng-container>
+
+
+        <ng-container *ngIf="field.rowGroup">
+          <div class="double-input">
+            <div *ngFor="let sub of field.rowGroup">
+              <label>{{ sub.label }}</label>
+              <input [type]="sub.type || 'text'" [placeholder]="sub.placeholder" [formControlName]="sub.name" />
+            </div>
+          </div>
+        </ng-container>
+
+
+        <ng-container *ngIf="field.type === 'items'">
+          <div class="items-header">
+            <h4>{{ field.label || 'بنود العرض' }}</h4>
+            <button type="button" class="add-item" (click)="addItem()">+</button>
+          </div>
+
+          <table class="items-table">
+            <thead>
+              <tr>
+                <th>الوصف</th>
+                <th style="width:110px">الكمية</th>
+                <th style="width:140px">سعر الوحدة</th>
+                <th style="width:120px">الخصم %</th>
+                <th style="width:120px">الإجمالي</th>
+                <th style="width:60px"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of getItemsArray().controls; let i = index" [formGroupName]="i">
+                <td><input formControlName="description" placeholder="وصف البند" /></td>
+                <td><input type="number" formControlName="quantity" (input)="calcTotals()" /></td>
+                <td><input type="number" formControlName="unitPrice" (input)="calcTotals()" /></td>
+                <td><input type="number" formControlName="discountPercentage" (input)="calcTotals()" /></td>
+                <td>{{ getLineTotal(i) | number:'1.2-2' }} ر.س</td>
+                <td>
+                  <button type="button" class="del" (click)="removeItem(i)" [disabled]="getItemsArray().length <= 1">✕</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+
+          <div class="items-totals">
+            <div>المجموع الجزئي: <strong>{{ subtotal | number:'1.2-2' }} ر.س</strong></div>
+            <div>إجمالى الخصم: <strong>{{ totalDiscount | number:'1.2-2' }} ر.س</strong></div>
+            <div>الصافى: <strong>{{ totalAmount | number:'1.2-2' }} ر.س</strong></div>
+          </div>
+        </ng-container>
+
+      </div>
+    </form>
+
+    <div class="modal-footer fixed-footer">
+      <button type="button" class="cancel" (click)="onCancel()">إلغاء</button>
+      <button type="submit" class="save" (click)="onSubmit()">{{ isEditMode ? 'تحديث' : submitText }}</button>
+    </div>
+  </div>
+</div> -->

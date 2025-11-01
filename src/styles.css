@@ -1,15 +1,19 @@
 :root{
   --purple: #5D5FEF;
   --light-purple: #5D5FEF4D;
+  --lighter-purple: #5D5FEF0D;
   --shine-green:#27C840;
   --light-green:#64FF9A;
+  --lighter-green:#5DEF7D0D;
   --green:#42A56B;
   --red:#FF0000;
   --light-red:#FF5F57;
   --yellow:#FEBC2F;
   --light-yellow:#FBFF87;
+  --lighter-yellow:#EFE85D0D;
   --blue:#0088FF;
   --light-blue:#92BFFF;
+  --lighter-blue:#92BFFF0d;
   --dark-blue:#222B59;
   --brown:#AC7F5E;
   --dark-brown:#633B48;

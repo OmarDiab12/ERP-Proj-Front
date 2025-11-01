@@ -1,1 +1,272 @@
-<p>quotes works!</p>
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<app-page-header [title]="'عروض الأسعار'" [subtitle]="'إنشاء وإدارة عروض الأسعار بين مقدمى الخدمة والعملاء'"
+  [rtl]="true" [showAddButton1]="true" [addButton1]="{ label: 'عرض سعر جديد', icon: 'pi pi-plus' }"
+  (add1Click)="openAddModal()">
+</app-page-header>
+
+<div class="cards-row mb-2 mt-4">
+
+  <div class="card-box">
+    <div class="card shadow-sm blue-card">
+      <div class="right">
+        <i class="pi pi-file"></i>
+      </div>
+      <div class="left">
+        <h3>إجمالى العروض</h3>
+        <p>3</p>
+      </div>
+    </div>
+  </div>
+  <div class="card-box">
+    <div class="card shadow-sm yellow-card">
+      <div class="right">
+        <i class="pi pi-dollar"></i>
+      </div>
+      <div class="left">
+        <h3>قيد الإنتظار</h3>
+        <p>3</p>
+      </div>
+    </div>
+  </div>
+  <div class="card-box">
+    <div class="card shadow-sm green-card">
+      <div class="right">
+        <i class="pi pi-thumbs-up"></i>
+      </div>
+      <div class="left">
+        <h3>مقبولة</h3>
+        <p>3</p>
+      </div>
+    </div>
+  </div>
+  <div class="card-box">
+    <div class="card shadow-sm red-card">
+      <div class="right">
+        <i class="pi pi-times"></i>
+      </div>
+      <div class="left">
+        <h3>مرفوضة</h3>
+        <p>3</p>
+      </div>
+    </div>
+  </div>
+  <div class="card-box">
+    <div class="card shadow-sm green-card">
+      <div class="right">
+        <i class="pi pi-chart-line"></i>
+      </div>
+      <div class="left">
+        <h3>القيمة الإجمالية</h3>
+        <p>3</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="bg-round-white mt-4">
+  <app-custom-table [data]="quotations" [columns]="quotationColumns" [showCheckbox]="false" [showActions]="true" [showEye]="false" [showPencil]="true" [showTrash]="true"
+    (edit)="openEditModal($event)" (delete)="deleteQuotation($event)">
+  </app-custom-table>
+</div>
+
+<!-- modal form -->
+<div class="custom-modal" *ngIf="showModal">
+  <div class="custom-modal-content">
+    <div class="modal-header">
+      <div>
+        <h2>{{ isEditMode ? 'تعديل عرض السعر' : 'إنشاء عرض سعر جديد' }}</h2>
+        <p class="subtitle">
+          {{
+          isEditMode
+          ? 'قم بتعديل بيانات العرض ثم اضغط حفظ عند الانتهاء.'
+          : 'أدخل بيانات العرض هنا ثم اضغط حفظ عند الانتهاء.'
+          }}
+        </p>
+      </div>
+      <button (click)="closeModal()" class="close-btn">✕</button>
+    </div>
+
+    <form [formGroup]="quotationForm" (ngSubmit)="submitQuotation()" class="scroll-area">
+      <div class="row">
+        <div class="col-md-6 mb-2">
+          <label>اسم العميل
+            <span class="required">*</span>
+          </label>
+          <select formControlName="ClientId" class="form-control">
+            <option value="">اختر العميل</option>
+            <option *ngFor="let c of clientsOptions" [value]="c.value">{{ c.label }}</option>
+          </select>
+          <div *ngIf="quotationForm.get('ClientId')?.invalid && quotationForm.get('ClientId')?.touched" class="error">
+            هذا الحقل مطلوب
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-2">
+          <label>الحالة
+            <span class="required">*</span>
+          </label>
+          <select formControlName="Status" class="form-control">
+            <option value="">اختر الحالة</option>
+            <option value="sent">قيد الإنتظار</option>
+            <option value="Accepted">مقبولة</option>
+            <option value="Rejected">مرفوضة</option>
+          </select>
+          <div *ngIf="quotationForm.get('Status')?.invalid && quotationForm.get('Status')?.touched" class="error">
+            هذا الحقل مطلوب
+          </div>
+        </div>
+        <div class="col-md-6 mb-2">
+          <label>تاريخ العرض
+            <span class="required">*</span>
+          </label>
+          <input type="date" formControlName="QuotationDate" class="form-control">
+          <div *ngIf="quotationForm.get('QuotationDate')?.invalid && quotationForm.get('QuotationDate')?.touched"
+            class="error">
+            هذا الحقل مطلوب
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-2">
+          <label>صالح حتى
+            <span class="required">*</span>
+          </label>
+          <input type="date" formControlName="isValidTo" class="form-control">
+          <div *ngIf="quotationForm.get('isValidTo')?.invalid && quotationForm.get('isValidTo')?.touched" class="error">
+            هذا الحقل مطلوب
+          </div>
+        </div>
+
+      </div>
+
+
+
+      <div class="d-flex align-items-center justify-content-between w-100">
+        <h5>بنود العرض
+          <span class="required">*</span>
+        </h5>
+        <button type="button" class="btn" (click)="addItem()">
+          <i class="pi pi-plus"></i>
+        </button>
+      </div>
+
+      <div formArrayName="Items">
+        <div class="row itemLabels">
+          <div class="col-3">
+            <label>الوصف</label>
+          </div>
+          <div class="col-2">
+            <label>السعر</label>
+          </div>
+          <div class="col-1">
+            <label>الكمية</label>
+          </div>
+          <div class="col-2">
+            <label>السعر بعد الخصم</label>
+          </div>
+          <div class="col-2">
+            <label>ملاحظات</label>
+          </div>
+          <div class="col-1">
+            <label></label>
+          </div>
+          <div class="col-1">
+            <label>حذف</label>
+          </div>
+        </div>
+        <div *ngFor="let item of itemsArray.controls; let i = index" [formGroupName]="i" class="card">
+
+          <div class="row">
+            <div class="col-3">
+              <input type="text" formControlName="description" class="form-control" />
+              <div *ngIf="item.get('description')?.invalid && item.get('description')?.touched" class="error">
+                مطلوب
+              </div>
+            </div>
+            <div class="col-2">
+              <input type="number" formControlName="unitPrice" class="form-control" />
+              <div *ngIf="item.get('unitPrice')?.invalid && item.get('unitPrice')?.touched" class="error">
+                مطلوب
+              </div>
+            </div>
+            <div class="col-1">
+              <input type="number" formControlName="quantity" class="form-control" />
+              <div *ngIf="item.get('quantity')?.invalid && item.get('quantity')?.touched" class="error">
+                مطلوب
+              </div>
+            </div>
+            <div class="col-2">
+              <input type="number" formControlName="discountPercentage" class="form-control" />
+            </div>
+            <div class="col-2">
+              <input type="text" formControlName="itemNotes" class="form-control" />
+            </div>
+            <div class="col-1 text-end small text-muted">
+              <strong>الإجمالي:</strong>
+              {{ getItemTotal(item.value) | number:'1.2-2' }} ج.م
+            </div>
+            <div class="col-1 d-flex align-items-center justify-content-center">
+              <button type="button" class="btn deleteItemBtn" (click)="removeItem(i)"
+                [disabled]="itemsArray.length === 1">
+                <i class="pi pi-trash"></i>
+              </button>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="row total-summary mt-1 p-2 border-top">
+          <div class="col-10 text-end fw-bold">
+            الإجمالي قبل الخصم:
+          </div>
+          <div class="col-2">
+            {{ getTotalBeforeDiscount() | number:'1.2-2' }} ج.م
+          </div>
+
+          <div class="col-10 text-end fw-bold">
+            الإجمالي بعد الخصم:
+          </div>
+          <div class="col-2">
+            {{ getTotalAfterDiscount() | number:'1.2-2' }} ج.م
+          </div>
+        </div>
+
+
+
+      </div>
+
+      <div class="row">
+          <div class="col-12 mb-2">
+            <label>ملاحظات</label>
+            <textarea formControlName="GeneralNotes" class="form-control" rows="2"></textarea>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="image-upload-container">
+            <div class="image-preview-box" (click)="fileInput.click()">
+              <span><i class="pi pi-upload"></i></span>
+              <p>اختر ملف</p>
+            </div>
+            <input type="file" #fileInput multiple (change)="onFileChange($event)" hidden />
+          </div>
+        </div>
+
+
+        <div *ngIf="selectedFiles.length > 0" class="mt-2">
+  <p>الملفات المختارة:</p>
+  <ul>
+    <li *ngFor="let file of selectedFiles">{{ file.name }}</li>
+  </ul>
+</div>
+
+    </form>
+
+    <div class="modal-footer fixed-footer">
+      <button type="button" class="cancel" (click)="closeModal()">إلغاء</button>
+      <button type="submit" class="save" (click)="submitQuotation()">{{ isEditMode ? 'تحديث' : 'حفظ' }}</button>
+    </div>
+  </div>
+</div>

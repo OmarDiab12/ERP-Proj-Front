@@ -27,16 +27,40 @@ export class CustomTableComponent {
   @Input() showPencil: boolean = false;
   @Input() showTrash: boolean = false;
   @Input() showDownload: boolean = false;
+  @Input() showPagination: boolean = false;
+  @Input() pageSize: number = 5;
 
   // ألوان الحالات (مثال)
-  getStatusClass(status: string) {
-    switch (status) {
-      case 'نشط': return 'badge badge-blue';
-      case 'مكتمل': return 'badge badge-green';
-      case 'متأخر': return 'badge badge-red';
-      default: return 'badge badge-gray';
-    }
+  // getStatusClass(status: string) {
+  //   switch (status) {
+  //     case 'نشط': return 'badge badge-blue';
+  //     case 'Sent': return 'badge badge-blue';
+  //     case 'مكتمل': return 'badge badge-green';
+  //     case 'متأخر': return 'badge badge-red';
+  //     default: return 'badge badge-gray';
+  //   }
+  // }
+
+  getStatusData(status: string) {
+  switch (status) {
+    case 'نشط':
+      return { class: 'badge badge-blue', label: 'نشط' };
+
+    case 'Sent':
+      return { class: 'badge badge-blue', label: 'قيد التقدم' };
+
+    case 'مكتمل':
+      return { class: 'badge badge-green', label: 'مكتمل' };
+
+    case 'متأخر':
+      return { class: 'badge badge-red', label: 'متأخر' };
+
+    default:
+      return { class: 'badge badge-gray', label: status || 'غير معروف' };
   }
+}
+
+
 
   // getStatusClass(status: string): string {
   // switch (status.toLowerCase()) {
@@ -86,5 +110,27 @@ getFullImageUrl(imagePath: string): string {
   }
 
   return imagePath;
+}
+
+
+
+
+
+currentPage: number = 1;
+// pageSize: number = 5;
+
+get totalPages(): number {
+  return Math.ceil(this.data.length / this.pageSize);
+}
+
+get paginatedData() {
+  const start = (this.currentPage - 1) * this.pageSize;
+  return this.data.slice(start, start + this.pageSize);
+}
+
+goToPage(page: number) {
+  if (page >= 1 && page <= this.totalPages) {
+    this.currentPage = page;
+  }
 }
 }

@@ -11,9 +11,6 @@
 
 <p-tabView [(activeIndex)]="selectedTab" class="custom-tabs">
 
-
-
-
   <p-tabPanel>
     <ng-template pTemplate="header">
       <span>نظرة عامة</span>
@@ -151,9 +148,6 @@
     </div>
   </p-tabPanel>
 
-
-
-
   <p-tabPanel>
     <ng-template pTemplate="header">
       <span>رأس المال والسحوبات</span>
@@ -210,8 +204,6 @@
 
     </div>
   </p-tabPanel>
-
-
 
   <p-tabPanel>
     <ng-template pTemplate="header">
@@ -281,10 +273,6 @@
 
   </p-tabPanel>
 
-
-
-
-
   <p-tabPanel>
     <ng-template pTemplate="header">
       <span>تقارير الشركاء</span>
@@ -294,41 +282,8 @@
     </div>
   </p-tabPanel>
 
-
-
-
-
 </p-tabView>
 
-
-
-
-
-
-
-
-<!-- <button (click)="openModal()">➕ إضافة عميل</button> -->
-
-<!-- هنا بستخدم showModal عشان يظهر أو يختفي -->
-<!-- <app-form-module
-  *ngIf="showModal"
-  [title]="'إضافة عميل جديد'"
-  [fields]="customerFields"
-  submitText="حفظ"
-  (close)="closeModal()"
-  (submit)="saveCustomer($event)">
-</app-form-module> -->
-
-<!-- <app-form-module
-  *ngIf="showModal"
-  [title]="'إضافة مورد جديد'"
-  [subtitle]="'أدخل بيانات المورد الجديد هنا، ثم اضغط حفظ عند الانتهاء.'"
-  [fields]="fields"
-  [formData]="selectedSupplier"
-  [submitText]="'حفظ'"
-  (cancel)="closeModal()"
-  (formSubmit)="saveSupplier($event)">
-</app-form-module> -->
 
 
 <app-form-module
@@ -344,10 +299,3 @@
 ></app-form-module>
 
 
-<!-- <app-form-modal
-  [title]="'إضافة عميل جديد'"
-  [submitText]="'حفظ'"
-  [fields]="customerFields"
-  (close)="showModal = false"
-  (submit)="saveCustomer($event)">
-</app-form-modal> -->

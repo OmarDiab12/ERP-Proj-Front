@@ -41,7 +41,7 @@
 </div>
 
 
-<app-form-module *ngIf="showModal" [title]="'عميل'" [subtitle]="'العميل'" [fields]="clientFields"
+<app-form-module *ngIf="showModal" [title]="'عميل'" [subtitle]="'العميل'" [fields]="clientFields" [showImageUpload]="true" [personImageLabel]="'العميل'"
   [formData]="isEditMode ? selectedClient : null" [disabledFields]="isEditMode ? ['email', 'clientName'] : []"
   [submitText]="isEditMode ? 'تعديل' : 'إضافة'" (formSubmit)="isEditMode ? updateClient($event) : addClient($event)"
   (cancel)="closeForm()"></app-form-module>

@@ -1,0 +1,156 @@
+<div class="stepper-root" dir="rtl">
+  <div class="card">
+
+    <!-- 🔹 رأس الـ Stepper -->
+    <div class="stepper-header">
+      <div class="title">
+        <h2>إنشاء مشروع جديد</h2>
+        <!-- <button (click)="onCancel()" class="close-btn">✕</button> -->
+        <button class="close-btn" (click)="closeStepper()">✕</button>
+      </div>
+      <div class="stepper-track">
+        <ng-container *ngFor="let s of steps; let i = index">
+          <!-- كل عنصر خطوة -->
+          <div class="step-item" [ngClass]="{ active: currentStep === i+1, completed: isCompleted(i) }"
+            (click)="goTo(i+1)" role="button" tabindex="0">
+            <span class="circle">
+              <i [class]="s.icon"></i>
+            </span>
+            <span class="step-label">{{ s.label }}</span>
+          </div>
+
+          <!-- الخط الواصل بين الخطوات -->
+          <div *ngIf="i < steps.length -1" class="connector">
+            <div class="connector-fill" [style.width.%]="(currentStep > i+1 ? 100 : 0)">
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- 🔹 جسم الـ Stepper -->
+    <div class="stepper-body">
+
+      <!-- 🟢 الخطوة 1: المعلومات الأساسية -->
+      <div *ngIf="currentStep === 1" class="panel-content">
+
+        <div class="form-row">
+          <label>اسم المشروع <span class="required">*</span></label>
+          <input pInputText type="text" [(ngModel)]="formData.projectName" placeholder="ادخل اسم المشروع" />
+        </div>
+
+        <div class="form-row">
+          <label>العميل <span class="required">*</span></label>
+          <!-- <p-dropdown [options]="clientsOptions" [(ngModel)]="formData.clientId" placeholder="اختر العميل"></p-dropdown> -->
+          <select [(ngModel)]="formData.clientId" class="form-control">
+            <option value="">اختر العميل</option>
+            <option *ngFor="let c of clientsOptions" [value]="c.value">{{ c.label }}</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label>الموقع</label>
+          <input pInputText type="text" [(ngModel)]="formData.location" placeholder="ادخل الموقع" />
+        </div>
+
+        <div class="form-row">
+          <label>الحالة</label>
+          <!-- <p-dropdown [options]="statusOptions" [(ngModel)]="formData.status" placeholder="اختر الحالة"></p-dropdown> -->
+          <select [(ngModel)]="formData.status" class="form-control">
+            <option value="">اختر الحالة</option>
+            <option *ngFor="let s of statusOptions" [value]="s.value">{{ s.label }}</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label>الوصف</label>
+          <textarea pInputTextarea [(ngModel)]="formData.description" placeholder="ادخل وصف المشروع"></textarea>
+        </div>
+
+        <!-- <div class="actions right">
+          <button pButton type="button" label="التالي" icon="pi pi-arrow-left" (click)="next()"></button>
+        </div> -->
+      </div>
+
+      <!-- 🟡 الخطوة 2: المستندات -->
+      <div *ngIf="currentStep === 2" class="panel-content">
+
+        <div class="form-row">
+          <label>تحميل صورة أو ملف</label>
+          <input type="file" (change)="onFileSelect($event)" />
+        </div>
+
+        <div class="form-row">
+          <label>ربط عرض سعر</label>
+          <!-- <p-dropdown [options]="quotationOptions" [(ngModel)]="formData.quotationId" placeholder="اختر عرض سعر"></p-dropdown> -->
+          <select [(ngModel)]="formData.quotationId" class="form-control">
+            <option value="">اختر عرض سعر</option>
+            <option *ngFor="let q of quotationOptions" [value]="q.value">{{ q.label }}</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 🟣 الخطوة 3: الوسيط والعمولة -->
+      <div *ngIf="currentStep === 3" class="panel-content">
+
+        <div class="form-row">
+          <label>اسم الوسيط</label>
+          <!-- <p-dropdown [options]="brokersOptions" [(ngModel)]="formData.brokerId" placeholder="اختر الوسيط"></p-dropdown> -->
+          <select [(ngModel)]="formData.brokerId" class="form-control">
+            <option value="">اختر وسيط</option>
+            <option *ngFor="let b of brokersOptions" [value]="b.value">{{ b.label }}</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label>نسبة العمولة (%)</label>
+          <input pInputText type="number" [(ngModel)]="formData.commissionRate" placeholder="ادخل نسبة العمولة" />
+        </div>
+      </div>
+
+      <!-- 🔵 الخطوة 4: المقاولون -->
+      <div *ngIf="currentStep === 4" class="panel-content">
+
+        <div class="form-row">
+          <label>اختيار المقاولين</label>
+          <!-- <p-multiSelect [options]="contractorsOptions" [(ngModel)]="formData.contractors" placeholder="اختر مقاول أو أكثر"></p-multiSelect> -->
+          <select multiple [(ngModel)]="formData.contractors" class="form-control">
+            <option value="">اختر مقاول</option>
+            <option *ngFor="let c of contractorsOptions" [value]="c.value">{{ c.label }}</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- 🔴 الخطوة 5: مراجعة المشروع -->
+      <div *ngIf="currentStep === 5" class="panel-content final">
+
+        <!-- عرض كل البيانات المدخلة -->
+        <div class="review-box">
+          <p><strong>اسم المشروع:</strong> {{ formData.projectName }}</p>
+          <p><strong>العميل:</strong> {{ getLabelByValue(clientsOptions, formData.clientId) }}</p>
+          <p><strong>الموقع:</strong> {{ formData.location }}</p>
+          <p><strong>الحالة:</strong> {{ formData.status }}</p>
+          <p><strong>الوصف:</strong> {{ formData.description }}</p>
+          <p><strong>الوسيط:</strong> {{ getLabelByValue(brokersOptions, formData.brokerId) }}</p>
+          <p><strong>العمولة:</strong> {{ formData.commissionRate }}%</p>
+          <!-- <p><strong>المقاولون:</strong> {{ formData.contractors.name ?.join(', ') }}</p> -->
+          <p><strong>المقاولون:</strong> {{ getMultipleLabels(contractorsOptions, formData.contractors) }}</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="fixed-footer">
+      <div class="right">
+        <button *ngIf="currentStep > 1" pButton type="button" label="السابق" class="cancel" (click)="prev()"></button>
+      </div>
+      <div class="left">
+        <button *ngIf="currentStep < steps.length" pButton type="button" class="save" label="التالي"
+          (click)="next()"></button>
+        <button *ngIf="currentStep === steps.length" pButton type="button" class="save" label="إنشاء"
+          (click)="submit()"></button>
+      </div>
+    </div>
+  </div>
+</div>

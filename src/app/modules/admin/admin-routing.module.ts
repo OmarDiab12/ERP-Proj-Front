@@ -19,6 +19,7 @@ import { LoansComponent } from './loans/loans.component';
 import { ExpensesComponent } from './expenses/expenses.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AdminLayoutComponent } from 'src/app/layouts/admin-layout/admin-layout.component';
+import { EmployeesComponent } from './employees/employees.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,7 @@ const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent , data: { breadcrumb: 'لوحة التحكم' }},
       { path: 'analytics', component: AnalyticsComponent , data: { breadcrumb: 'التحليلات' }},
       { path: 'projects', component: ProjectsComponent , data: { breadcrumb: 'المشاريع' }},
+      { path: 'employees', component: EmployeesComponent , data: { breadcrumb: 'الموظفين' }},
       { path: 'clients', component: ClientsComponent , data: { breadcrumb: 'العملاء' }},
       { path: 'contractors', component: ContractorsComponent , data: { breadcrumb: 'المقاولون' }},
       { path: 'brokers', component: BrokersComponent , data: { breadcrumb: 'السماسرة' }},

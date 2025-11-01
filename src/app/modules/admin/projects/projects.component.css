@@ -1,0 +1,194 @@
+
+/* Header */
+.header{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  border: 1px solid;
+  border-radius: 18px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+.header.purple{
+  background-color: var(--lighter-purple);
+  border-color: var(--purple);
+}
+.header.green{
+  background-color: var(--lighter-green);
+  border-color: var(--green);
+}
+.header.yellow{
+  background-color: var(--lighter-yellow);
+  border-color: var(--yellow);
+}
+.header.blue{
+  background-color: var(--lighter-blue);
+  border-color: var(--blue);
+}
+
+.header h3{
+  margin: 0px 0px 10px;
+  font-size: 18px;
+  text-align: center;
+  color: #000;
+}
+.header p{
+  margin: 0;
+  font-size: 14px;
+  color: #000;
+  text-align: center;
+}
+
+/* Cards */
+.cards{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.card,.noData{
+  padding: 10px;
+  background-color: #fff;
+  border: none;
+  border-radius: 14px;
+  width: 100%;
+}
+.noData h3{
+  text-align: center !important;
+  font-size: 16px !important;
+  color: #000 !important;
+}
+.card .head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.card .head h4{
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+  margin: 0;
+}
+.card .head p{
+  font-size: 12px;
+  color: var(--gray);
+  border:1px solid var(--gray);
+  border-radius: 12px;
+  padding:2px 6px;
+  margin: 0;
+}
+
+.card p{
+  font-size: 14px;
+  color: var(--gray);
+    margin: 0 0 5px;
+}
+.card h3{
+  font-size: 14px;
+  color: #000;
+  margin: 10px 0;
+}
+.card .value{
+  margin: 15px 0;
+}
+.card .value h5{
+  font-size: 12px;
+  font-weight: bold;
+  color: #000;
+}
+
+
+::ng-deep .p-progressbar-value {
+  background-color: var(--purple) !important; /* أزرق */
+}
+
+::ng-deep .p-progressbar-value[style*="width: 100%"] {
+  background-color: var(--shine-green) !important; /* أخضر عند الاكتمال */
+}
+
+.card .moneyInfo{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+    margin: 0 0 5px;
+}
+.card .moneyInfo h3{
+  font-size: 14px;
+  color: var(--gray);
+  margin: 0;
+}
+.card .moneyInfo span{
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+}
+.card .moneyInfo.last{
+  border-bottom: 1px solid var(--gray);
+  padding-bottom: 10px;
+}
+.card .moneyInfo.last span{
+  font-size: 14px;
+  color: var(--red);
+  margin: 0;
+}
+
+
+
+
+
+
+
+.actionBtns {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+.actionBtns .right,
+.actionBtns .left{
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.cancel,
+.save {
+  width: 100%;
+  text-align: center;
+  border-radius: 10px;
+  font-size: 14px;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  outline: none;
+}
+
+.cancel {
+  background: transparent;
+  color: #7b5cff;
+  border: 1px solid #7b5cff;
+}
+.cancel:hover {
+  background: rgba(123, 92, 255, 0.05);
+}
+
+.save {
+  background: #7b5cff;
+  border: none;
+  color: #fff;
+}
+.save:hover {
+  background: #5d43d3;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

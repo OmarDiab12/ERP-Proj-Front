@@ -1,1 +1,217 @@
-<p>projects works!</p>
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<app-page-header [title]="'المشاريع'" [subtitle]="'إنشاء وتتبع وإدارة جميع المشاريع'" [rtl]="true"
+  [showAddButton1]="true" [addButton1]="{ label: 'مشروع جديد', icon: 'pi pi-plus' }" (add1Click)="openStepper()">
+</app-page-header>
+
+
+<!-- <div class="bg-round-white">
+  <app-page-header [title]="'قائمة المشاريع'" [subtitle]="'إدارة جميع المشاريع'" [rtl]="true"></app-page-header>
+
+  <app-custom-table
+    [data]="projects"
+    [columns]="columns"
+    [showCheckbox]="false"
+    [showActions]="true"
+    [showEye]="false"
+    [showPencil]="false"
+    [showTrash]="true"
+>
+  </app-custom-table>
+</div> -->
+
+
+<div class="row mb-2 mt-4">
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <div class="header purple">
+      <h3>المشاريع الجديدة</h3>
+      <p>1 مشروع</p>
+    </div>
+    <div class="cards">
+      <div class="card shadow-sm">
+        <div class="head">
+          <h4>تطوير مجمع سكنى</h4>
+          <p>PRJ-103</p>
+        </div>
+        <p>مجموعه الإسكان الحديث</p>
+        <div class="value">
+          <div class="flex align-items-center justify-content-between mb-1">
+            <h5>التقدم</h5>
+            <h5>50%</h5>
+          </div>
+          <p-progressBar [value]="50" [showValue]="false"
+            [style]="{'height': '12px','border-radius': '12px','overflow': 'hidden'}"></p-progressBar>
+        </div>
+        <h3><i class="pi pi-calendar"></i>
+          ينتهى: 29 شعبان 1447 هجريا
+        </h3>
+        <div class="moneyInfo">
+          <h3>المدفوعات:</h3>
+          <span>500,000 ر.س</span>
+        </div>
+        <div class="moneyInfo last">
+          <h3>صافى الربح:</h3>
+          <span>500,000 ر.س</span>
+        </div>
+        <h3>الوسيط: محمد على</h3>
+        <div class="actionBtns">
+          <div class="right">
+            <button type="button" class="save" label="تفاصيل إضافية">
+              تفاصيل إضافية
+            </button>
+          </div>
+          <div class="left">
+            <button type="button" label="تعديل" class="cancel">تعديل</button>
+          </div>
+        </div>
+      </div>
+      <div class="card shadow-sm">
+        <div class="head">
+          <h4>تطوير مجمع سكنى</h4>
+          <p>PRJ-103</p>
+        </div>
+        <p>مجموعه الإسكان الحديث</p>
+        <div class="value">
+          <div class="flex align-items-center justify-content-between mb-1">
+            <h5>التقدم</h5>
+            <h5>50%</h5>
+          </div>
+          <p-progressBar [value]="50" [showValue]="false"
+            [style]="{'height': '12px','border-radius': '12px','overflow': 'hidden'}"></p-progressBar>
+        </div>
+        <h3><i class="pi pi-calendar"></i>
+          ينتهى: 29 شعبان 1447 هجريا
+        </h3>
+        <div class="moneyInfo">
+          <h3>المدفوعات:</h3>
+          <span>500,000 ر.س</span>
+        </div>
+        <div class="moneyInfo last">
+          <h3>صافى الربح:</h3>
+          <span>500,000 ر.س</span>
+        </div>
+        <h3>الوسيط: محمد على</h3>
+        <div class="actionBtns">
+          <div class="right">
+            <button type="button" class="save" label="تفاصيل إضافية">
+              تفاصيل إضافية
+            </button>
+          </div>
+          <div class="left">
+            <button type="button" label="تعديل" class="cancel">تعديل</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <div class="header green">
+      <h3>المشاريع الجارية</h3>
+      <p>1 مشروع</p>
+    </div>
+    <div class="cards">
+      <div class="card shadow-sm">
+        <div class="head">
+          <h4>تطوير مجمع سكنى</h4>
+          <p>PRJ-103</p>
+        </div>
+        <p>مجموعه الإسكان الحديث</p>
+        <div class="value">
+          <div class="flex align-items-center justify-content-between mb-1">
+            <h5>التقدم</h5>
+            <h5>50%</h5>
+          </div>
+          <p-progressBar [value]="50" [showValue]="false"
+            [style]="{'height': '12px','border-radius': '12px','overflow': 'hidden'}"></p-progressBar>
+        </div>
+        <h3><i class="pi pi-calendar"></i>
+          ينتهى: 29 شعبان 1447 هجريا
+        </h3>
+        <div class="moneyInfo">
+          <h3>المدفوعات:</h3>
+          <span>500,000 ر.س</span>
+        </div>
+        <div class="moneyInfo last">
+          <h3>صافى الربح:</h3>
+          <span>500,000 ر.س</span>
+        </div>
+        <h3>الوسيط: محمد على</h3>
+        <div class="actionBtns">
+          <div class="right">
+            <button type="button" class="save" label="تفاصيل إضافية">
+              تفاصيل إضافية
+            </button>
+          </div>
+          <div class="left">
+            <button type="button" label="تعديل" class="cancel">تعديل</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <div class="header yellow">
+      <h3>المشاريع المتوقفة</h3>
+      <p>1 مشروع</p>
+    </div>
+    <div class="cards">
+      <div class="noData shadow-sm">
+        <h3>لا توجد مشاريع</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <div class="header blue">
+      <h3>المشاريع المكتملة</h3>
+      <p>1 مشروع</p>
+    </div>
+    <div class="cards">
+      <div class="card shadow-sm">
+        <div class="head">
+          <h4>تطوير مجمع سكنى</h4>
+          <p>PRJ-103</p>
+        </div>
+        <p>مجموعه الإسكان الحديث</p>
+        <div class="value">
+          <div class="flex align-items-center justify-content-between mb-1">
+            <h5>التقدم</h5>
+            <h5>100%</h5>
+          </div>
+          <p-progressBar [value]="100" [showValue]="false"
+            [style]="{'height': '12px','border-radius': '12px','overflow': 'hidden'}"></p-progressBar>
+        </div>
+        <h3><i class="pi pi-calendar"></i>
+          ينتهى: 29 شعبان 1447 هجريا
+        </h3>
+        <div class="moneyInfo">
+          <h3>المدفوعات:</h3>
+          <span>500,000 ر.س</span>
+        </div>
+        <div class="moneyInfo last">
+          <h3>صافى الربح:</h3>
+          <span>500,000 ر.س</span>
+        </div>
+        <h3>الوسيط: محمد على</h3>
+        <div class="actionBtns">
+          <div class="right">
+            <button type="button" class="save" label="تفاصيل إضافية">
+              تفاصيل إضافية
+            </button>
+          </div>
+          <div class="left">
+            <button type="button" label="تعديل" class="cancel">تعديل</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+<app-stepper *ngIf="showStepper" (close)="closeStepper()"></app-stepper>

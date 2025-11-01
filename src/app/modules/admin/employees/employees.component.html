@@ -1,0 +1,55 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<app-page-header
+  [title]="'الموظفين'"
+  [subtitle]="'إدارة وعرض بيانات الموظفين'"
+  [rtl]="true"
+  [showAddButton1]="true"
+  [addButton1]="{ label: 'إضافة موظف', icon: 'pi pi-plus' }"
+  (add1Click)="openAddModal()">
+</app-page-header>
+
+<div class="row mb-2 mt-4">
+  <div class="col-md-6 col-lg-4 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-users" [title]='"إجمالي عدد الموظفين"' [value]="employees.length" [percentage]="'موظف مسجل'">
+    </app-card>
+  </div>
+  <div class="col-md-6 col-lg-4 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-briefcase" [title]='"الوظائف النشطة"' [value]="employees.length" [percentage]="'نشط حالياً'">
+    </app-card>
+  </div>
+  <div class="col-md-6 col-lg-4 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-chart-line" [title]='"متوسط الراتب الأساسي"' [value]="averageSalary" [percentage]="'تحليل الراتب'">
+    </app-card>
+  </div>
+</div>
+
+<div class="bg-round-white">
+  <app-page-header [title]="'قائمة الموظفين'" [subtitle]="'إدارة بيانات جميع الموظفين'" [rtl]="true"></app-page-header>
+
+  <app-custom-table
+    [data]="employees"
+    [columns]="employeeColumns"
+    [showCheckbox]="false"
+    [showActions]="true"
+    [showEye]="false"
+    [showPencil]="true"
+    [showTrash]="true"
+    [showDownload]="false"
+    (edit)="openEditModal($event)"
+    (delete)="deleteEmployee($event)">
+  </app-custom-table>
+</div>
+
+<app-form-module
+  *ngIf="showModal"
+  [title]="'الموظف'"
+  [subtitle]="'بيانات الموظف'"
+  [fields]="employeeFields"
+  [showImageUpload]="false"
+  [formData]="isEditMode ? selectedEmployee : null"
+  [submitText]="isEditMode ? 'تعديل' : 'إضافة'"
+  (formSubmit)="isEditMode ? updateEmployee($event) : addEmployee($event)"
+  (cancel)="closeForm()">
+</app-form-module>

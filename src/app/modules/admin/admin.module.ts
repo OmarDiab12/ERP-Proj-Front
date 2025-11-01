@@ -38,6 +38,11 @@ import { FormModuleComponent } from 'src/app/shared/components/form-module/form-
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { StepperComponent } from 'src/app/shared/components/stepper/stepper.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { EmployeesComponent } from './employees/employees.component';
 
 
 @NgModule({
@@ -67,13 +72,17 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     SettingsComponent,
     PageHeaderComponent,
     CardComponent,
-    CustomTableComponent
+    CustomTableComponent,
+    StepperComponent,
+    EmployeesComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     AdminRoutingModule,
     FormsModule,
+    MultiSelectModule,
+    DropdownModule,
     ReactiveFormsModule,
     HttpClientModule,
     TabViewModule,
@@ -81,7 +90,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     CardModule,
     FormModuleComponent,
     ToastModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    ProgressBarModule
 ],providers: [ConfirmationService, MessageService],
 })
 export class AdminModule { }

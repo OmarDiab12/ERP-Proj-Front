@@ -14,7 +14,8 @@
   </thead>
 
   <tbody>
-    <tr *ngFor="let row of data">
+    <!-- <tr *ngFor="let row of data"> -->
+    <tr *ngFor="let row of paginatedData">
       <td *ngIf="showCheckbox">
         <input type="checkbox" />
       </td>
@@ -27,15 +28,21 @@
           <span *ngSwitchCase="'text'" [ngClass]="col.styleClass">{{ row[col.field] }}</span>
 
           <!-- عملة -->
-          <span *ngSwitchCase="'currency'" class="currency">{{ row[col.field] }} رس</span>
+          <span *ngSwitchCase="'currency'" class="currency">{{ row[col.field] }} ر.س</span>
 
           <!-- تاريخ -->
           <span *ngSwitchCase="'date'">{{ row[col.field] | date:'yyyy-MM-dd' }}</span>
 
           <!-- حالة -->
-          <span *ngSwitchCase="'status'" [ngClass]="getStatusClass(row[col.field])">
+          <!-- <span *ngSwitchCase="'status'" [ngClass]="getStatusClass(row[col.field])">
             {{ row[col.field] }}
-          </span>
+          </span> -->
+          <span *ngSwitchCase="'status'" [ngClass]="getStatusData(row[col.field]).class">
+  {{ getStatusData(row[col.field]).label }}
+</span>
+
+
+
 
           <!-- صورة -->
           <img *ngSwitchCase="'image'" [src]="getFullImageUrl(row[col.field])" alt="Client Image" width="60" height="60"
@@ -60,6 +67,26 @@
     </tr>
   </tbody>
 </table>
+
+
+<!-- Pagination -->
+<div *ngIf="showPagination && totalPages > 1" class="pagination-container">
+  <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1" class="page-btn">السابق</button>
+
+  <div class="pages">
+    <button
+      *ngFor="let page of [].constructor(totalPages); let i = index"
+      (click)="goToPage(i + 1)"
+      [class.active]="currentPage === i + 1"
+      class="page-number"
+    >
+      {{ i + 1 }}
+    </button>
+  </div>
+
+  <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages" class="page-btn">التالي</button>
+</div>
+
 
 
 
