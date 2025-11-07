@@ -2,8 +2,8 @@
 <p-confirmDialog></p-confirmDialog>
 
 
-<app-page-header [title]="'العملاء'" [subtitle]="'إدارة وعرض بيانات العملاء'"
-  [rtl]="true" [showAddButton1]="true" [addButton1]="{ label: 'إضافة عميل', icon: 'pi pi-plus' }" (add1Click)="openAddModal()"></app-page-header>
+<app-page-header [title]="'العملاء'" [subtitle]="'إدارة وعرض بيانات العملاء'" [rtl]="true" [showAddButton1]="true"
+  [addButton1]="{ label: 'إضافة عميل', icon: 'pi pi-plus' }" (add1Click)="openAddModal()"></app-page-header>
 
 
 
@@ -41,7 +41,7 @@
 </div>
 
 
-<app-form-module *ngIf="showModal" [title]="'عميل'" [subtitle]="'العميل'" [fields]="clientFields" [showImageUpload]="true" [personImageLabel]="'العميل'"
-  [formData]="isEditMode ? selectedClient : null" [disabledFields]="isEditMode ? ['email', 'clientName'] : []"
-  [submitText]="isEditMode ? 'تعديل' : 'إضافة'" (formSubmit)="isEditMode ? updateClient($event) : addClient($event)"
-  (cancel)="closeForm()"></app-form-module>
+<app-form-module *ngIf="showModal" [title]="'عميل'" [subtitle]="'العميل'" [fields]="clientFields"
+  [showImageUpload]="true" [personImageLabel]="'العميل'" [formData]="isEditMode ? selectedClient : null"
+  [disabledFields]="isEditMode ? ['email', 'clientName'] : []" [submitText]="isEditMode ? 'تعديل' : 'إضافة'"
+  (formSubmit)="isEditMode ? updateClient($event) : addClient($event)" (cancel)="closeForm()"></app-form-module>

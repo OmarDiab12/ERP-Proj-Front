@@ -263,6 +263,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/Core/services/data.service';
+import { FormArray, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-stepper',
@@ -288,17 +290,158 @@ export class StepperComponent implements OnInit {
 
   // 🔹 الداتا اللى بتتبعت فى الآخر
   formData: any = {
-    projectName: '',
-    clientId: null,
-    location: '',
-    status: '',
-    description: '',
-    quotationId: null,
-    file: null,
-    brokerId: null,
-    commissionRate: '',
-    contractors: []
+    ProjectName: '',
+    Description: '',
+    ClientId: null,
+    Location: '',
+    StartDate: '',
+    EndDate: '',
+    Status: '',
+    QuotationId: null,
+    BrokerId: null,
+    BrokerCommissionPercentage: '',
+     Contractors: [
+      {
+        contractorId: '',
+        contractAmount: 0,
+        contractDescription: 'string',
+        contractStartDate: 'string',
+        contractEndDate: 'string',
+        contractDetails: [
+          {
+            contractorId: '',
+            index: 0,
+            amount: 0,
+            status: 'string',
+            dateTime: 'string'
+          }
+        ]
+      }
+    ],
+    Attachments: []
   };
+
+
+  addContractor() {
+    const nextIndex = this.formData.Contractors.length;
+    this.formData.Contractors.push({
+      contractorId: '',
+      contractAmount: 0,
+      contractDescription: '',
+      contractStartDate: '',
+      contractEndDate: '',
+      contractDetails: [
+        {
+          contractorId: '',
+          index: 0,
+          amount: 0,
+          status: '',
+          dateTime: new Date().toISOString()
+        }
+      ]
+    });
+    // focus the newly added contractor select so user can pick immediately
+    setTimeout(() => {
+      try {
+        const sel = document.querySelector(`.contractor-select[data-index="${nextIndex}"]`) as HTMLElement | null;
+        if (sel) sel.focus();
+      } catch (e) { /* noop */ }
+    }, 60);
+}
+
+removeContractor(index: number) {
+    if (this.formData.Contractors.length > 1) {
+      this.formData.Contractors.splice(index, 1);
+      // re-index contractDetails indexes for consistency
+      this.formData.Contractors.forEach((c: any, idx: number) => {
+        if (Array.isArray(c.contractDetails)) {
+          c.contractDetails.forEach((d: any) => d.index = idx);
+        }
+      });
+    }
+}
+
+  /**
+   * Return a joined string of contractor labels based on current Contractors array
+   * This maps contractorId values to the labels available in contractorsOptions.
+   */
+  getContractorLabels(): string {
+    if (!Array.isArray(this.formData.Contractors) || this.formData.Contractors.length === 0) return 'غير محدد';
+    const ids = this.formData.Contractors.map((c: any) => c.contractorId).filter((v: any) => v != null && v !== '');
+    if (ids.length === 0) return 'غير محدد';
+    const labels = this.contractorsOptions
+      .filter(o => ids.includes(o.value))
+      .map(o => o.label);
+    return labels.length ? labels.join(', ') : 'غير محدد';
+  }
+
+  // payment status options (first option intentionally empty as you requested)
+  paymentStatusOptions = [
+    { label: '', value: '' },
+    { label: 'قيد الإنتظار', value: 'Pending' },
+    { label: 'مدفوعة', value: 'Paid' }
+    // { label: 'جزئيا', value: 'Partial' }
+  ];
+
+  /** Add a payment (contractDetail) to a specific contractor */
+  addPayment(contractorIndex: number) {
+    const contractor = this.formData.Contractors[contractorIndex];
+    if (!contractor) return;
+    const nextIdx = contractor.contractDetails ? contractor.contractDetails.length : 0;
+    contractor.contractDetails = contractor.contractDetails || [];
+    contractor.contractDetails.push({
+      contractorId: contractor.contractorId || 0,
+      index: nextIdx,
+      amount: 0,
+      status: '',
+      dateTime: new Date().toISOString()
+    });
+  }
+
+  /** When user selects a contractor, sync contractorId into each contractDetail entry */
+  onContractorChange(contractorIndex: number) {
+    const contractor = this.formData.Contractors[contractorIndex];
+    if (!contractor) return;
+    const id = contractor.contractorId;
+    if (Array.isArray(contractor.contractDetails)) {
+      contractor.contractDetails.forEach((d: any) => d.contractorId = id);
+    }
+  }
+
+  /** Remove a payment from a contractor, but keep at least one payment */
+  deletePayment(contractorIndex: number, paymentIndex: number) {
+    const contractor = this.formData.Contractors[contractorIndex];
+    if (!contractor || !Array.isArray(contractor.contractDetails)) return;
+    if (contractor.contractDetails.length <= 1) return; // disabled in UI
+    contractor.contractDetails.splice(paymentIndex, 1);
+    // re-index remaining payments
+    contractor.contractDetails.forEach((d: any, idx: number) => d.index = idx);
+  }
+
+  /** Human-friendly Arabic label for a payment position (1 => الأولى, 2 => الثانية, ... ) */
+  getPaymentLabel(pos: number): string {
+    const map: Record<number, string> = {
+      1: 'الأولى',
+      2: 'الثانية',
+      3: 'الثالثة',
+      4: 'الرابعة',
+      5: 'الخامسة',
+      6: 'السادسة',
+      7: 'السابعة',
+      8: 'الثامنة',
+      9: 'التاسعة',
+      10: 'العاشرة'
+    };
+    return map[pos] || `الدفعة ${pos}`;
+  }
+
+  /** Sum of amounts for a contractor's payments */
+  getPaymentsTotal(contractorIndex: number): number {
+    const contractor = this.formData.Contractors[contractorIndex];
+    if (!contractor || !Array.isArray(contractor.contractDetails)) return 0;
+    return contractor.contractDetails.reduce((acc: number, d: any) => acc + (Number(d.amount) || 0), 0);
+  }
+
 
   // 🔹 خيارات الـ dropdowns
   clientsOptions: any[] = [];
@@ -308,15 +451,17 @@ export class StepperComponent implements OnInit {
 
   // 🔹 الحالات ثابتة
   statusOptions = [
-    { label: 'قيد التنفيذ', value: 'قيد التنفيذ' },
-    { label: 'مكتمل', value: 'مكتمل' },
-    { label: 'ملغي', value: 'ملغي' }
+    { label: 'فى إنتظار الموافقة', value: 'PendingApproval' },
+    { label: 'فى الإنتظار ', value: 'OnHold' },
+    { label: 'قيد التنفيذ', value: 'InProgress' },
+    { label: 'مكتمل', value: 'Completed' },
+    { label: 'موافق عليه', value: 'Accepted' },
+    { label: 'ملغى', value: 'Canceled' }
   ];
 
-  // رابط الـ API الأساسى
-  back = 'https://aubs.runasp.net/api/';
 
-  constructor(private http: HttpClient, private dataService: DataService) { }
+
+  constructor(private http: HttpClient, private dataService: DataService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.loadClients();
@@ -327,17 +472,9 @@ export class StepperComponent implements OnInit {
 
   // 🟢 تحميل العملاء
   loadClients() {
-    // this.GetAllClients().subscribe({
-    //   next: (res: any) => {
-    //     this.clientsOptions = res?.data?.items?.map((c: any) => ({
-    //       label: c.name,
-    //       value: c.id
-    //     })) || [];
-    //   },
-    //   error: err => console.error('خطأ في تحميل العملاء:', err)
-    // });
     this.dataService.GetAllClients().subscribe({
-      next: (res) => { this.clientsOptions = res?.data || [];
+      next: (res) => {
+        this.clientsOptions = res?.data || [];
         this.clientsOptions = this.clientsOptions.map((c: any) => ({ value: c.id, label: c.name }));
         console.log('عملاء محملين:', this.clientsOptions);
       },
@@ -348,20 +485,11 @@ export class StepperComponent implements OnInit {
 
   // 🟡 تحميل عروض الأسعار
   loadQuotations() {
-    // this.GetAllQuotations().subscribe({
-    //   next: (res: any) => {
-    //     this.quotationOptions = res?.data?.items?.map((q: any) => ({
-    //       label: q.title,
-    //       value: q.id
-    //     })) || [];
-    //   },
-    //   error: err => console.error('خطأ في تحميل عروض الأسعار:', err)
-    // });
     this.dataService.GetAllQuotations().subscribe({
-      next: (res) =>{
-       this.quotationOptions = res?.data || [],
-      this.quotationOptions = this.quotationOptions.map((q: any) => ({ value: q.id, label: q.title }));
-      console.log('عروض أسعار محملة:', this.quotationOptions);
+      next: (res) => {
+        this.quotationOptions = res?.data || [],
+          this.quotationOptions = this.quotationOptions.map((q: any) => ({ value: q.id, label: q.title }));
+        console.log('عروض أسعار محملة:', this.quotationOptions);
       },
       // error: () => this.messageService.add({ severity: 'error', summary: 'خطأ', detail: 'فشل تحميل العروض' })
       error: (err) => console.error('خطأ في تحميل عروض الأسعار:', err)
@@ -370,20 +498,11 @@ export class StepperComponent implements OnInit {
 
   // 🟣 تحميل الوسطاء
   loadBrokers() {
-    // this.GetAllBrokers().subscribe({
-    //   next: (res: any) => {
-    //     this.brokersOptions = res?.data?.items?.map((b: any) => ({
-    //       label: b.name,
-    //       value: b.id
-    //     })) || [];
-    //   },
-    //   error: err => console.error('خطأ في تحميل الوسطاء:', err)
-    // });
     this.dataService.GetAllBrokers().subscribe({
-      next: (res) =>{
-       this.brokersOptions = res?.data || [],
-        this.brokersOptions = this.brokersOptions.map((b: any) => ({ value: b.id, label: b.name }));
-      console.log('الوسطاء المحملون:', this.brokersOptions);
+      next: (res) => {
+        this.brokersOptions = res?.data || [],
+          this.brokersOptions = this.brokersOptions.map((b: any) => ({ value: b.id, label: b.name }));
+        console.log('الوسطاء المحملون:', this.brokersOptions);
       },
       // error: () => this.messageService.add({ severity: 'error', summary: 'خطأ', detail: 'فشل تحميل العروض' })
       error: (err) => console.error('خطأ في تحميل عروض الوسطاء:', err)
@@ -392,46 +511,22 @@ export class StepperComponent implements OnInit {
 
   // 🔵 تحميل المقاولين
   loadContractors() {
-    // this.GetAllContractor().subscribe({
-    //   next: (res: any) => {
-    //     this.contractorsOptions = res?.data?.items?.map((con: any) => ({
-    //       label: con.name,
-    //       value: con.id
-    //     })) || [];
-    //   },
-    //   error: err => console.error('خطأ في تحميل المقاولين:', err)
-    // });
     this.dataService.GetAllContractor().subscribe({
       next: (res) => {
         this.contractorsOptions = res?.data || [],
-        this.contractorsOptions = this.contractorsOptions.map((c: any) => ({ value: c.id, label: c.name }));
-      console.log('المقاولون المحملون:', this.contractorsOptions);
+          this.contractorsOptions = this.contractorsOptions.map((c: any) => ({ value: c.id, label: c.name }));
+        console.log('المقاولون المحملون:', this.contractorsOptions);
       },
       // error: () => this.messageService.add({ severity: 'error', summary: 'خطأ', detail: 'فشل تحميل العروض' })
       error: (err) => console.error('خطأ في تحميل عروض المقاولون:', err)
     });
   }
 
-  // // ✅ الخدمات
-  // GetAllClients(): Observable<any> {
-  //   return this.http.post(this.back + 'Clients/get-all', {});
-  // }
-
-  // GetAllQuotations(): Observable<any> {
-  //   return this.http.post(this.back + 'Quotations/get-all', {});
-  // }
-
-  // GetAllBrokers(): Observable<any> {
-  //   return this.http.post(this.back + 'Broker/get-all', {});
-  // }
-
-  // GetAllContractor(): Observable<any> {
-  //   return this.http.post(this.back + 'Contractor/get-all', {});
-  // }
 
   // 📁 عند اختيار ملف
   onFileSelect(event: any) {
-    this.formData.file = event.target.files[0];
+    // keep the full FileList to allow multiple uploads
+    this.formData.Attachments = event.target.files;
   }
 
   // 🔹 التنقل بين الخطوات
@@ -444,27 +539,148 @@ export class StepperComponent implements OnInit {
 
   // 🔹 الإرسال النهائي
   submit() {
-    console.log('📦 بيانات المشروع:', this.formData);
-    alert('تم إنشاء المشروع بنجاح ✅');
+    const form = this.buildFormData();
+    this.dataService.AddProject(form).subscribe({
+      next: (res) => {
+        if (res?.isValid) {
+          this.messageService.add({ severity: 'success', summary: 'تم', detail: 'تم إضافة المشروع بنجاح' });
+          this.closeStepper();
+        } else {
+          this.messageService.add({ severity: 'warn', summary: 'تحذير', detail: res?.message || 'فشل الإضافة' });
+        }
+      },
+      error: () => {
+        this.messageService.add({ severity: 'error', summary: 'خطأ', detail: 'حدث خطأ أثناء الإضافة' });
+      }
+    });
+    // print sanitized payload so you can inspect before sending to server
+    // console.log('📦 Prepared Project payload for API:', payload);
+    // TODO: replace alert with proper UI notification when integrated
+    // alert('تم إنشاء المشروع بنجاح ✅ (راجع الكونسول للـ payload)');
+    // if you want, here we can call a DataService method to send `payload` to the backend
+  }
+
+  /**
+   * Prepare and normalize `formData` into a payload shape ready for API submission.
+   * - converts numeric-like strings to numbers
+   * - ensures contractDetails indices and date format (YYYY-MM-DD)
+   */
+  preparePayloadForApi(): any {
+    const clone = JSON.parse(JSON.stringify(this.formData || {}));
+    const toNumberIfNumeric = (v: any) => {
+      if (v === null || v === undefined || v === '') return v;
+      const n = Number(v);
+      return Number.isFinite(n) ? n : v;
+    };
+
+    // normalize top-level ids/nums
+    clone.ClientId = toNumberIfNumeric(clone.ClientId);
+    clone.QuotationId = toNumberIfNumeric(clone.QuotationId);
+    clone.BrokerId = toNumberIfNumeric(clone.BrokerId);
+    clone.BrokerCommissionPercentage = toNumberIfNumeric(clone.BrokerCommissionPercentage);
+
+    // normalize contractors
+    clone.Contractors = (clone.Contractors || []).map((c: any, ci: number) => {
+      const cc: any = { ...c };
+      cc.contractorId = toNumberIfNumeric(cc.contractorId);
+      cc.contractAmount = toNumberIfNumeric(cc.contractAmount);
+      // ensure contractDetails array
+      cc.contractDetails = (cc.contractDetails || []).map((d: any, di: number) => {
+        const dd: any = { ...d };
+        dd.contractorId = toNumberIfNumeric(dd.contractorId);
+        dd.index = di; // re-index to be safe
+        dd.amount = toNumberIfNumeric(dd.amount);
+        dd.status = dd.status || '';
+        // normalize date to YYYY-MM-DD if possible
+        if (dd.dateTime) {
+          // if already YYYY-MM-DD keep it, otherwise convert
+          if (typeof dd.dateTime === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(dd.dateTime)) {
+            // keep
+          } else {
+            const dt = new Date(dd.dateTime);
+            if (!isNaN(dt.getTime())) dd.dateTime = dt.toISOString().split('T')[0];
+          }
+        } else {
+          dd.dateTime = '';
+        }
+        return dd;
+      });
+      return cc;
+    });
+
+    // attachments: convert File -> filename array for now
+    if (clone.Attachments) {
+      if (Array.isArray(clone.Attachments)) {
+        clone.Attachments = clone.Attachments.map((f: any) => (f && f.name) ? f.name : f);
+      } else if (clone.Attachments.name) {
+        clone.Attachments = [clone.Attachments.name];
+      }
+    } else {
+      clone.Attachments = [];
+    }
+
+    return clone;
+  }
+
+  /** Build FormData with individual fields (like clients component) */
+  buildFormData(): FormData {
+    const payload = this.preparePayloadForApi();
+    const fd = new FormData();
+
+    // append primitive/top-level fields individually (matching server expectations)
+    const topFields = [
+      'ProjectName', 'Description', 'ClientId', 'Location', 'StartDate', 'EndDate',
+      'Status', 'QuotationId', 'BrokerId', 'BrokerCommissionPercentage'
+    ];
+    topFields.forEach((k) => {
+      const v = (payload as any)[k];
+      if (v !== undefined && v !== null) fd.append(k, String(v));
+    });
+
+    // append Contractors as JSON string (server can parse this)
+    if (Array.isArray(payload.Contractors)) {
+      fd.append('Contractors', JSON.stringify(payload.Contractors));
+    }
+
+    // Attach files (if any) — append each under 'Attachments' key
+    const files = this.formData.Attachments;
+    if (files) {
+      if ((files as FileList).length !== undefined) {
+        for (let i = 0; i < (files as FileList).length; i++) {
+          const f = (files as FileList)[i];
+          if (f) fd.append('Attachments', f, f.name);
+        }
+      } else if (Array.isArray(files)) {
+        (files as any[]).forEach((f: File) => fd.append('Attachments', f, f.name));
+      }
+    }
+
+    return fd;
   }
 
 
+  getLabelByValue(options: any[], value: any) {
+    if (value == null || value === '') return 'غير محدد';
+    const match = options.find(o => String(o.value) === String(value));
+    return match ? match.label : 'غير محدد';
+  }
 
+  getMultipleLabels(options: any[], values: any[]) {
+    if (!values || values.length === 0) return 'غير محدد';
+    return options.filter(o => values.includes(o.value)).map(o => o.label).join(', ');
+  }
 
-
-
-
-//   getLabelByValue(options: any[], value: any) {
-//   return options.find(o => o.value === value)?.label || 'غير محدد';
-// }
-getLabelByValue(options: any[], value: any) {
-  if (value == null || value === '') return 'غير محدد';
-  const match = options.find(o => String(o.value) === String(value));
-  return match ? match.label : 'غير محدد';
+validateCommission(event: any) {
+  const value = event.target.value;
+  if (value < 1) {
+    event.target.value = 1;
+    this.formData.commissionRate = 1;
+  } else if (value > 60) {
+    event.target.value = 60;
+    this.formData.commissionRate = 60;
+  } else {
+    this.formData.commissionRate = value;
+  }
 }
 
-getMultipleLabels(options: any[], values: any[]) {
-  if (!values || values.length === 0) return 'غير محدد';
-  return options.filter(o => values.includes(o.value)).map(o => o.label).join(', ');
-}
 }

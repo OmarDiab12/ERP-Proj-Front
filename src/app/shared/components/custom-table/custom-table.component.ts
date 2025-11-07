@@ -73,6 +73,7 @@ export class CustomTableComponent {
   @Output() edit = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
   @Output() downlaod = new EventEmitter<any>();
+  @Output() pageChange = new EventEmitter<{ page: number, pageSize: number }>();
 
   onView(row: any) { this.view.emit(row); }
   onEdit(row: any) { this.edit.emit(row); }
@@ -128,9 +129,15 @@ get paginatedData() {
   return this.data.slice(start, start + this.pageSize);
 }
 
+// goToPage(page: number) {
+//   if (page >= 1 && page <= this.totalPages) {
+//     this.currentPage = page;
+//   }
+// }
 goToPage(page: number) {
   if (page >= 1 && page <= this.totalPages) {
     this.currentPage = page;
+    this.pageChange.emit({ page: this.currentPage, pageSize: this.pageSize });
   }
 }
 }

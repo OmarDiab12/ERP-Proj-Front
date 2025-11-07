@@ -1,1 +1,96 @@
-<p>expenses works!</p>
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<app-page-header [title]="'المصروفات التشغيلية'" [subtitle]="'إدارة المصروفات اليومية والموافقات'" [rtl]="true"
+  [showAddButton1]="true" [addButton1]="{ label: 'إضافة مصروف', icon: 'pi pi-plus' }"
+  (add1Click)="openAddExpenseForm()">
+</app-page-header>
+
+
+<div class="row mb-2 mt-4">
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-dollar" [title]='"إجمالى المصروفات الشهرية"' [value]="45500"></app-card>
+  </div>
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-sync" [title]='"فى انتظار الموافقة"' [value]="8"></app-card>
+  </div>
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi--exclamation-triangle" [title]='"أعلى فئة مصروفات"' [value]="'صيانة'"></app-card>
+  </div>
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-thumbs-up" [title]='"المصروفات الموافق عليها"' [value]="22"></app-card>
+  </div>
+</div>
+
+
+
+<div class="bg-round-white">
+
+  <app-page-header [title]="'إدارة المصروفات التشغيلية'" [subtitle]="'تتبع المصروفات اليومية وتحليلها'"
+    [rtl]="true"></app-page-header>
+
+  <p-tabView [(activeIndex)]="smallSelectedTab" class="small-custom-tabs">
+
+    <p-tabPanel>
+      <ng-template pTemplate="header">
+        <span>الكل</span>
+      </ng-template>
+      <div>
+        <app-custom-table [data]="allExpenses" [columns]="columns" [showCheckbox]="false" [showActions]="true"
+          [showEye]="true" [showPencil]="true" [showTrash]="true" [showPagination]="true" [pageSize]="10"
+  (pageChange)="onPageChange($event)" (edit)="openEditExpenseForm($event)" (delete)="deleteExpense($event)"></app-custom-table>
+      </div>
+    </p-tabPanel>
+
+    <p-tabPanel *ngFor="let category of categories; let i = index">
+      <ng-template pTemplate="header" [class.active]="activeTab === category">
+        <span>{{ category }}</span>
+      </ng-template>
+      <div>
+        <app-custom-table [data]="getExpensesByCategory(category)" [columns]="columns" [showCheckbox]="false" [showActions]="true"
+          [showEye]="true" [showPencil]="true" [showTrash]="true" [showDownload]="false" [showPagination]="true" [pageSize]="10"
+  (pageChange)="onPageChange($event)" (edit)="openEditExpenseForm($event)" (delete)="deleteExpense($event)"></app-custom-table>
+      </div>
+    </p-tabPanel>
+
+  </p-tabView>
+</div>
+
+
+
+
+<!--
+<ul class="nav nav-tabs">
+    <li
+      *ngFor="let category of categories; let i = index"
+      class="nav-item"
+      (click)="activeTab = category"
+    >
+      <a
+        class="nav-link"
+        [class.active]="activeTab === category"
+        href="javascript:void(0)"
+      >
+        {{ category }}
+      </a>
+    </li>
+  </ul>
+
+
+  <div *ngFor="let category of categories">
+    <div *ngIf="activeTab === category">
+      <app-custom-table
+        [data]="getExpensesByCategory(category)"
+        [columns]="columns"
+        [actions]="tableActions"
+        (edit)="openEditExpenseForm($event)"
+        (delete)="deleteExpense($event)"
+      ></app-custom-table>
+    </div>
+  </div> -->
+
+  <!-- مودال الإضافة/التعديل -->
+  <app-form-module *ngIf="showModal" [title]="'عميل'" [subtitle]="'العميل'" [fields]="expenseFields"
+ [formData]="isEditMode ? selectedExpense : null"
+  [disabledFields]="isEditMode ? ['email', 'clientName'] : []" [submitText]="isEditMode ? 'تعديل' : 'إضافة'"
+  (formSubmit)="isEditMode ? updateExpense($event) : submitExpense($event)" (cancel)="closeModal()"></app-form-module>

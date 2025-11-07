@@ -36,36 +36,135 @@
 
         <div class="form-row">
           <label>اسم المشروع <span class="required">*</span></label>
-          <input pInputText type="text" [(ngModel)]="formData.projectName" placeholder="ادخل اسم المشروع" />
+          <input pInputText type="text" [(ngModel)]="formData.ProjectName" placeholder="ادخل اسم المشروع" />
         </div>
 
         <div class="form-row">
           <label>العميل <span class="required">*</span></label>
           <!-- <p-dropdown [options]="clientsOptions" [(ngModel)]="formData.clientId" placeholder="اختر العميل"></p-dropdown> -->
-          <select [(ngModel)]="formData.clientId" class="form-control">
+          <select [(ngModel)]="formData.ClientId" class="form-control">
             <option value="">اختر العميل</option>
             <option *ngFor="let c of clientsOptions" [value]="c.value">{{ c.label }}</option>
           </select>
         </div>
+        <div class="d-flex align-items-center justify-content-between gap-2">
+          <div class="form-row col-sm-6 mb-sm-1">
+            <label>الموقع</label>
+            <input pInputText type="text" [(ngModel)]="formData.Location" placeholder="ادخل الموقع" />
+          </div>
 
-        <div class="form-row">
-          <label>الموقع</label>
-          <input pInputText type="text" [(ngModel)]="formData.location" placeholder="ادخل الموقع" />
+          <div class="form-row col-sm-6 mb-sm-1">
+            <label>الحالة</label>
+            <!-- <p-dropdown [options]="statusOptions" [(ngModel)]="formData.status" placeholder="اختر الحالة"></p-dropdown> -->
+            <select [(ngModel)]="formData.Status" class="form-control">
+              <option value="">اختر الحالة</option>
+              <option *ngFor="let s of statusOptions" [value]="s.value">{{ s.label }}</option>
+            </select>
+          </div>
+
         </div>
 
-        <div class="form-row">
-          <label>الحالة</label>
-          <!-- <p-dropdown [options]="statusOptions" [(ngModel)]="formData.status" placeholder="اختر الحالة"></p-dropdown> -->
-          <select [(ngModel)]="formData.status" class="form-control">
-            <option value="">اختر الحالة</option>
-            <option *ngFor="let s of statusOptions" [value]="s.value">{{ s.label }}</option>
-          </select>
+        <div class="d-flex align-items-center justify-content-between gap-2">
+          <div class="form-row col-sm-6 mb-sm-1">
+            <label>تاريخ البداية</label>
+            <input type="date" [(ngModel)]="formData.StartDate" />
+          </div>
+
+          <div class="form-row col-sm-6 mb-sm-1">
+            <label>تاريخ النهاية</label>
+            <input type="date" [(ngModel)]="formData.EndDate" />
+          </div>
         </div>
 
         <div class="form-row">
           <label>الوصف</label>
-          <textarea pInputTextarea [(ngModel)]="formData.description" placeholder="ادخل وصف المشروع"></textarea>
+          <textarea pInputTextarea [(ngModel)]="formData.Description" placeholder="ادخل وصف المشروع"></textarea>
         </div>
+
+
+        <!-- <div class="form-row">
+          <div class="d-flex align-items-center justify-content-between w-100">
+        <h5>إضافة دفعات
+          <span class="required">*</span>
+        </h5>
+        <button type="button" class="btn" (click)="addItem()">
+          <i class="pi pi-plus"></i>
+        </button>
+      </div>
+
+      <div formArrayName="Items">
+        <div class="row itemLabels">
+          <div class="col-3">
+            <label>الدفعة</label>
+          </div>
+          <div class="col-2">
+            <label>المبلغ</label>
+          </div>
+          <div class="col-1">
+            <label>الحالة</label>
+          </div>
+          <div class="col-1">
+            <label></label>
+          </div>
+          <div class="col-1">
+            <label>حذف</label>
+          </div>
+        </div>
+        <div *ngFor="let item of itemsArray.controls; let i = index" [formGroupName]="i" class="card">
+
+          <div class="row">
+            <div class="col-3">
+              <input type="text" formControlName="description" class="form-control" />
+              <div *ngIf="item.get('description')?.invalid && item.get('description')?.touched" class="error">
+                مطلوب
+              </div>
+            </div>
+            <div class="col-2">
+              <input type="number" formControlName="unitPrice" class="form-control" />
+              <div *ngIf="item.get('unitPrice')?.invalid && item.get('unitPrice')?.touched" class="error">
+                مطلوب
+              </div>
+            </div>
+            <div class="col-1">
+              <input type="number" formControlName="quantity" class="form-control" />
+              <div *ngIf="item.get('quantity')?.invalid && item.get('quantity')?.touched" class="error">
+                مطلوب
+              </div>
+            </div>
+            <div class="col-2">
+              <input type="number" formControlName="discountPercentage" class="form-control" />
+            </div>
+            <div class="col-2">
+              <input type="text" formControlName="itemNotes" class="form-control" />
+            </div>
+            <div class="col-1 text-end small text-muted">
+              <strong>الإجمالي:</strong>
+              {{ getItemTotal(item.value) | number:'1.2-2' }} ج.م
+            </div>
+            <div class="col-1 d-flex align-items-center justify-content-center">
+              <button type="button" class="btn deleteItemBtn" (click)="removeItem(i)"
+                [disabled]="itemsArray.length === 1">
+                <i class="pi pi-trash"></i>
+              </button>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="row total-summary mt-1 p-2 border-top">
+          <div class="col-10 text-end fw-bold">
+            الإجمالي :
+          </div>
+          <div class="col-2">
+            {{ getTotal() | number:'1.2-2' }} ج.م
+          </div>
+
+        </div>
+
+
+
+      </div>
+        </div> -->
 
         <!-- <div class="actions right">
           <button pButton type="button" label="التالي" icon="pi pi-arrow-left" (click)="next()"></button>
@@ -76,14 +175,19 @@
       <div *ngIf="currentStep === 2" class="panel-content">
 
         <div class="form-row">
-          <label>تحميل صورة أو ملف</label>
-          <input type="file" (change)="onFileSelect($event)" />
+          <div class="image-upload-container">
+            <div class="image-preview-box" (click)="fileInput.click()">
+              <span><i class="pi pi-upload"></i></span>
+              <p>اختر صورة او ملف</p>
+            </div>
+            <input type="file" #fileInput multiple (change)="onFileSelect($event)" hidden />
+          </div>
         </div>
 
         <div class="form-row">
           <label>ربط عرض سعر</label>
           <!-- <p-dropdown [options]="quotationOptions" [(ngModel)]="formData.quotationId" placeholder="اختر عرض سعر"></p-dropdown> -->
-          <select [(ngModel)]="formData.quotationId" class="form-control">
+          <select [(ngModel)]="formData.QuotationId" class="form-control">
             <option value="">اختر عرض سعر</option>
             <option *ngFor="let q of quotationOptions" [value]="q.value">{{ q.label }}</option>
           </select>
@@ -96,7 +200,7 @@
         <div class="form-row">
           <label>اسم الوسيط</label>
           <!-- <p-dropdown [options]="brokersOptions" [(ngModel)]="formData.brokerId" placeholder="اختر الوسيط"></p-dropdown> -->
-          <select [(ngModel)]="formData.brokerId" class="form-control">
+          <select [(ngModel)]="formData.BrokerId" class="form-control">
             <option value="">اختر وسيط</option>
             <option *ngFor="let b of brokersOptions" [value]="b.value">{{ b.label }}</option>
           </select>
@@ -104,38 +208,189 @@
 
         <div class="form-row">
           <label>نسبة العمولة (%)</label>
-          <input pInputText type="number" [(ngModel)]="formData.commissionRate" placeholder="ادخل نسبة العمولة" />
+          <input pInputText type="number" min="1" max="80" (input)="validateCommission($event)"
+            [(ngModel)]="formData.BrokerCommissionPercentage" placeholder="ادخل نسبة العمولة" />
         </div>
       </div>
 
       <!-- 🔵 الخطوة 4: المقاولون -->
-      <div *ngIf="currentStep === 4" class="panel-content">
+      <!-- <div *ngIf="currentStep === 4" class="panel-content">
 
         <div class="form-row">
           <label>اختيار المقاولين</label>
-          <!-- <p-multiSelect [options]="contractorsOptions" [(ngModel)]="formData.contractors" placeholder="اختر مقاول أو أكثر"></p-multiSelect> -->
           <select multiple [(ngModel)]="formData.contractors" class="form-control">
             <option value="">اختر مقاول</option>
             <option *ngFor="let c of contractorsOptions" [value]="c.value">{{ c.label }}</option>
           </select>
         </div>
 
+      </div> -->
+
+      <!-- 🔵 الخطوة 4: المقاولون -->
+      <div *ngIf="currentStep === 4" class="panel-content">
+        <div class="mb-3">
+          <button type="button" class="btn btn-outline-primary" (click)="addContractor()">
+            <i class="pi pi-plus" style="margin-right:6px"></i> إضافة مقاول جديد
+          </button>
+        </div>
+        <div *ngFor="let contractor of formData.Contractors; let i = index" class="contractor-item box">
+
+          <div class="d-flex align-items-center justify-content-between gap-2">
+            <div class="form-row" style="flex:1;">
+              <label>المقاول</label>
+              <select [(ngModel)]="contractor.contractorId" (ngModelChange)="onContractorChange(i)" class="form-control contractor-select" [attr.data-index]="i">
+                <option value="">اختر مقاول</option>
+                <option *ngFor="let c of contractorsOptions" [value]="c.value">{{ c.label }}</option>
+              </select>
+            </div>
+            <div class="form-row" style="margin-top:22px;">
+              <button type="button" class="btn btn-danger" (click)="removeContractor(i)" [disabled]="formData.Contractors.length <= 1">
+                حذف المقاول
+              </button>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label>وصف العقد</label>
+            <input type="text" [(ngModel)]="contractor.contractDescription" placeholder="ادخل تفاصيل عن المقاول" />
+          </div>
+
+          <div class="d-flex align-items-center justify-content-between gap-2">
+            <div class="form-row col-sm-6 mb-sm-1">
+              <label>تاريخ البداية</label>
+              <input type="date" [(ngModel)]="contractor.contractStartDate" />
+            </div>
+
+            <div class="form-row col-sm-6 mb-sm-1">
+              <label>تاريخ النهاية</label>
+              <input type="date" [(ngModel)]="contractor.contractEndDate" />
+            </div>
+          </div>
+
+<div class="payment my-2" *ngIf="contractor.contractorId && contractor.contractDescription">
+
+
+
+          <div class="d-flex align-items-center justify-content-between w-100">
+            <h5>إضافة دفعات
+              <span class="required">*</span>
+            </h5>
+            <!-- add payment for this contractor -->
+            <button type="button" class="btn" (click)="addPayment(i)">
+              <i class="pi pi-plus"></i>
+            </button>
+          </div>
+
+          <!-- show payments only after contractor selected and description provided -->
+          <div>
+            <div class="itemLabels mb-1">
+              <div class="col-3">
+                <label>الدفعة</label>
+              </div>
+              <div class="col-2">
+                <label>المبلغ</label>
+              </div>
+              <div class="col-3">
+                <label>الحالة</label>
+              </div>
+              <div class="col-3">
+                <label>التاريخ</label>
+              </div>
+              <div class="col-1">
+                <label>حذف</label>
+              </div>
+            </div>
+
+            <div *ngFor="let pay of contractor.contractDetails; let j = index" class="itemInputs mb-1">
+              <div class="d-flex align-items-center">
+                <div class="col-3">
+                  <p>{{ getPaymentLabel(j+1) }}</p>
+                </div>
+                <div class="col-2">
+                  <input type="number" [(ngModel)]="pay.amount" class="form-control" placeholder="0" />
+                </div>
+                <div class="col-3">
+                  <select class="form-control" [(ngModel)]="pay.status">
+                    <option *ngFor="let s of paymentStatusOptions" [value]="s.value">{{ s.label || 'اختر الحالة' }}</option>
+                  </select>
+                </div>
+                <div class="col-3">
+                  <input type="date" class="form-control" [(ngModel)]="pay.dateTime" />
+                </div>
+                <div class="col-1 d-flex align-items-center justify-content-center">
+                  <button type="button" class="btn deleteItemBtn" (click)="deletePayment(i, j)"
+                    [disabled]="contractor.contractDetails.length <= 1">
+                    <i class="pi pi-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="row total-summary mt-1 p-2 border-top">
+              <div class="col-10 text-end fw-bold">
+                الإجمالي :
+              </div>
+              <div class="col-2">
+                {{ getPaymentsTotal(i) | number:'1.2-2' }} ج.م
+              </div>
+            </div>
+          </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+        </div>
+
       </div>
 
       <!-- 🔴 الخطوة 5: مراجعة المشروع -->
       <div *ngIf="currentStep === 5" class="panel-content final">
+        <h4>مراجعة المشروع</h4>
+        <p>تأكد من صحة بيانات المشروع قبل الحفظ</p>
 
         <!-- عرض كل البيانات المدخلة -->
-        <div class="review-box">
-          <p><strong>اسم المشروع:</strong> {{ formData.projectName }}</p>
-          <p><strong>العميل:</strong> {{ getLabelByValue(clientsOptions, formData.clientId) }}</p>
-          <p><strong>الموقع:</strong> {{ formData.location }}</p>
-          <p><strong>الحالة:</strong> {{ formData.status }}</p>
-          <p><strong>الوصف:</strong> {{ formData.description }}</p>
-          <p><strong>الوسيط:</strong> {{ getLabelByValue(brokersOptions, formData.brokerId) }}</p>
-          <p><strong>العمولة:</strong> {{ formData.commissionRate }}%</p>
-          <!-- <p><strong>المقاولون:</strong> {{ formData.contractors.name ?.join(', ') }}</p> -->
-          <p><strong>المقاولون:</strong> {{ getMultipleLabels(contractorsOptions, formData.contractors) }}</p>
+        <div class="review-box shadow-sm">
+          <div class="d-flex align-items-center justify-content-between gap-2">
+            <strong>اسم المشروع:</strong>
+            <p>{{ formData.ProjectName }}</p>
+          </div>
+          <div class="d-flex align-items-center justify-content-between gap-2">
+            <strong>العميل:</strong>
+            <p> {{ getLabelByValue(clientsOptions, formData.ClientId) }}</p>
+          </div>
+          <div class="d-flex align-items-center justify-content-between gap-2">
+            <strong>الموقع:</strong>
+            <p>{{ formData.Location }}</p>
+          </div>
+          <div class="d-flex align-items-center justify-content-between gap-2">
+            <strong>الحالة:</strong>
+            <p>{{ getLabelByValue(statusOptions, formData.Status) }}</p>
+          </div>
+          <div class="d-flex align-items-center justify-content-between gap-2">
+            <strong>الوصف:</strong>
+            <p>{{ formData.Description }}</p>
+          </div>
+          <div class="d-flex align-items-center justify-content-between gap-2">
+            <strong>الوسيط:</strong>
+            <p>{{ getLabelByValue(brokersOptions, formData.BrokerId) }}</p>
+          </div>
+          <div class="d-flex align-items-center justify-content-between gap-2">
+            <strong>العمولة:</strong>
+            <p>{{ formData.BrokerCommissionPercentage }}%</p>
+          </div>
+          <div class="d-flex align-items-center justify-content-between gap-2">
+            <strong>المقاولون:</strong>
+            <p>{{ getContractorLabels() }}</p>
+          </div>
+          <!-- <strong>المقاولون:</strong> <p>{{ formData.contractors.name ?.join(', ') }}</p> -->
         </div>
       </div>
 

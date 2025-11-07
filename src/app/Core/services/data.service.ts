@@ -40,11 +40,6 @@ export class DataService {
   AddBroker(data: object): Observable<any> {
     return this.HttpClient.post(this.back + 'Broker/create', data);
   }
-//   {
-//   "name": "string",
-//   "phoneNumber": "string",
-//   "address": "string"
-// }
 
   // not created in backend
   DeleteBroker(id: any): Observable<any> {
@@ -54,12 +49,6 @@ export class DataService {
   EditBroker(data: object): Observable<any> {
     return this.HttpClient.post(this.back + 'Broker/edit', data);
   }
-//   {
-//   "id": 0,
-//   "name": "string",
-//   "phoneNumber": "string",
-//   "address": "string"
-// }
 
   // ---------------- Clients ------------------------------
 
@@ -97,11 +86,6 @@ GetContractorById(id: any): Observable<any> {
 AddContractor(data: object): Observable<any> {
   return this.HttpClient.post(this.back + 'Contractor/create', data);
 }
-// {
-//   "name": "string",
-//   "address": "string",
-//   "phoneNumber": "string"
-// }
 
 // not created in backend
 DeleteContractor(id: any): Observable<any> {
@@ -111,12 +95,6 @@ return this.HttpClient.post(this.back + 'Contractor/delete/' + id, {});
 EditContractor(data: object): Observable<any> {
 return this.HttpClient.post(this.back + 'Contractor/edit', data,{});
 }
-// {
-//   "id": 0,
-//   "name": "string",
-//   "address": "string",
-//   "phoneNumber": "string"
-// }
 
 // ---------------- Employees ------------------------------
 
@@ -174,8 +152,8 @@ return this.HttpClient.post(this.back + 'Employees/transactions/get-1-1-1', {});
 
 // ---------------- OperationalExpenses ------------------------------
 
-GetAllOperationalExpenses(): Observable<any> {
-return this.HttpClient.post(this.back + 'OperationalExpenses/get-all-1-1', {});
+GetAllOperationalExpenses(page:number,pageSize:number): Observable<any> {
+return this.HttpClient.post(this.back + 'OperationalExpenses/get-all-'+page+'-'+pageSize, {});
 }
 
 GetAllInRangeOperationalExpenses(): Observable<any> {
@@ -189,27 +167,14 @@ GetOperationalExpenseById(id: any): Observable<any> {
 AddOperationalExpense(data: object): Observable<any> {
 return this.HttpClient.post(this.back + 'OperationalExpenses/create', data);
 }
-// {
-//   "description": "string",
-//   "amount": 0,
-//   "expenseDate": "string",
-//   "category": "string"
-// }
 
 DeleteOperationalExpense(id: any): Observable<any> {
-  return this.HttpClient.post(this.back + 'OperationalExpenses/delete-' + id, {});
+  return this.HttpClient.post(this.back + 'OperationalExpenses/delete-'+ id, {});
 }
 
 EditOperationalExpense(data: object): Observable<any> {
   return this.HttpClient.post(this.back + 'OperationalExpenses/edit', data,{});
 }
-// {
-//   "description": "string",
-//   "amount": 0,
-//   "expenseDate": "string",
-//   "category": "string",
-//   "id": 0
-// }
 
 // ---------------- Partner ------------------------------
 
@@ -321,6 +286,32 @@ return this.HttpClient.post(this.back + 'Quotations/delete-' + id, {});
 
 EditQuotation(data: object): Observable<any> {
 return this.HttpClient.post(this.back + 'Quotations/edit', data,{});
+
+}
+// ---------------- Projects ------------------------------
+
+// not created in backend
+GetAllProjects(): Observable<any> {
+return this.HttpClient.post(this.back + 'Project/get-all', {});
+}
+
+// not created in backend
+GetProjectById(id: any): Observable<any> {
+return this.HttpClient.post(this.back + 'Projects/get-' + id, {});
+}
+
+AddProject(data: object): Observable<any> {
+return this.HttpClient.post(this.back + 'Project/create-full', data);
+}
+
+// not created in backend
+DeleteProject(id: any): Observable<any> {
+return this.HttpClient.post(this.back + 'Projects/delete-' + id, {});
+}
+
+// not created in backend
+EditProject(data: object): Observable<any> {
+return this.HttpClient.post(this.back + 'Projects/edit', data,{});
 }
 
 

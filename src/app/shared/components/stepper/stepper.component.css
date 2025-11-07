@@ -51,6 +51,42 @@
 
 
 
+.image-upload-container {
+  margin-bottom: 20px;
+  text-align: center;
+}
+.image-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+.image-preview-box {
+  border: 2px dashed #ccc;
+  border-radius: 15px;
+  padding: 15px;
+  cursor: pointer;
+  background: #fafafa;
+  transition: all 0.2s ease;
+}
+.image-preview-box:hover {
+  background: #f3f3ff;
+  border-color: #7b5cff;
+}
+.image-preview-box img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.upload-placeholder {
+  color: #777;
+  font-size: 13px;
+}
+.upload-placeholder span {
+  font-size: 26px;
+  display: block;
+}
 
 
 
@@ -193,11 +229,11 @@
 .step-item.active .step-label { color:var(--purple); font-weight:600; }
 
 .step-item.completed .circle {
-  background:var(--shine-green);
-  border-color:var(--shine-green);
+  background:var(--green);
+  border-color:var(--green);
   color:#fff;
 }
-.step-item.completed .step-label { color:var(--shine-green); font-weight:600; }
+.step-item.completed .step-label { color:var(--green); font-weight:600; }
 
 
 
@@ -336,6 +372,8 @@
 .image-upload-container {
   margin-bottom: 20px;
   text-align: center;
+  padding:0;
+  max-width: 100%;
 }
 .image-label {
   display: block;
@@ -391,9 +429,30 @@
 
 
 
+.final h4{
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.final p{
+  font-size: 12px;
+  text-align: center;
+  color: #555;
+  margin: 0 0 5px;
+}
 
 
-
+.review-box{
+  background-color: #71BFFF0D;
+  border:1px solid #71BFFF;
+  border-radius: 12px;
+  padding: 8px;
+}
+.review-box p{
+  margin: 0;
+}
 
 
 
@@ -481,4 +540,66 @@
   transition: width 0.3s ease;
   border-radius: 2px;
   width: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.payment{
+  background-color: #71BFFF0D;
+  border:1px solid #71BFFF;
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.itemLabels{
+  display: flex;
+  background-color: #fff;
+  border: none;
+  border-radius: 8px;
+}
+.itemInputs{
+  display: flex;
+  border: none;
+  align-items: center;
+}
+.itemInputs .deleteItemBtn{
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+.itemInputs .deleteItemBtn:hover{
+  background-color: transparent;
+}
+.itemInputs .deleteItemBtn i {
+  font-size: 14px;
+  padding: 6px;
+  transition: all 0.2s ease;
+  color:var(--red)
+}
+
+.itemInputs .deleteItemBtn i:hover {
+  font-weight: bold !important;
+}
+
+
+
+.required {
+  color: #e74c3c;
+  margin-right: 4px;
+}
+
+.error {
+  margin-top: 4px;
+  color: #e74c3c;
+  font-size: 12px;
 }
