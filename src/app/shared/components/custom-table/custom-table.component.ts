@@ -41,24 +41,43 @@ export class CustomTableComponent {
   //   }
   // }
 
-  getStatusData(status: string) {
-  switch (status) {
-    case 'نشط':
-      return { class: 'badge badge-blue', label: 'نشط' };
+  /**
+   * Return an object with CSS class and label for a status value.
+   * Accepts strings (various labels) or boolean (true/false) for flags like `isRepaid`.
+   */
+  getStatusData(status: any) {
+    // boolean-like values: actual boolean or string/number representations
+    if (typeof status === 'boolean') {
+      return status ? { class: 'badge badge-green', label: 'نعم' } : { class: 'badge badge-red', label: 'لا' };
+    }
+    if (typeof status === 'string') {
+      const s = status.trim().toLowerCase();
+      if (s === 'true' || s === '1' || s === 'yes' || s === 'نعم') {
+        return { class: 'badge badge-green', label: 'نعم' };
+      }
+      if (s === 'false' || s === '0' || s === 'no' || s === 'لا') {
+        return { class: 'badge badge-red', label: 'لا' };
+      }
+    }
+    if (typeof status === 'number') {
+      if (status === 1) return { class: 'badge badge-green', label: 'نعم' };
+      if (status === 0) return { class: 'badge badge-red', label: 'لا' };
+    }
 
-    case 'Sent':
-      return { class: 'badge badge-blue', label: 'قيد التقدم' };
-
-    case 'مكتمل':
-      return { class: 'badge badge-green', label: 'مكتمل' };
-
-    case 'متأخر':
-      return { class: 'badge badge-red', label: 'متأخر' };
-
-    default:
-      return { class: 'badge badge-gray', label: status || 'غير معروف' };
+    // string statuses (existing mappings)
+    switch (String(status)) {
+      case 'نشط':
+        return { class: 'badge badge-blue', label: 'نشط' };
+      case 'Sent':
+        return { class: 'badge badge-blue', label: 'قيد التقدم' };
+      case 'مكتمل':
+        return { class: 'badge badge-green', label: 'مكتمل' };
+      case 'متأخر':
+        return { class: 'badge badge-red', label: 'متأخر' };
+      default:
+        return { class: 'badge badge-gray', label: status || 'غير معروف' };
+    }
   }
-}
 
 
 

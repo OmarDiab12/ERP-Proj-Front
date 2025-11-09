@@ -22,7 +22,7 @@ registerLocaleData(localeAr);
   declarations: [
     AppComponent,
     ArabicDigitsPipe
-  ],
+ ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule, // ⬅️ أضف ده
@@ -39,8 +39,8 @@ registerLocaleData(localeAr);
       useClass: AuthInterceptor,
       multi: true,
     },
-    { provide: LOCALE_ID, useValue: 'ar' }
-  ],
+
+    { provide: LOCALE_ID, useValue: 'ar' }  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

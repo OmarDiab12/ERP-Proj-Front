@@ -1,25 +1,10 @@
-<p-toast></p-toast>
+<!-- <p-toast></p-toast>
 <p-confirmDialog></p-confirmDialog>
 
 <app-page-header [title]="'المشاريع'" [subtitle]="'إنشاء وتتبع وإدارة جميع المشاريع'" [rtl]="true"
   [showAddButton1]="true" [addButton1]="{ label: 'مشروع جديد', icon: 'pi pi-plus' }" (add1Click)="openStepper()">
 </app-page-header>
 
-
-<!-- <div class="bg-round-white">
-  <app-page-header [title]="'قائمة المشاريع'" [subtitle]="'إدارة جميع المشاريع'" [rtl]="true"></app-page-header>
-
-  <app-custom-table
-    [data]="projects"
-    [columns]="columns"
-    [showCheckbox]="false"
-    [showActions]="true"
-    [showEye]="false"
-    [showPencil]="false"
-    [showTrash]="true"
->
-  </app-custom-table>
-</div> -->
 
 
 <div class="row mb-2 mt-4">
@@ -214,4 +199,72 @@
 
 
 
-<app-stepper *ngIf="showStepper" (close)="closeStepper()"></app-stepper>
+<app-stepper *ngIf="showStepper" (close)="closeStepper()"></app-stepper> -->
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<app-page-header [title]="'المشاريع'" [subtitle]="'إنشاء وتتبع وإدارة جميع المشاريع'" [rtl]="true"
+  [showAddButton1]="true" [addButton1]="{ label: 'مشروع جديد', icon: 'pi pi-plus' }" (add1Click)="openStepper()">
+</app-page-header>
+
+
+
+<div class="row mb-2 mt-4">
+  <ng-container *ngFor="let g of groupDefs">
+    <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1">
+      <div class="header {{g.css}}">
+        <h3>{{ g.label }}</h3>
+        <p>{{ getCountForGroup(g.key) }} مشروع</p>
+      </div>
+      <div class="cards">
+        <ng-container *ngIf="(projectsByGroup[g.key] || []).length; else noData">
+          <div *ngFor="let p of projectsByGroup[g.key]" class="card shadow-sm">
+            <div class="head">
+              <h4>{{ p.projectName || '—' }}</h4>
+              <p>{{ ('PRJ-' + p.id) }}</p>
+            </div>
+            <p>{{ p.clientName || (p.client && p.client.name) || '-' }}</p>
+            <div class="value">
+              <div class="flex align-items-center justify-content-between mb-1">
+                <h5>التقدم</h5>
+                <h5>{{ p.progress || p.percentage || 0 }}%</h5>
+              </div>
+              <p-progressBar [value]="p.progress || p.percentage || 0" [showValue]="false"
+                [style]="{'height': '12px','border-radius': '12px','overflow': 'hidden'}"></p-progressBar>
+            </div>
+            <h3><i class="pi pi-calendar"></i>
+              ينتهى: {{ p.endDate || p.EndDate || '—' }}
+            </h3>
+            <div class="moneyInfo">
+              <h3>المدفوعات:</h3>
+              <span>{{ formatCurrencyOrDash(p.totalPayments) }}</span>
+            </div>
+            <div class="moneyInfo last">
+              <h3>صافى الربح:</h3>
+              <span>{{ formatCurrencyOrDash(computeNetProfitForProject(p)) }}</span>
+            </div>
+            <h3>الوسيط: {{ p.brokerName || (p.broker && p.broker.name) || p.BrokerName || '-' }}</h3>
+            <div class="actionBtns">
+              <div class="right">
+                <button type="button" class="save" label="تفاصيل إضافية">تفاصيل إضافية</button>
+              </div>
+              <div class="left">
+                <button type="button" label="تعديل" class="cancel" (click)="editProject(p)">تعديل</button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #noData>
+          <div class="noData shadow-sm">
+            <h3>لا توجد مشاريع</h3>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </ng-container>
+
+</div>
+
+
+
+<app-stepper *ngIf="showStepper" [projectToEdit]="editingProject" [isEditMode]="isEditMode" (close)="closeStepper()"></app-stepper>

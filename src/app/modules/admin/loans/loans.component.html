@@ -1,4 +1,4 @@
-<app-page-header [title]="'القروض الشخصية'" [subtitle]="'إدارة وعرض القروض الشخصية'"
+<!-- <app-page-header [title]="'القروض الشخصية'" [subtitle]="'إدارة وعرض القروض الشخصية'"
   [rtl]="true" [showAddButton1]="true" [addButton1]="{ label: 'إضافة سلفة', icon: 'pi pi-plus' }" (add1Click)="openAddModal()"></app-page-header>
 
 
@@ -46,4 +46,57 @@
 <app-form-module *ngIf="showModal" [title]="'سلفة'" [subtitle]="'السلفة'" [fields]="loanFields"
   [formData]="isEditMode ? selectedLoan : null" [disabledFields]="isEditMode ? ['email', 'loanName'] : []"
   [submitText]="isEditMode ? 'تعديل' : 'إضافة'" (formSubmit)="isEditMode ? updateLoan($event) : addLoan($event)"
-  (cancel)="closeForm()"></app-form-module>
+  (cancel)="closeForm()"></app-form-module> -->
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+  <app-page-header
+  [title]="'القروض الشخصية'"
+  [subtitle]="'إدارة وعرض القروض الشخصية'"
+  [rtl]="true"
+  [showAddButton1]="true"
+  [addButton1]="{ label: 'إضافة سلفة', icon: 'pi pi-plus' }"
+  (add1Click)="openAddModal()">
+</app-page-header>
+
+<div class="row mb-2 mt-4">
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-wallet" [title]='"إجمالى السلف الممنوحة"' [value]="totalAmount || '0'" [currency]="'ر.س'" [percentage]="''"></app-card>
+  </div>
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-wallet" [title]='"إجمالى السلف المتبقية"' [value]="totalRemaining || '0'" [currency]="'ر.س'" [percentage]="''"></app-card>
+  </div>
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-wallet" [title]='"السلف النشطة"' [value]="activeLoansCount || '0'" [percentage]="''"></app-card>
+  </div>
+  <div class="col-md-6 col-lg-3 col-sm-12 mb-sm-1 ">
+    <app-card icon="pi pi-wallet" [title]='"عدد القروض"' [value]="loans.length || '0'" [percentage]="''"></app-card>
+  </div>
+</div>
+
+<div class="bg-round-white">
+  <app-page-header [title]="'قائمة القروض'" [subtitle]="'إدارة جميع القروض الشخصية'" [rtl]="true"></app-page-header>
+
+  <app-custom-table
+    [data]="loans"
+    [columns]="loanColumns"
+    [showCheckbox]="false"
+    [showActions]="true"
+    [showEye]="false"
+    [showPencil]="true"
+    [showTrash]="true"
+    (edit)="openEditModal($event)"
+    (delete)="confirmDelete($event)">
+  </app-custom-table>
+</div>
+
+<app-form-module
+  *ngIf="showModal"
+  [title]="'سلفة'"
+  [subtitle]="isEditMode ? 'تعديل بيانات السلفة' : 'إضافة سلفة جديدة'"
+  [fields]="effectiveLoanFields"
+  [formData]="isEditMode ? selectedLoan : null"
+  [submitText]="isEditMode ? 'تعديل' : 'إضافة'"
+  (formSubmit)="isEditMode ? updateLoan($event) : addLoan($event)"
+  (cancel)="closeForm()">
+</app-form-module>

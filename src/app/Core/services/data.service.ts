@@ -228,8 +228,8 @@ return this.HttpClient.post(this.back + 'Partner/edit', data,{});
 
 // ---------------- PersonalLoan ------------------------------
 
-GetAllPersonalLoan(): Observable<any> {
-return this.HttpClient.post(this.back + 'PersonalLoan/get-all-1-1', {});
+GetAllPersonalLoan(page:number,pageSize:number): Observable<any> {
+return this.HttpClient.post(this.back + 'PersonalLoan/get-all-'+page+'-'+pageSize, {});
 }
 
 GetAllPersonalLoanInSpeceficDate(): Observable<any> {
@@ -243,12 +243,6 @@ return this.HttpClient.post(this.back + 'PersonalLoan/get-' + id, {});
 AddPersonalLoan(data: object): Observable<any> {
 return this.HttpClient.post(this.back + 'PersonalLoan/create', data);
 }
-// {
-//   "personName": "string",
-//   "issueDate": "string",
-//   "amount": 0,
-//   "repaymentDate": "string"
-// }
 
 DeletePersonalLoan(id: any): Observable<any> {
 return this.HttpClient.post(this.back + 'PersonalLoan/delete-' + id, {});
@@ -257,14 +251,7 @@ return this.HttpClient.post(this.back + 'PersonalLoan/delete-' + id, {});
 EditPersonalLoan(data: object): Observable<any> {
 return this.HttpClient.post(this.back + 'PersonalLoan/edit', data,{});
 }
-// {
-//   "personName": "string",
-//   "issueDate": "string",
-//   "amount": 0,
-//   "repaymentDate": "string",
-//   "id": 0,
-//   "isRepaid": true
-// }
+
 
 // ---------------- Quotations ------------------------------
 
@@ -297,7 +284,7 @@ return this.HttpClient.post(this.back + 'Project/get-all', {});
 
 // not created in backend
 GetProjectById(id: any): Observable<any> {
-return this.HttpClient.post(this.back + 'Projects/get-' + id, {});
+return this.HttpClient.post(this.back + 'Project/get-by-id-' + id, {});
 }
 
 AddProject(data: object): Observable<any> {
@@ -311,7 +298,7 @@ return this.HttpClient.post(this.back + 'Projects/delete-' + id, {});
 
 // not created in backend
 EditProject(data: object): Observable<any> {
-return this.HttpClient.post(this.back + 'Projects/edit', data,{});
+return this.HttpClient.post(this.back + 'Project/update-full', data,{});
 }
 
 
