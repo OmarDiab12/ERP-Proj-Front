@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map, of, shareReplay, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, map, tap } from 'rxjs';
 
 export interface Supplier {
   id: number;
@@ -34,22 +34,32 @@ interface SupplierAssetResponse {
   suppliers: Supplier[];
 }
 
+export interface NewSupplierPayload {
+  owner: string;
+  manager: string;
+  supplierName: string;
+  phone: string;
+  email: string;
+  status: Supplier['status'];
+}
+
 @Injectable({ providedIn: 'root' })
 export class SuppliersService {
-  private suppliers$?: Observable<Supplier[]>;
+  private suppliersSubject = new BehaviorSubject<Supplier[]>([]);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.reloadFromAsset();
+  }
+
+  private reloadFromAsset(): void {
+    this.http
+      .get<SupplierAssetResponse>('assets/data/suppliers.json')
+      .pipe(map(res => res.suppliers || []))
+      .subscribe(list => this.suppliersSubject.next(list));
+  }
 
   private loadSuppliers(): Observable<Supplier[]> {
-    if (!this.suppliers$) {
-      this.suppliers$ = this.http
-        .get<SupplierAssetResponse>('assets/data/suppliers.json')
-        .pipe(
-          map(res => res.suppliers || []),
-          shareReplay(1)
-        );
-    }
-    return this.suppliers$;
+    return this.suppliersSubject.asObservable();
   }
 
   getSuppliers(query: SupplierQuery): Observable<SuppliersPage> {
@@ -82,11 +92,33 @@ export class SuppliersService {
     );
   }
 
+  addSupplier(payload: NewSupplierPayload): Observable<Supplier> {
+    const nextId = this.suppliersSubject.value.length + 1;
+    const newSupplier: Supplier = {
+      id: nextId,
+      name: payload.supplierName,
+      company: payload.owner,
+      contactPerson: payload.manager,
+      phone: payload.phone,
+      email: payload.email,
+      location: '—',
+      category: 'مواد بناء',
+      status: payload.status,
+      rating: 4.5,
+      outstandingOrders: 0,
+      lastOrderDate: new Date().toISOString()
+    };
+
+    this.suppliersSubject.next([newSupplier, ...this.suppliersSubject.value]);
+    return of(newSupplier);
+  }
+
   markFavorite(id: number): Observable<boolean> {
     return of(true).pipe(tap(() => console.log(`⭐ Marked supplier ${id} as favorite`)));
   }
 
   deleteSupplier(id: number): Observable<boolean> {
+    this.suppliersSubject.next(this.suppliersSubject.value.filter(supplier => supplier.id !== id));
     return of(true).pipe(tap(() => console.log(`🗑️ Deleted supplier ${id}`)));
   }
 
@@ -95,6 +127,6 @@ export class SuppliersService {
   }
 
   refreshCache(): void {
-    this.suppliers$ = undefined;
+    this.reloadFromAsset();
   }
 }

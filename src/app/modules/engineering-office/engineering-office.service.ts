@@ -31,44 +31,7 @@ export interface EngineeringProjectPayload {
 
 @Injectable({ providedIn: 'root' })
 export class EngineeringOfficeService {
-  private projectsSubject = new BehaviorSubject<EngineeringProject[]>([
-    {
-      id: 1,
-      title: 'تصميم مبنى إداري حديث',
-      client: 'شركة الريادة',
-      location: 'الرياض، السعودية',
-      budget: 850000,
-      startDate: '2024-03-01',
-      endDate: '2024-11-30',
-      status: 'قيد التنفيذ',
-      description: 'إشراف كامل على تصميم وتنفيذ مبنى إداري بمواصفات ذكية.',
-      imageUrl: 'https://images.unsplash.com/photo-1503389152951-9f343605f61e?auto=format&fit=crop&w=900&q=80'
-    },
-    {
-      id: 2,
-      title: 'مجمع سكني فاخر',
-      client: 'أملاك الشرق',
-      location: 'جدة، السعودية',
-      budget: 1450000,
-      startDate: '2024-01-10',
-      endDate: '2025-02-15',
-      status: 'جديد',
-      description: 'تصميم هندسي كامل لمجمع سكني يتضمن مرافق ترفيهية وخدمات متكاملة.',
-      imageUrl: 'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&w=900&q=80'
-    },
-    {
-      id: 3,
-      title: 'ترميم مبنى تراثي',
-      client: 'الهيئة العامة للسياحة',
-      location: 'الدرعية التاريخية',
-      budget: 320000,
-      startDate: '2023-09-05',
-      endDate: '2024-06-30',
-      status: 'مكتمل',
-      description: 'مشروع ترميم شامل مع المحافظة على الهوية المعمارية التراثية.',
-      imageUrl: 'https://images.unsplash.com/photo-1529429617124-aee4f2e3d5a8?auto=format&fit=crop&w=900&q=80'
-    }
-  ]);
+  private projectsSubject = new BehaviorSubject<EngineeringProject[]>([]);
 
   getProjects(): Observable<EngineeringProject[]> {
     return this.projectsSubject.asObservable();

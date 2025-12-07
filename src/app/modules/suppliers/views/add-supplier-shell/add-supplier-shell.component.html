@@ -1,24 +1,51 @@
-<div class="shell">
-  <div class="breadcrumbs">
-    <a routerLink="/admin/suppliers">الموردون</a>
-    <span>/</span>
-    <span>إضافة مورد جديد</span>
-  </div>
+<p-toast></p-toast>
 
-  <h1>إضافة مورد جديد</h1>
-  <p class="lead">سيتم إضافة تفاصيل التصميم والنماذج عند تسليم مخطط الواجهات. تم إعداد المسار والهيكل لربط النموذج فور وصوله.</p>
-
-  <div class="placeholder">
-    <div class="steps">
-      <div *ngFor="let step of steps" class="step" [class.active]="step.active">
-        <div class="dot"></div>
-        <span>{{ step.label }}</span>
+<div class="overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <p class="eyebrow">إضافة مورد جديد</p>
+        <h2>أدخل بيانات المورد الجديد بما لا يقل عن ثلاث حقول لتتمكن من الحفظ</h2>
       </div>
+      <button class="icon-btn" routerLink="/admin/suppliers"><i class="pi pi-times"></i></button>
     </div>
-    <div class="empty-card">
-      <i class="pi pi-pencil"></i>
-      <p>نموذج إضافة المورد سيكون هنا قريباً.</p>
-      <span class="hint">يمكنك الآن التنقل لهذا المسار من زر "إضافة مورد جديد".</span>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="form-grid">
+      <div class="form-group" [class.invalid]="getControl('owner')?.invalid && getControl('owner')?.touched">
+        <label>الشخص المسؤول</label>
+        <input formControlName="owner" type="text" placeholder="اسم المسؤول" />
+      </div>
+      <div class="form-group" [class.invalid]="getControl('manager')?.invalid && getControl('manager')?.touched">
+        <label>اسم المسؤول عنه</label>
+        <input formControlName="manager" type="text" placeholder="اسم المسؤول عنه" />
+      </div>
+      <div class="form-group" [class.invalid]="getControl('supplierName')?.invalid && getControl('supplierName')?.touched">
+        <label>اسم المورد</label>
+        <input formControlName="supplierName" type="text" placeholder="أدخل اسم المورد" />
+      </div>
+      <div class="form-group" [class.invalid]="getControl('phone')?.invalid && getControl('phone')?.touched">
+        <label>رقم الجوال</label>
+        <input formControlName="phone" type="tel" placeholder="+955xxxxxxxx" />
+      </div>
+      <div class="form-group" [class.invalid]="getControl('email')?.invalid && getControl('email')?.touched">
+        <label>البريد الإلكتروني</label>
+        <input formControlName="email" type="email" placeholder="example@example.com" />
+      </div>
+      <div class="form-group" [class.invalid]="getControl('status')?.invalid && getControl('status')?.touched">
+        <label>الحالة</label>
+        <select formControlName="status">
+          <option value="">اختر الحالة</option>
+          <option value="نشط">نشط</option>
+          <option value="قيد المتابعة">قيد المتابعة</option>
+          <option value="موقوف">موقوف</option>
+        </select>
+      </div>
+    </form>
+
+    <div class="actions">
+      <button type="button" class="ghost-btn" routerLink="/admin/suppliers">الغاء</button>
+      <button type="button" class="secondary-btn" (click)="form.reset()">إعادة إدخال</button>
+      <button type="submit" class="primary-btn" [disabled]="form.invalid" (click)="submit()">حفظ</button>
     </div>
   </div>
 </div>
