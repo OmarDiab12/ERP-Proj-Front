@@ -17,6 +17,10 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)
   },
+  {
+    path: 'engineering-office',
+    loadChildren: () => import('./modules/engineering-office/engineering-office.module').then(m => m.EngineeringOfficeModule)
+  },
   // { path: '', redirectTo: 'login', pathMatch: 'full' },
   // Redirect unknown routes to root which loads auth module (and then login)
   { path: '**', redirectTo: '' }
