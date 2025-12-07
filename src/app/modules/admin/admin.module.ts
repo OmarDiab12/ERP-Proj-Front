@@ -16,7 +16,6 @@ import { ProjectsComponent } from './projects/projects.component';
 import { ClientsComponent } from './clients/clients.component';
 import { ContractorsComponent } from './contractors/contractors.component';
 import { BrokersComponent } from './brokers/brokers.component';
-import { SuppliersComponent } from './suppliers/suppliers.component';
 import { AssetsComponent } from './assets/assets.component';
 import { QuotesComponent } from './quotes/quotes.component';
 import { WarehouseComponent } from './warehouse/warehouse.component';
@@ -59,7 +58,6 @@ import { EmployeesComponent } from './employees/employees.component';
     ClientsComponent,
     ContractorsComponent,
     BrokersComponent,
-    SuppliersComponent,
     AssetsComponent,
     QuotesComponent,
     WarehouseComponent,
@@ -92,6 +90,7 @@ import { EmployeesComponent } from './employees/employees.component';
     ToastModule,
     ConfirmDialogModule,
     ProgressBarModule
-],providers: [ConfirmationService, MessageService],
+  ],
+  providers: [ConfirmationService, MessageService],
 })
 export class AdminModule { }

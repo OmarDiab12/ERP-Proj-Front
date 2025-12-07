@@ -7,7 +7,6 @@ import { ProjectsComponent } from './projects/projects.component';
 import { ClientsComponent } from './clients/clients.component';
 import { ContractorsComponent } from './contractors/contractors.component';
 import { BrokersComponent } from './brokers/brokers.component';
-import { SuppliersComponent } from './suppliers/suppliers.component';
 import { AssetsComponent } from './assets/assets.component';
 import { QuotesComponent } from './quotes/quotes.component';
 import { WarehouseComponent } from './warehouse/warehouse.component';
@@ -35,7 +34,7 @@ const routes: Routes = [
       { path: 'clients', component: ClientsComponent , data: { breadcrumb: 'العملاء' }},
       { path: 'contractors', component: ContractorsComponent , data: { breadcrumb: 'المقاولون' }},
       { path: 'brokers', component: BrokersComponent , data: { breadcrumb: 'السماسرة' }},
-      { path: 'suppliers', component: SuppliersComponent , data: { breadcrumb: 'الموردون' }},
+      { path: 'suppliers', loadChildren: () => import('../suppliers/suppliers.module').then(m => m.SuppliersModule) },
       { path: 'assets', component: AssetsComponent , data: { breadcrumb: 'الأصول' }},
       { path: 'quotes', component: QuotesComponent , data: { breadcrumb: 'عروض الأسعار' }},
       { path: 'warehouse', component: WarehouseComponent , data: { breadcrumb: 'المخزون' }},
