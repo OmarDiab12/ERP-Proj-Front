@@ -3,12 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
-import { NavBarComponent } from 'src/app/shared/components/nav-bar/nav-bar.component';
 import { RouterModule } from '@angular/router';
-import { AdminLayoutComponent } from 'src/app/layouts/admin-layout/admin-layout.component';
-import { SideBarComponent } from 'src/app/shared/components/side-bar/side-bar.component';
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component';
-import { BreadcrumbComponent } from 'src/app/shared/components/breadcrumb/breadcrumb.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AnalyticsComponent } from './analytics/analytics.component';
@@ -34,22 +29,16 @@ import { FormModuleComponent } from 'src/app/shared/components/form-module/form-
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { StepperComponent } from 'src/app/shared/components/stepper/stepper.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { EmployeesComponent } from './employees/employees.component';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedUiModule } from 'src/app/shared/shared-ui.module';
 
 
 @NgModule({
   declarations: [
     AdminComponent,
-    AdminLayoutComponent,
-    NavBarComponent,
-    SideBarComponent,
-    NotificationComponent,
-    BreadcrumbComponent,
     DashboardComponent,
     AnalyticsComponent,
     ProjectsComponent,
@@ -66,12 +55,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
     LoansComponent,
     ExpensesComponent,
     SettingsComponent,
-    StepperComponent,
     EmployeesComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
+    SharedUiModule,
     AdminRoutingModule,
     SharedModule,
     FormsModule,
