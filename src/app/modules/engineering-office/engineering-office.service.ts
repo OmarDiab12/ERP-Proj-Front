@@ -31,7 +31,58 @@ export interface EngineeringProjectPayload {
 
 @Injectable({ providedIn: 'root' })
 export class EngineeringOfficeService {
-  private projectsSubject = new BehaviorSubject<EngineeringProject[]>([]);
+  private readonly defaultProjects: EngineeringProject[] = [
+    {
+      id: 1,
+      title: 'تصميم برج الأعمال - الرياض',
+      client: 'شركة روافد القابضة',
+      location: 'الرياض - المملكة العربية السعودية',
+      budget: 9200000,
+      startDate: '2024-02-10',
+      endDate: '2024-12-18',
+      status: 'قيد التنفيذ',
+      description: 'تصميم وتنفيذ برج تجاري من 24 طابقاً بمرافق ذكية وفق معايير الاستدامة.',
+      imageUrl: 'https://images.unsplash.com/photo-1496309732348-3627f3f040ee?auto=format&fit=crop&w=1200&q=80'
+    },
+    {
+      id: 2,
+      title: 'تطوير مخطط سكني - جدة',
+      client: 'صروح للتطوير',
+      location: 'جدة - المملكة العربية السعودية',
+      budget: 6100000,
+      startDate: '2023-11-01',
+      endDate: '2024-09-30',
+      status: 'مكتمل',
+      description: 'إعداد المخططات والبنية التحتية لمخطط سكني يضم 180 وحدة.',
+      imageUrl: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80'
+    },
+    {
+      id: 3,
+      title: 'مشروع منتجع الشاطئ',
+      client: 'هيئة السياحة',
+      location: 'نيوم - المملكة العربية السعودية',
+      budget: 7800000,
+      startDate: '2024-03-15',
+      endDate: '2025-01-10',
+      status: 'جديد',
+      description: 'تصميم منتجع بحري فاخر يضم فلل خاصة ومرافق ترفيهية متكاملة.',
+      imageUrl: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80'
+    },
+    {
+      id: 4,
+      title: 'مركز بحوث تقني',
+      client: 'وزارة الاتصالات',
+      location: 'الدمام - المملكة العربية السعودية',
+      budget: 4300000,
+      startDate: '2024-01-20',
+      endDate: '2024-11-05',
+      status: 'مؤجل',
+      description: 'تصميم مركز بحوث متخصص بالتحول الرقمي مع مختبرات وتجهيزات متقدمة.',
+      imageUrl: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80'
+    }
+  ];
+
+  private projectsSubject = new BehaviorSubject<EngineeringProject[]>([...this.defaultProjects]);
 
   getProjects(): Observable<EngineeringProject[]> {
     return this.projectsSubject.asObservable();
