@@ -14,6 +14,13 @@ const routes: Routes = [
   },
 
   {
+    path: 'partnerships',
+    canActivate: [authGuard],
+    canLoad: [authGuard],
+    loadChildren: () => import('./modules/partnerships/partnerships.module').then(m => m.PartnershipsModule)
+  },
+
+  {
     path: '',
     loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)
   },
