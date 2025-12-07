@@ -1,0 +1,13 @@
+<app-page-header
+  [title]="'فاتورة جديدة'"
+  [subtitle]="'إنشاء فاتورة جديدة مع حفظ المسودة'"
+  [rtl]="true"
+></app-page-header>
+
+<div class="bg-round-white form-shell">
+  <p>ستتم إضافة النموذج الكامل بعد اعتماد بنية الفاتورة من الخادم.</p>
+  <div class="actions">
+    <button class="btn outline" routerLink="/invoices">إلغاء</button>
+    <button class="btn filled" (click)="saveDraft()">حفظ كمُسودة</button>
+  </div>
+</div>

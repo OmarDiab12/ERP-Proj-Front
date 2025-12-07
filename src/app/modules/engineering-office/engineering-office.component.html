@@ -1,0 +1,158 @@
+<div class="page-header">
+  <div>
+    <h2>المكتب الهندسي</h2>
+    <p class="subtitle">إدارة المشاريع الهندسية والطلبات الخاصة</p>
+  </div>
+  <button class="primary-btn" (click)="openNewProjectDialog()">
+    <i class="pi pi-plus"></i>
+    مشروع هندسي جديد
+  </button>
+</div>
+
+<div class="toolbar">
+  <div class="search-box">
+    <i class="pi pi-search"></i>
+    <input type="text" placeholder="ابحث بالاسم / مشروع العميل" [(ngModel)]="searchTerm" (input)="applyFilters()" />
+  </div>
+  <div class="filters">
+    <label for="status-filter">الحالة</label>
+    <select id="status-filter" [(ngModel)]="statusFilter" (change)="applyFilters()">
+      <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+    </select>
+  </div>
+  <h3>لا توجد مشاريع</h3>
+  <p>ابدأ بإنشاء مشروع هندسي جديد لعرضه في المنظومة</p>
+</div>
+
+<div class="empty-state" *ngIf="filteredProjects.length === 0">
+  <div class="empty-icon">
+    <i class="pi pi-folder"></i>
+  </div>
+  <h3>لا توجد مشاريع</h3>
+  <p>ابدأ بإنشاء مشروع هندسي جديد لعرضه في المنظومة</p>
+</div>
+
+<div class="project-grid" *ngIf="filteredProjects.length > 0">
+  <div class="project-card" *ngFor="let project of filteredProjects">
+    <div class="project-image" [style.backgroundImage]="'url(' + project.imageUrl + ')'">
+      <span class="status-chip" [ngClass]="statusClass(project.status)">{{ project.status }}</span>
+    </div>
+    <div class="project-content">
+      <h3>{{ project.title }}</h3>
+      <p class="description">{{ project.description }}</p>
+      <div class="meta">
+        <div><i class="pi pi-user"></i> {{ project.client }}</div>
+        <div><i class="pi pi-map-marker"></i> {{ project.location }}</div>
+        <div><i class="pi pi-calendar"></i> {{ project.startDate }} - {{ project.endDate }}</div>
+        <div><i class="pi pi-dollar"></i> {{ project.budget | number }} ريال</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="dialog-backdrop" *ngIf="showNewProjectDialog">
+  <div class="dialog">
+    <div class="dialog-header">
+      <h3>مشروع هندسي جديد</h3>
+      <button class="icon-btn" (click)="closeNewProjectDialog()"><i class="pi pi-times"></i></button>
+    </div>
+    <form [formGroup]="projectForm" (ngSubmit)="submitProject()">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>اسم المشروع</label>
+          <input type="text" formControlName="title" placeholder="أدخل اسم المشروع">
+        </div>
+        <div class="form-group">
+          <label>اسم العميل</label>
+          <input type="text" formControlName="client" placeholder="اسم العميل">
+        </div>
+        <div class="form-group">
+          <label>الموقع</label>
+          <input type="text" formControlName="location" placeholder="المدينة - الدولة">
+        </div>
+        <div class="form-group">
+          <label>الميزانية (ريال)</label>
+          <input type="number" formControlName="budget" placeholder="0">
+        </div>
+        <div class="form-group">
+          <label>تاريخ البدء</label>
+          <input type="date" formControlName="startDate">
+        </div>
+        <div class="form-group">
+          <label>تاريخ الانتهاء</label>
+          <input type="date" formControlName="endDate">
+        </div>
+        <div class="form-group">
+          <label>المهندس المسؤول</label>
+          <input type="text" formControlName="responsibleEngineer" placeholder="اسم المهندس">
+        </div>
+        <div class="form-group">
+          <label>رقم التواصل</label>
+          <input type="tel" formControlName="contactNumber" placeholder="05XXXXXXXX">
+        </div>
+        <div class="form-group">
+          <label>الحالة</label>
+          <select formControlName="status">
+            <option value="جديد">جديد</option>
+            <option value="قيد التنفيذ">قيد التنفيذ</option>
+            <option value="مكتمل">مكتمل</option>
+            <option value="مؤجل">مؤجل</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>وصف المشروع</label>
+        <textarea rows="3" formControlName="description" placeholder="تفاصيل مختصرة عن امشروع"></textarea>
+      </div>
+
+      <div class="upload-grid">
+        <div class="upload-zone"
+             (dragover)="$event.preventDefault()"
+             (drop)="onFileDrop($event, 'drawings')">
+          <div class="upload-header">
+            <div>
+              <h4>المخططات الهندسية</h4>
+              <p>اسحب الملفات هنا أو اضغط للرفع</p>
+            </div>
+            <label class="secondary-btn">
+              اختيار ملفات
+              <input type="file" multiple (change)="onFileSelect($event, 'drawings')">
+            </label>
+          </div>
+          <div class="file-list" *ngIf="drawings.length">
+            <div class="file-pill" *ngFor="let file of drawings; index as i">
+              <span>{{ file.name }}</span>
+              <button type="button" class="icon-btn" (click)="removeFile(i, 'drawings')"><i class="pi pi-times"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="upload-zone"
+             (dragover)="$event.preventDefault()"
+             (drop)="onFileDrop($event, 'permits')">
+          <div class="upload-header">
+            <div>
+              <h4>التصاريح والموافقات</h4>
+              <p>اسحب الملفات هنا أو اضغط للرفع</p>
+            </div>
+            <label class="secondary-btn">
+              اختيار ملفات
+              <input type="file" multiple (change)="onFileSelect($event, 'permits')">
+            </label>
+          </div>
+          <div class="file-list" *ngIf="permits.length">
+            <div class="file-pill" *ngFor="let file of permits; index as i">
+              <span>{{ file.name }}</span>
+              <button type="button" class="icon-btn" (click)="removeFile(i, 'permits')"><i class="pi pi-times"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="ghost-btn" (click)="closeNewProjectDialog()">إلغاء</button>
+        <button type="submit" class="primary-btn">حفظ المشروع</button>
+      </div>
+    </form>
+  </div>
+</div>

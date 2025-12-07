@@ -1,0 +1,11 @@
+<app-page-header
+  [title]="'تفاصيل الفاتورة'"
+  [subtitle]="'مراجعة تفاصيل الفاتورة وإجراءاتها'"
+  [rtl]="true"
+></app-page-header>
+
+<div class="bg-round-white details">
+  <h3>الفاتورة رقم {{ invoiceId }}</h3>
+  <p>سيتم ربط هذه الصفحة ببيانات الخادم حال توفر نقطة النهاية.</p>
+  <button class="btn outline" routerLink="/invoices">العودة للقائمة</button>
+</div>

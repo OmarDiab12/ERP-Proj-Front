@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/Core/services/data.service';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-expenses',
@@ -19,7 +19,7 @@ export class ExpensesComponent implements OnInit {
   isEditMode = false;
   selectedExpense: any = null;
 
-  constructor(private dataService: DataService, private confirmationService: ConfirmationService) {}
+  constructor(private dataService: DataService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
   columns = [
     { field: 'description', header: 'الوصف' },
@@ -54,7 +54,10 @@ pageSize: number = 10;
         console.log(this.allExpenses);
         this.loading = false;
       },
-      error: () => (this.loading = false)
+      error: () => {
+        this.loading = false;
+        this.messageService.add({ severity: 'error', summary: 'خطأ', detail: 'فشل تحميل المصروفات' });
+      }
     });
   }
 
@@ -74,6 +77,10 @@ pageSize: number = 10;
       next: () => {
         this.closeModal();
         this.getAllExpenses();
+        this.messageService.add({ severity: 'success', summary: 'تم', detail: 'تمت إضافة المصروف بنجاح' });
+      },
+      error: () => {
+        this.messageService.add({ severity: 'error', summary: 'خطأ', detail: 'تعذر إضافة المصروف' });
       }
     });
   }
@@ -90,6 +97,10 @@ pageSize: number = 10;
       next: () => {
         this.closeModal();
         this.getAllExpenses();
+        this.messageService.add({ severity: 'success', summary: 'تم', detail: 'تم تحديث المصروف بنجاح' });
+      },
+      error: () => {
+        this.messageService.add({ severity: 'error', summary: 'خطأ', detail: 'تعذر تحديث المصروف' });
       }
     });
   }
@@ -103,7 +114,11 @@ pageSize: number = 10;
       rejectLabel: 'إلغاء',
       accept: () => {
         this.dataService.DeleteOperationalExpense(expense.id).subscribe({
-          next: () => this.getAllExpenses()
+          next: () => {
+            this.getAllExpenses();
+            this.messageService.add({ severity: 'success', summary: 'تم', detail: 'تم حذف المصروف بنجاح' });
+          },
+          error: () => this.messageService.add({ severity: 'error', summary: 'خطأ', detail: 'تعذر حذف المصروف' })
         });
       }
     });
