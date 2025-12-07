@@ -14,6 +14,11 @@ const routes: Routes = [
   },
 
   {
+    path: 'inventory',
+    canActivate: [authGuard],
+    canLoad: [authGuard],
+    loadChildren: () => import('./modules/inventory/inventory.module').then(m => m.InventoryModule)
+  },
     path: 'partnerships',
     canActivate: [authGuard],
     canLoad: [authGuard],

@@ -67,6 +67,18 @@ export class CustomTableComponent {
 
     // string statuses (existing mappings)
     switch (String(status)) {
+      case 'متوفر':
+      case 'In Stock':
+        return { class: 'badge badge-green', label: 'متوفر' };
+      case 'قيد التوريد':
+      case 'Pending Delivery':
+        return { class: 'badge badge-yellow', label: 'قيد التوريد' };
+      case 'منخفض':
+      case 'Low Stock':
+        return { class: 'badge badge-orange', label: 'منخفض' };
+      case 'نفد المخزون':
+      case 'Out of Stock':
+        return { class: 'badge badge-red', label: 'نفد المخزون' };
       case 'نشط':
         return { class: 'badge badge-blue', label: 'نشط' };
       case 'Sent':
