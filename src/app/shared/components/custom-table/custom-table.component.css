@@ -40,6 +40,8 @@
 .badge-blue { background: var(--light-blue); color: #000; }
 .badge-green { background: var(--light-green); color: #000; }
 .badge-red { background: var(--light-red); color: #000; }
+.badge-yellow { background: #fff4e6; color: #ad6200; }
+.badge-orange { background: #ffe4d5; color: #c2410c; }
 .badge-gray { background: var(--gray); color: #000; }
 
 .red { color: var(--red) !important; }

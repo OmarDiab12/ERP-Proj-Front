@@ -27,11 +27,8 @@ import { CashflowComponent } from './cashflow/cashflow.component';
 import { LoansComponent } from './loans/loans.component';
 import { ExpensesComponent } from './expenses/expenses.component';
 import { SettingsComponent } from './settings/settings.component';
-import { PageHeaderComponent } from 'src/app/shared/components/page-header/page-header.component';
 import { HttpClientModule } from '@angular/common/http';
-import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { TabViewModule } from 'primeng/tabview';
-import { CustomTableComponent } from 'src/app/shared/components/custom-table/custom-table.component';
 import { ChartModule } from 'primeng/chart';
 import { CardModule } from 'primeng/card';
 import { FormModuleComponent } from 'src/app/shared/components/form-module/form-module.component';
@@ -43,6 +40,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { EmployeesComponent } from './employees/employees.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -70,9 +68,6 @@ import { EmployeesComponent } from './employees/employees.component';
     LoansComponent,
     ExpensesComponent,
     SettingsComponent,
-    PageHeaderComponent,
-    CardComponent,
-    CustomTableComponent,
     StepperComponent,
     EmployeesComponent
   ],
@@ -80,6 +75,7 @@ import { EmployeesComponent } from './employees/employees.component';
     CommonModule,
     RouterModule,
     AdminRoutingModule,
+    SharedModule,
     FormsModule,
     MultiSelectModule,
     DropdownModule,

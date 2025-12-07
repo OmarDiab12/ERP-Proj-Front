@@ -1,0 +1,94 @@
+<div class="inventory-page">
+  <app-page-header
+    [title]="'إدارة المخزون'"
+    [subtitle]="'تتبع حالة المنتجات والكميات المتاحة'"
+    [rtl]="true"
+    [showAddButton1]="true"
+    [addButton1]="{ label: 'إضافة منتج', icon: 'pi pi-plus' }"
+    [showLightButton1]="true"
+    [LightButton1]="{ label: 'تحديث القائمة', icon: 'pi pi-refresh' }"
+    (add1Click)="onAddItem()"
+    (Light1Click)="onRefresh()"
+  ></app-page-header>
+
+  <div class="kpi-grid row">
+    <div class="col-lg-3 col-md-6 col-sm-12" *ngFor="let card of kpis">
+      <app-card
+        [icon]="card.icon"
+        [title]="card.title"
+        [subtitle]="card.subtitle"
+        [value]="getKpiValue(card.key)"
+        [colorClass]="card.colorClass"
+      ></app-card>
+    </div>
+  </div>
+
+  <div class="filters card shadow-sm">
+    <div class="filters__header">
+      <h3>البحث و التصفية</h3>
+      <p>حدد حالة المنتج أو الفئة لتضييق النتائج</p>
+    </div>
+    <form [formGroup]="filtersForm" class="filters__form row">
+      <div class="col-lg-4 col-md-6 col-sm-12 mb-2">
+        <label for="search">بحث</label>
+        <div class="input-with-icon">
+          <i class="pi pi-search"></i>
+          <input id="search" type="text" placeholder="ابحث باسم المنتج أو كود التخزين" formControlName="search" />
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12 mb-2">
+        <label for="status">حالة المخزون</label>
+        <select id="status" formControlName="status">
+          <option value="">الكل</option>
+          <option value="متوفر">متوفر</option>
+          <option value="منخفض">منخفض</option>
+          <option value="نفد المخزون">نفد المخزون</option>
+          <option value="قيد التوريد">قيد التوريد</option>
+        </select>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12 mb-2">
+        <label for="category">الفئة</label>
+        <select id="category" formControlName="category">
+          <option value="">كل الفئات</option>
+          <option *ngFor="let category of availableCategories" [value]="category">{{ category }}</option>
+        </select>
+      </div>
+    </form>
+  </div>
+
+  <div class="table-wrapper card shadow-sm">
+    <div class="table__header">
+      <div>
+        <h3>جميع المنتجات</h3>
+        <p>عرض تفصيلي لحالة كل عنصر</p>
+      </div>
+      <div class="status-legend">
+        <span class="legend-chip badge badge-green">متوفر</span>
+        <span class="legend-chip badge badge-yellow">قيد التوريد</span>
+        <span class="legend-chip badge badge-orange">منخفض</span>
+        <span class="legend-chip badge badge-red">نفد المخزون</span>
+      </div>
+    </div>
+
+    <div class="table__content" *ngIf="!loading; else loadingState">
+      <app-custom-table
+        [data]="filteredProducts"
+        [columns]="columns"
+        [showCheckbox]="false"
+        [showActions]="false"
+        [showPagination]="true"
+        [pageSize]="6"
+      ></app-custom-table>
+      <div class="empty" *ngIf="!filteredProducts.length && !errorMessage">
+        لا توجد عناصر مطابقة لخيارات البحث الحالية.
+      </div>
+      <div class="error" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+    </div>
+
+    <ng-template #loadingState>
+      <div class="loading">جاري تحميل بيانات المخزون...</div>
+    </ng-template>
+  </div>
+</div>

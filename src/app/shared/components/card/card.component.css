@@ -68,3 +68,9 @@
   background-color: var(--light-purple);
   color: var(--purple);
 }
+
+.purple { color: #7c3aed; }
+.orange { color: #f97316; }
+.blue { color: #2563eb; }
+.green { color: #16a34a; }
+.red { color: #dc2626; }
