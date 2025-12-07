@@ -1,0 +1,96 @@
+<app-page-header
+  [title]="'الفواتير'"
+  [subtitle]="'متابعة وإدارة فواتير العملاء'"
+  [rtl]="true"
+  [showAddButton1]="true"
+  [addButton1]="{ label: 'فاتورة جديدة', icon: 'pi pi-plus' }"
+  (add1Click)="navigateToNew()"
+></app-page-header>
+
+<div class="bg-round-white">
+  <div class="filters">
+    <div class="tabs">
+      <button
+        *ngFor="let tab of statusTabs"
+        class="tab"
+        [class.active]="filters.status === tab.key"
+        (click)="setStatus(tab.key)"
+      >
+        {{ tab.label }}
+      </button>
+    </div>
+
+    <div class="filter-actions">
+      <div class="search-box">
+        <input
+          type="text"
+          placeholder="بحث عن فاتورة أو عميل"
+          [(ngModel)]="filters.search"
+          (input)="applyFilters()"
+        />
+        <i class="pi pi-search"></i>
+      </div>
+
+      <select [(ngModel)]="filters.client" (change)="applyFilters()">
+        <option value="all">كل العملاء</option>
+        <option *ngFor="let invoice of invoices" [value]="invoice.client">{{ invoice.client }}</option>
+      </select>
+
+      <select [(ngModel)]="filters.period" (change)="applyFilters()">
+        <option value="all">كل الفترات</option>
+        <option value="this-month">هذا الشهر</option>
+        <option value="last-month">الشهر الماضي</option>
+      </select>
+
+      <button class="btn filled" (click)="navigateToNew()">
+        <i class="pi pi-plus"></i>
+        إنشاء فاتورة
+      </button>
+    </div>
+  </div>
+
+  <div class="table-wrapper" *ngIf="filteredInvoices.length; else emptyState">
+    <table class="invoice-table">
+      <thead>
+        <tr>
+          <th>رقم الفاتورة</th>
+          <th>العميل</th>
+          <th>تاريخ الإصدار</th>
+          <th>تاريخ الاستحقاق</th>
+          <th>الإجمالي</th>
+          <th>الحالة</th>
+          <th class="actions-col">إجراءات</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let invoice of filteredInvoices; trackBy: trackByInvoiceId">
+          <td>{{ invoice.invoiceNumber }}</td>
+          <td>{{ invoice.client }}</td>
+          <td>{{ invoice.issueDate }}</td>
+          <td>{{ invoice.dueDate }}</td>
+          <td>{{ invoice.total | number }}</td>
+          <td>
+            <span [ngClass]="['status', invoice.status]">{{ invoice.status | titlecase }}</span>
+          </td>
+          <td class="actions">
+            <button class="btn outline" (click)="navigateToDetails(invoice)">
+              <i class="pi pi-eye"></i>
+              عرض
+            </button>
+            <button class="btn filled" (click)="navigateToDetails(invoice)">
+              <i class="pi pi-pencil"></i>
+              تعديل
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #emptyState>
+    <div class="empty">
+      <p>لا توجد فواتير مطابقة لعوامل التصفية الحالية.</p>
+      <button class="btn filled" (click)="navigateToNew()">إنشاء فاتورة</button>
+    </div>
+  </ng-template>
+</div>

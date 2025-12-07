@@ -3,12 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
-import { NavBarComponent } from 'src/app/shared/components/nav-bar/nav-bar.component';
 import { RouterModule } from '@angular/router';
-import { AdminLayoutComponent } from 'src/app/layouts/admin-layout/admin-layout.component';
-import { SideBarComponent } from 'src/app/shared/components/side-bar/side-bar.component';
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component';
-import { BreadcrumbComponent } from 'src/app/shared/components/breadcrumb/breadcrumb.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AnalyticsComponent } from './analytics/analytics.component';
@@ -27,32 +22,24 @@ import { CashflowComponent } from './cashflow/cashflow.component';
 import { LoansComponent } from './loans/loans.component';
 import { ExpensesComponent } from './expenses/expenses.component';
 import { SettingsComponent } from './settings/settings.component';
-import { PageHeaderComponent } from 'src/app/shared/components/page-header/page-header.component';
 import { HttpClientModule } from '@angular/common/http';
-import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { TabViewModule } from 'primeng/tabview';
-import { CustomTableComponent } from 'src/app/shared/components/custom-table/custom-table.component';
 import { ChartModule } from 'primeng/chart';
 import { CardModule } from 'primeng/card';
 import { FormModuleComponent } from 'src/app/shared/components/form-module/form-module.component';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { StepperComponent } from 'src/app/shared/components/stepper/stepper.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { EmployeesComponent } from './employees/employees.component';
+import { SharedUiModule } from 'src/app/shared/shared-ui.module';
 
 
 @NgModule({
   declarations: [
     AdminComponent,
-    AdminLayoutComponent,
-    NavBarComponent,
-    SideBarComponent,
-    NotificationComponent,
-    BreadcrumbComponent,
     DashboardComponent,
     AnalyticsComponent,
     ProjectsComponent,
@@ -70,15 +57,12 @@ import { EmployeesComponent } from './employees/employees.component';
     LoansComponent,
     ExpensesComponent,
     SettingsComponent,
-    PageHeaderComponent,
-    CardComponent,
-    CustomTableComponent,
-    StepperComponent,
     EmployeesComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
+    SharedUiModule,
     AdminRoutingModule,
     FormsModule,
     MultiSelectModule,
@@ -92,6 +76,7 @@ import { EmployeesComponent } from './employees/employees.component';
     ToastModule,
     ConfirmDialogModule,
     ProgressBarModule
-],providers: [ConfirmationService, MessageService],
+  ],
+  providers: [ConfirmationService, MessageService],
 })
 export class AdminModule { }
