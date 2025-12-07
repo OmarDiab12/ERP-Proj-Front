@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { Observable, tap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 // import { SUCCESS_MESSAGE, DISABLE_SWAL, DISABLE_SPINNER } from './http.interceptor';
 
 @Injectable({
@@ -15,8 +16,8 @@ export class UserDataService {
   name:string="";
   email:string="";
   id:string="";
-  // back: string = "https://aubs.runasp.net/api/"
-  back: string = "https://newerp.runasp.net/api/"
+  private readonly apiBase = environment.apiBaseUrl;
+  private readonly endpoints = environment.endpoints.auth;
   constructor(private HttpClient:HttpClient,private Router:Router) {}
 
 
@@ -87,7 +88,7 @@ getCurrentUserId(): number {
 }
 
   registerStudent(data:object):Observable<any>{
-    return this.HttpClient.post(this.back+'User/register-student',data,{});
+    return this.HttpClient.post(this.apiBase + this.endpoints.registerStudent,data,{});
   }
 
   login(data:object):Observable<any>{
@@ -97,7 +98,7 @@ getCurrentUserId(): number {
     //     .set(DISABLE_SWAL, true)
     //     .set(DISABLE_SPINNER, true)
     // });
-    return this.HttpClient.post(this.back+'User/login',data,{});
+    return this.HttpClient.post(this.apiBase + this.endpoints.login,data,{});
   }
 
   logOut(){

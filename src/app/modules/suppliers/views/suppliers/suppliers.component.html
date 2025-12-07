@@ -1,0 +1,138 @@
+<p-toast></p-toast>
+
+<div class="header">
+  <div>
+    <p class="eyebrow">الموردون</p>
+    <h1>لوحة الموردين</h1>
+    <p class="subtitle">إدارة بيانات الموردين، المتابعة، والعمليات اليومية.</p>
+  </div>
+  <a class="cta" routerLink="/admin/suppliers/add">
+    <i class="pi pi-plus"></i>
+    إضافة مورد جديد
+  </a>
+</div>
+
+<div class="summary-card">
+  <div>
+    <p class="label">إجمالي الموردين</p>
+    <h2>{{ pagination.total }}</h2>
+  </div>
+  <div>
+    <p class="label">طلبات قيد التوريد</p>
+    <h3>18</h3>
+  </div>
+  <div>
+    <p class="label">متوسط تقييم الجودة</p>
+    <h3>4.5 / 5</h3>
+  </div>
+</div>
+
+<form class="filters" [formGroup]="filters">
+  <div class="field">
+    <label>بحث سريع</label>
+    <div class="input">
+      <i class="pi pi-search"></i>
+      <input type="text" formControlName="search" placeholder="ابحث باسم المورد أو الشركة أو البريد" />
+    </div>
+  </div>
+  <div class="field">
+    <label>التصنيف</label>
+    <select formControlName="category">
+      <option value="">الكل</option>
+      <option value="مواد بناء">مواد بناء</option>
+      <option value="معدات">معدات</option>
+      <option value="تشطيبات">تشطيبات</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>الحالة</label>
+    <select formControlName="status">
+      <option value="">الكل</option>
+      <option value="نشط">نشط</option>
+      <option value="قيد المتابعة">قيد المتابعة</option>
+      <option value="موقوف">موقوف</option>
+    </select>
+  </div>
+  <div class="actions">
+    <button type="button" class="ghost" (click)="resetFilters()">إعادة تعيين</button>
+  </div>
+</form>
+
+<div class="table-card" [class.loading]="loading">
+  <div class="table-header">
+    <h3>قائمة الموردين</h3>
+    <span class="count">{{ pagination.total }} مورد</span>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>المورد</th>
+          <th>بيانات التواصل</th>
+          <th>الفئة</th>
+          <th>الطلبات المعلقة</th>
+          <th>آخر طلب</th>
+          <th class="actions-col">الإجراءات</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let supplier of suppliers">
+          <td>
+            <div class="primary-cell">
+              <div class="avatar">{{ supplier.name.charAt(0) }}</div>
+              <div>
+                <div class="title">{{ supplier.name }}</div>
+                <div class="meta">{{ supplier.company }}</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="stacked">
+              <span>{{ supplier.contactPerson }}</span>
+              <span class="muted">{{ supplier.email }}</span>
+              <span class="muted">{{ supplier.phone }}</span>
+            </div>
+          </td>
+          <td>
+            <span class="pill">{{ supplier.category }}</span>
+            <span class="status" [ngClass]="statusClass(supplier.status)">{{ supplier.status }}</span>
+          </td>
+          <td>
+            <div class="stacked">
+              <span class="metric">{{ supplier.outstandingOrders }} طلب</span>
+              <span class="muted">تقييم {{ supplier.rating }} / 5</span>
+            </div>
+          </td>
+          <td>
+            <div class="stacked">
+              <span>{{ supplier.lastOrderDate | date:'mediumDate' }}</span>
+              <span class="muted">{{ supplier.location }}</span>
+            </div>
+          </td>
+          <td class="row-actions">
+            <button type="button" title="تحميل" (click)="downloadProfile(supplier)"><i class="pi pi-download"></i></button>
+            <button type="button" title="تعديل" [routerLink]="['/admin/suppliers/add']"><i class="pi pi-pencil"></i></button>
+            <button type="button" title="مفضلة" (click)="markFavorite(supplier)"><i class="pi pi-star"></i></button>
+            <button type="button" title="حذف" (click)="deleteSupplier(supplier)"><i class="pi pi-trash"></i></button>
+          </td>
+        </tr>
+        <tr *ngIf="!loading && suppliers.length === 0">
+          <td colspan="6" class="empty">لا توجد نتائج مطابقة</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button type="button" (click)="goToPage(pagination.page - 1)" [disabled]="pagination.page === 1">السابق</button>
+    <div class="pages">
+      <button
+        *ngFor="let page of [].constructor(totalPages); let i = index"
+        type="button"
+        [class.active]="pagination.page === i + 1"
+        (click)="goToPage(i + 1)">
+        {{ i + 1 }}
+      </button>
+    </div>
+    <button type="button" (click)="goToPage(pagination.page + 1)" [disabled]="pagination.page === totalPages">التالي</button>
+  </div>
+</div>
