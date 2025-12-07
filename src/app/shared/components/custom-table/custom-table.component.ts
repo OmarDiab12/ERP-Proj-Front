@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-custom-table',
@@ -121,8 +122,7 @@ getFullImageUrl(imagePath: string): string {
     return 'assets/images/default-user.png'; // صورة افتراضية
   }
 
-  // 🟢 ده الـ API base URL بتاعك (غيّره لو مختلف)
-  const baseUrl = 'https://newerp.runasp.net/';
+  const baseUrl = environment.assetBaseUrl;
 
   // لو الصورة جاية من السيرفر بدون http أو https
   if (!imagePath.startsWith('http')) {
