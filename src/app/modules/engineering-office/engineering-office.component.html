@@ -20,6 +20,8 @@
       <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
     </select>
   </div>
+  <h3>لا توجد مشاريع</h3>
+  <p>ابدأ بإنشاء مشروع هندسي جديد لعرضه في المنظومة</p>
 </div>
 
 <div class="empty-state" *ngIf="filteredProjects.length === 0">
