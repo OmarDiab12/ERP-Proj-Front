@@ -11,7 +11,6 @@ import { ProjectsComponent } from './projects/projects.component';
 import { ClientsComponent } from './clients/clients.component';
 import { ContractorsComponent } from './contractors/contractors.component';
 import { BrokersComponent } from './brokers/brokers.component';
-import { SuppliersComponent } from './suppliers/suppliers.component';
 import { AssetsComponent } from './assets/assets.component';
 import { QuotesComponent } from './quotes/quotes.component';
 import { WarehouseComponent } from './warehouse/warehouse.component';
@@ -46,7 +45,6 @@ import { SharedUiModule } from 'src/app/shared/shared-ui.module';
     ClientsComponent,
     ContractorsComponent,
     BrokersComponent,
-    SuppliersComponent,
     AssetsComponent,
     QuotesComponent,
     WarehouseComponent,
@@ -64,6 +62,7 @@ import { SharedUiModule } from 'src/app/shared/shared-ui.module';
     RouterModule,
     SharedUiModule,
     AdminRoutingModule,
+    SharedModule,
     FormsModule,
     MultiSelectModule,
     DropdownModule,

@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-custom-table',
@@ -66,6 +67,18 @@ export class CustomTableComponent {
 
     // string statuses (existing mappings)
     switch (String(status)) {
+      case 'متوفر':
+      case 'In Stock':
+        return { class: 'badge badge-green', label: 'متوفر' };
+      case 'قيد التوريد':
+      case 'Pending Delivery':
+        return { class: 'badge badge-yellow', label: 'قيد التوريد' };
+      case 'منخفض':
+      case 'Low Stock':
+        return { class: 'badge badge-orange', label: 'منخفض' };
+      case 'نفد المخزون':
+      case 'Out of Stock':
+        return { class: 'badge badge-red', label: 'نفد المخزون' };
       case 'نشط':
         return { class: 'badge badge-blue', label: 'نشط' };
       case 'Sent':
@@ -121,8 +134,7 @@ getFullImageUrl(imagePath: string): string {
     return 'assets/images/default-user.png'; // صورة افتراضية
   }
 
-  // 🟢 ده الـ API base URL بتاعك (غيّره لو مختلف)
-  const baseUrl = 'https://newerp.runasp.net/';
+  const baseUrl = environment.assetBaseUrl;
 
   // لو الصورة جاية من السيرفر بدون http أو https
   if (!imagePath.startsWith('http')) {

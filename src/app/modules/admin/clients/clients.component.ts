@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/Core/services/data.service';
 import { MessageService, ConfirmationService } from 'primeng/api';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-clients',
@@ -163,7 +164,7 @@ export class ClientsComponent implements OnInit {
 
   getFullImageUrl(relativePath: string): string {
   if (!relativePath) return 'assets/images/default-avatar.png'; // صورة افتراضية
-  return `https://newerp.runasp.net/${relativePath}`;
+  return `${environment.assetBaseUrl}${relativePath}`;
 }
 
 }

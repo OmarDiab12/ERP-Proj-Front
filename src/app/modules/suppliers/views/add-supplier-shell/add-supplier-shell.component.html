@@ -1,0 +1,24 @@
+<div class="shell">
+  <div class="breadcrumbs">
+    <a routerLink="/admin/suppliers">الموردون</a>
+    <span>/</span>
+    <span>إضافة مورد جديد</span>
+  </div>
+
+  <h1>إضافة مورد جديد</h1>
+  <p class="lead">سيتم إضافة تفاصيل التصميم والنماذج عند تسليم مخطط الواجهات. تم إعداد المسار والهيكل لربط النموذج فور وصوله.</p>
+
+  <div class="placeholder">
+    <div class="steps">
+      <div *ngFor="let step of steps" class="step" [class.active]="step.active">
+        <div class="dot"></div>
+        <span>{{ step.label }}</span>
+      </div>
+    </div>
+    <div class="empty-card">
+      <i class="pi pi-pencil"></i>
+      <p>نموذج إضافة المورد سيكون هنا قريباً.</p>
+      <span class="hint">يمكنك الآن التنقل لهذا المسار من زر "إضافة مورد جديد".</span>
+    </div>
+  </div>
+</div>
