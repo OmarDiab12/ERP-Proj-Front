@@ -1,0 +1,68 @@
+<div class="page-wrapper">
+  <div class="header">
+    <div>
+      <h2 class="title">الشراكات</h2>
+      <p class="subtitle">لوحة معلومات الشراكات والمشاريع المشتركة</p>
+    </div>
+    <button pButton type="button" class="p-button p-component p-button-rounded p-button-success" (click)="onCreateProject()">
+      <span class="pi pi-plus mr-2"></span>
+      <span class="button-label">إنشاء مشروع</span>
+    </button>
+  </div>
+
+  <div class="kpi-grid">
+    <p-card class="kpi-card" *ngFor="let kpi of [
+      { label: 'إجمالي الشراكات', value: stats.totalPartnerships, icon: 'pi pi-users', tone: 'purple' },
+      { label: 'المشاريع النشطة', value: stats.activeProjects, icon: 'pi pi-briefcase', tone: 'green' },
+      { label: 'إجمالي الاستثمارات', value: stats.totalInvestment, icon: 'pi pi-wallet', tone: 'blue', currency: 'ر.س' },
+      { label: 'الأرباح المتوقعة', value: stats.expectedProfit, icon: 'pi pi-chart-line', tone: 'orange', currency: 'ر.س' }
+    ]">
+      <div class="kpi-header">
+        <span class="pi" [ngClass]="kpi.icon"></span>
+        <span class="badge" [ngClass]="kpi.tone"></span>
+      </div>
+      <div class="kpi-body">
+        <p class="kpi-label">{{ kpi.label }}</p>
+        <p class="kpi-value">{{ formatNumber(kpi.value) }} <span class="currency" *ngIf="kpi.currency">{{ kpi.currency }}</span></p>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-title">مشاريع الشراكة</div>
+      <div class="search-box">
+        <span class="pi pi-search"></span>
+        <input pInputText type="text" [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()" placeholder="ابحث عن مشروع أو مالك أو حالة" />
+      </div>
+    </div>
+
+    <div *ngIf="filteredProjects.length; else emptyState" class="projects-grid">
+      <p-card *ngFor="let project of filteredProjects" class="project-card">
+        <div class="project-card__header">
+          <div>
+            <h4 class="project-title">{{ project.name }}</h4>
+            <p class="project-owner">{{ project.owner || 'غير محدد' }}</p>
+          </div>
+          <p-tag [value]="project.status || 'غير محدد'" [severity]="project.status === 'مكتمل' ? 'success' : project.status === 'متوقف' ? 'warning' : 'info'"></p-tag>
+        </div>
+        <div class="project-card__body">
+          <div class="detail"><span class="label">الموقع:</span> <span>{{ project.location || 'غير متوفر' }}</span></div>
+          <div class="detail"><span class="label">الميزانية:</span> <span>{{ project.budget ? formatNumber(project.budget) + ' ر.س' : 'غير متوفر' }}</span></div>
+        </div>
+      </p-card>
+    </div>
+
+    <ng-template #emptyState>
+      <div class="empty-state">
+        <div class="placeholder-icon pi pi-briefcase"></div>
+        <h3>لا توجد مشاريع حالية</h3>
+        <p>ابدأ بإضافة مشروع شراكة جديد لتتبع الأداء والالتزامات.</p>
+        <button pButton type="button" class="p-button p-component p-button-rounded p-button-success" (click)="onCreateProject()">
+          <span class="pi pi-plus mr-2"></span>
+          <span class="button-label">إنشاء مشروع</span>
+        </button>
+      </div>
+    </ng-template>
+  </div>
+</div>
